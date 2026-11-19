@@ -2,6 +2,15 @@
 <html lang="zh-TW" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function () {
+      var m = 'auto';
+      try { m = localStorage.getItem('trip_theme') || 'auto'; } catch (e) { }
+      var d = m === 'dark' || (m === 'auto' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme-mode', m);
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Cdefs%3E%3ClinearGradient id=%22bg%22 x1=%220%22 y1=%220%22 x2=%220%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%23B45309%22/%3E%3Cstop offset=%221%22 stop-color=%22%23451A03%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22url%28%23bg%29%22/%3E%3Ccircle cx=%2248%22 cy=%2215%22 r=%224.5%22 fill=%22%23FDE68A%22/%3E%3Cpath d=%22M6 51 L32 15 L58 51 Z%22 fill=%22%23FEF3C7%22/%3E%3Cpath d=%22M32 15 L58 51 L44 51 Z%22 fill=%22%23FCD34D%22/%3E%3Cpath d=%22M32 33 L42 51 L22 51 Z%22 fill=%22%2378350F%22/%3E%3Cpath d=%22M32 33 L32 51%22 stroke=%22%23FEF3C7%22 stroke-width=%221.6%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M32 15 L32 8%22 stroke=%22%23FEF3C7%22 stroke-width=%222%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M32 8 L39 10.5 L32 13 Z%22 fill=%22%23F97316%22/%3E%3Crect x=%224%22 y=%2251%22 width=%2256%22 height=%223%22 rx=%221.5%22 fill=%22%2392400E%22/%3E%3C/svg%3E">
@@ -92,6 +101,9 @@
     .nav-chip-lock { flex-shrink: 0; white-space: nowrap; padding: 0.4rem 0.8rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; background: #fff; color: #6B7280; border: 1px solid #E5E7EB; }
     .side-icon.is-active { background: #D97706 !important; color: #fff !important; }
     .field-input { width: 100%; padding: 0.65rem 0.8rem; border-radius: 0.75rem; border: 1px solid #E5E7EB; background: #fff; font-size: 16px; color: #1F2937; outline: none; }
+    .field-input { height: 3rem; }
+    textarea.field-input { height: auto; }
+    select.field-input { -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%239CA3AF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 8l5 5 5-5'/></svg>"); background-repeat: no-repeat; background-position: right 0.8rem center; background-size: 1rem; padding-right: 2.4rem; }
     .field-input:focus { border-color: #F59E0B; box-shadow: 0 0 0 3px rgba(245,158,11,.18); }
     .tap-x { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 9999px; font-size: 12px; }
     .tap-x:active { background: rgba(0,0,0,.08); }
@@ -112,6 +124,193 @@
       * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
     }
 
+
+    /* ===== 淺色／深色外觀 ===== */
+    .theme-btn { width: 2.25rem; height: 2.25rem; border-radius: 9999px; background: #F3F4F6; color: #374151; display: inline-flex; align-items: center; justify-content: center; font-size: 0.95rem; transition: transform .15s; }
+    .theme-btn:active { transform: scale(0.92); }
+    .settle-panel { background: #FAF8F4; border: 2px solid #1C1917; border-radius: 1rem; padding: 1rem; }
+    @media (min-width: 640px) { .settle-panel { padding: 1.25rem; } }
+    .settle-title { color: #1C1917; }
+    .settle-ico { color: #047857; font-size: 1.25rem; }
+    .settle-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: #1C1917; color: #FDE68A; font-weight: 800; font-size: 0.8rem; padding: 0.35rem 0.85rem; border-radius: 9999px; }
+    .settle-badge i { color: #34D399; }
+    .settle-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: 0.75rem; background: #fff; border: 1px solid #E7E2DA; }
+    .settle-no { width: 1.5rem; height: 1.5rem; border-radius: 9999px; background: #1C1917; color: #FDE68A; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; flex-shrink: 0; }
+    .settle-arrow { color: #047857; font-weight: 900; margin: 0 0.35rem; }
+    .settle-amt { color: #047857; font-weight: 900; font-size: 1rem; white-space: nowrap; }
+    .settle-note { color: #57534E; }
+    .settle-foot { border-top: 1px solid #E7E2DA; }
+    .settle-link { color: #1C1917; font-weight: 700; text-decoration: underline; }
+    html[data-theme="dark"] { color-scheme: dark; }
+    html[data-theme="dark"] body { background-color: #14110F; color: #EDE6DE; }
+    html[data-theme="dark"] .nav-chip { background: #2E2823; color: #D8CFC5; }
+    html[data-theme="dark"] .nav-chip.is-active { background: #D97706; color: #fff; }
+    html[data-theme="dark"] .theme-btn { background: #2E2823; color: #FDE68A; }
+    html[data-theme="dark"] .field-input { background: #1B1815; color: #F5F0EA; border-color: #3A332D; }
+    html[data-theme="dark"] .field-input::placeholder, html[data-theme="dark"] input::placeholder, html[data-theme="dark"] textarea::placeholder { color: #8F857A; }
+    html[data-theme="dark"] input, html[data-theme="dark"] select, html[data-theme="dark"] textarea { color: #F5F0EA; }
+    html[data-theme="dark"] .card-shadow { box-shadow: 0 10px 25px -5px rgba(0,0,0,.5); }
+    html[data-theme="dark"] .settle-panel { background: #1B1815; border-color: #FDE68A; }
+    html[data-theme="dark"] .settle-title { color: #F5F0EA; }
+    html[data-theme="dark"] .settle-ico { color: #34D399; }
+    html[data-theme="dark"] .settle-badge { background: #FDE68A; color: #1C1917; }
+    html[data-theme="dark"] .settle-badge i { color: #047857; }
+    html[data-theme="dark"] .settle-row { background: #24201C; border-color: #3A332D; }
+    html[data-theme="dark"] .settle-no { background: #FDE68A; color: #1C1917; }
+    html[data-theme="dark"] .settle-arrow, html[data-theme="dark"] .settle-amt { color: #34D399; }
+    html[data-theme="dark"] .settle-note { color: #B3A99E; }
+    html[data-theme="dark"] .settle-foot { border-color: #3A332D; }
+    html[data-theme="dark"] .settle-link { color: #F5F0EA; }
+    html[data-theme="dark"] .member-selected { background-color: rgba(245,158,11,.35) !important; }
+    html[data-theme="dark"] .dropzone-highlight { background-color: rgba(245,158,11,.15) !important; }
+    html[data-theme="dark"] .bg-amber-100{background-color:rgba(245,158,11,0.18)}
+    html[data-theme="dark"] .bg-amber-100\/80{background-color:rgba(245,158,11,0.18)}
+    html[data-theme="dark"] .bg-amber-50{background-color:rgba(245,158,11,0.10)}
+    html[data-theme="dark"] .bg-amber-50\/40{background-color:rgba(245,158,11,0.10)}
+    html[data-theme="dark"] .bg-amber-50\/50{background-color:rgba(245,158,11,0.10)}
+    html[data-theme="dark"] .bg-amber-50\/60{background-color:rgba(245,158,11,0.10)}
+    html[data-theme="dark"] .bg-amber-50\/80{background-color:rgba(245,158,11,0.10)}
+    html[data-theme="dark"] .bg-blue-100{background-color:rgba(59,130,246,0.18)}
+    html[data-theme="dark"] .bg-blue-50\/50{background-color:rgba(59,130,246,0.10)}
+    html[data-theme="dark"] .bg-emerald-100{background-color:rgba(16,185,129,0.18)}
+    html[data-theme="dark"] .bg-emerald-100\/70{background-color:rgba(16,185,129,0.18)}
+    html[data-theme="dark"] .bg-emerald-100\/80{background-color:rgba(16,185,129,0.18)}
+    html[data-theme="dark"] .bg-emerald-50{background-color:rgba(16,185,129,0.10)}
+    html[data-theme="dark"] .bg-emerald-50\/40{background-color:rgba(16,185,129,0.10)}
+    html[data-theme="dark"] .bg-emerald-50\/50{background-color:rgba(16,185,129,0.10)}
+    html[data-theme="dark"] .bg-gray-100{background-color:#2E2823}
+    html[data-theme="dark"] .bg-gray-50{background-color:#26211D}
+    html[data-theme="dark"] .bg-orange-100{background-color:rgba(249,115,22,0.18)}
+    html[data-theme="dark"] .bg-pink-100{background-color:rgba(236,72,153,0.18)}
+    html[data-theme="dark"] .bg-purple-100{background-color:rgba(168,85,247,0.18)}
+    html[data-theme="dark"] .bg-purple-50\/50{background-color:rgba(168,85,247,0.10)}
+    html[data-theme="dark"] .bg-rose-100{background-color:rgba(244,63,94,0.18)}
+    html[data-theme="dark"] .bg-rose-50{background-color:rgba(244,63,94,0.10)}
+    html[data-theme="dark"] .bg-rose-50\/50{background-color:rgba(244,63,94,0.10)}
+    html[data-theme="dark"] .bg-sky-100{background-color:rgba(14,165,233,0.18)}
+    html[data-theme="dark"] .bg-sky-50\/30{background-color:rgba(14,165,233,0.10)}
+    html[data-theme="dark"] .bg-sky-50\/40{background-color:rgba(14,165,233,0.10)}
+    html[data-theme="dark"] .bg-sky-50\/60{background-color:rgba(14,165,233,0.10)}
+    html[data-theme="dark"] .bg-teal-100{background-color:rgba(20,184,166,0.18)}
+    html[data-theme="dark"] .bg-teal-50{background-color:rgba(20,184,166,0.10)}
+    html[data-theme="dark"] .bg-teal-50\/40{background-color:rgba(20,184,166,0.10)}
+    html[data-theme="dark"] .bg-white{background-color:#211D1A}
+    html[data-theme="dark"] .bg-white\/70{background-color:rgba(33,29,26,0.70)}
+    html[data-theme="dark"] .bg-white\/80{background-color:rgba(33,29,26,0.80)}
+    html[data-theme="dark"] .bg-white\/95{background-color:rgba(33,29,26,0.95)}
+    html[data-theme="dark"] .bg-yellow-100{background-color:rgba(234,179,8,0.18)}
+    html[data-theme="dark"] .bg-yellow-50\/40{background-color:rgba(234,179,8,0.10)}
+    html[data-theme="dark"] .border-amber-100{border-color:rgba(245,158,11,0.22)}
+    html[data-theme="dark"] .border-amber-100\/60{border-color:rgba(245,158,11,0.22)}
+    html[data-theme="dark"] .border-amber-200{border-color:rgba(245,158,11,0.32)}
+    html[data-theme="dark"] .border-amber-200\/60{border-color:rgba(245,158,11,0.32)}
+    html[data-theme="dark"] .border-amber-300{border-color:rgba(245,158,11,0.45)}
+    html[data-theme="dark"] .border-blue-200{border-color:rgba(59,130,246,0.32)}
+    html[data-theme="dark"] .border-blue-300{border-color:rgba(59,130,246,0.45)}
+    html[data-theme="dark"] .border-emerald-100{border-color:rgba(16,185,129,0.22)}
+    html[data-theme="dark"] .border-emerald-100\/60{border-color:rgba(16,185,129,0.22)}
+    html[data-theme="dark"] .border-emerald-200{border-color:rgba(16,185,129,0.32)}
+    html[data-theme="dark"] .border-emerald-200\/60{border-color:rgba(16,185,129,0.32)}
+    html[data-theme="dark"] .border-emerald-300{border-color:rgba(16,185,129,0.45)}
+    html[data-theme="dark"] .border-gray-100{border-color:#3A332D}
+    html[data-theme="dark"] .border-gray-200{border-color:#3A332D}
+    html[data-theme="dark"] .border-gray-300{border-color:#3A332D}
+    html[data-theme="dark"] .border-orange-300{border-color:rgba(249,115,22,0.45)}
+    html[data-theme="dark"] .border-pink-300{border-color:rgba(236,72,153,0.45)}
+    html[data-theme="dark"] .border-purple-200{border-color:rgba(168,85,247,0.32)}
+    html[data-theme="dark"] .border-purple-300{border-color:rgba(168,85,247,0.45)}
+    html[data-theme="dark"] .border-rose-200{border-color:rgba(244,63,94,0.32)}
+    html[data-theme="dark"] .border-rose-300{border-color:rgba(244,63,94,0.45)}
+    html[data-theme="dark"] .border-sky-100{border-color:rgba(14,165,233,0.22)}
+    html[data-theme="dark"] .border-sky-200{border-color:rgba(14,165,233,0.32)}
+    html[data-theme="dark"] .border-sky-300{border-color:rgba(14,165,233,0.45)}
+    html[data-theme="dark"] .border-teal-100{border-color:rgba(20,184,166,0.22)}
+    html[data-theme="dark"] .border-teal-200{border-color:rgba(20,184,166,0.32)}
+    html[data-theme="dark"] .border-teal-300{border-color:rgba(20,184,166,0.45)}
+    html[data-theme="dark"] .border-yellow-200{border-color:rgba(234,179,8,0.32)}
+    html[data-theme="dark"] .border-yellow-200\/50{border-color:rgba(234,179,8,0.32)}
+    html[data-theme="dark"] .divide-gray-100 > :not([hidden]) ~ :not([hidden]){border-color:#3A332D}
+    html[data-theme="dark"] .hover\:bg-amber-100:hover{background-color:rgba(245,158,11,0.24)}
+    html[data-theme="dark"] .hover\:bg-amber-200:hover{background-color:rgba(245,158,11,0.34)}
+    html[data-theme="dark"] .hover\:bg-amber-50:hover{background-color:rgba(245,158,11,0.16)}
+    html[data-theme="dark"] .hover\:bg-emerald-50:hover{background-color:rgba(16,185,129,0.16)}
+    html[data-theme="dark"] .hover\:bg-gray-200:hover{background-color:#38312B}
+    html[data-theme="dark"] .hover\:bg-purple-50:hover{background-color:rgba(168,85,247,0.16)}
+    html[data-theme="dark"] .hover\:bg-rose-100:hover{background-color:rgba(244,63,94,0.24)}
+    html[data-theme="dark"] .hover\:bg-rose-50:hover{background-color:rgba(244,63,94,0.16)}
+    html[data-theme="dark"] .hover\:bg-sky-50:hover{background-color:rgba(14,165,233,0.16)}
+    html[data-theme="dark"] .hover\:bg-stone-50:hover{background-color:rgba(255,255,255,.07)}
+    html[data-theme="dark"] .hover\:bg-teal-50:hover{background-color:rgba(20,184,166,0.16)}
+    html[data-theme="dark"] .hover\:bg-yellow-50:hover{background-color:rgba(234,179,8,0.16)}
+    html[data-theme="dark"] .hover\:border-amber-200:hover{border-color:rgba(245,158,11,0.44)}
+    html[data-theme="dark"] .hover\:border-amber-400:hover{border-color:rgba(245,158,11,0.60)}
+    html[data-theme="dark"] .hover\:border-blue-400:hover{border-color:rgba(59,130,246,0.60)}
+    html[data-theme="dark"] .hover\:border-blue-500:hover{border-color:rgba(59,130,246,0.60)}
+    html[data-theme="dark"] .hover\:border-emerald-200:hover{border-color:rgba(16,185,129,0.44)}
+    html[data-theme="dark"] .hover\:border-emerald-400:hover{border-color:rgba(16,185,129,0.60)}
+    html[data-theme="dark"] .hover\:border-emerald-500:hover{border-color:rgba(16,185,129,0.60)}
+    html[data-theme="dark"] .hover\:border-purple-200:hover{border-color:rgba(168,85,247,0.44)}
+    html[data-theme="dark"] .hover\:border-purple-400:hover{border-color:rgba(168,85,247,0.60)}
+    html[data-theme="dark"] .hover\:border-rose-200:hover{border-color:rgba(244,63,94,0.44)}
+    html[data-theme="dark"] .hover\:border-rose-400:hover{border-color:rgba(244,63,94,0.60)}
+    html[data-theme="dark"] .hover\:border-sky-200:hover{border-color:rgba(14,165,233,0.44)}
+    html[data-theme="dark"] .hover\:border-sky-400:hover{border-color:rgba(14,165,233,0.60)}
+    html[data-theme="dark"] .hover\:border-teal-200:hover{border-color:rgba(20,184,166,0.44)}
+    html[data-theme="dark"] .hover\:border-yellow-200:hover{border-color:rgba(234,179,8,0.44)}
+    html[data-theme="dark"] .hover\:text-amber-800:hover{color:rgb(252,211,77)}
+    html[data-theme="dark"] .hover\:text-emerald-800:hover{color:rgb(110,231,183)}
+    html[data-theme="dark"] .hover\:text-gray-700:hover{color:#E4DCD3}
+    html[data-theme="dark"] .hover\:text-gray-800:hover{color:#F5F0EA}
+    html[data-theme="dark"] .hover\:text-rose-600:hover{color:rgb(251,113,133)}
+    html[data-theme="dark"] .hover\:text-rose-700:hover{color:rgb(253,164,175)}
+    html[data-theme="dark"] .hover\:text-stone-900:hover{color:#F5F0EA}
+    html[data-theme="dark"] .text-amber-600{color:rgb(251,191,36)}
+    html[data-theme="dark"] .text-amber-700{color:rgb(252,211,77)}
+    html[data-theme="dark"] .text-amber-800{color:rgb(252,211,77)}
+    html[data-theme="dark"] .text-amber-900{color:rgb(252,211,77)}
+    html[data-theme="dark"] .text-amber-950{color:rgb(252,211,77)}
+    html[data-theme="dark"] .text-blue-600{color:rgb(96,165,250)}
+    html[data-theme="dark"] .text-blue-900{color:rgb(147,197,253)}
+    html[data-theme="dark"] .text-blue-950{color:rgb(147,197,253)}
+    html[data-theme="dark"] .text-emerald-600{color:rgb(52,211,153)}
+    html[data-theme="dark"] .text-emerald-700{color:rgb(110,231,183)}
+    html[data-theme="dark"] .text-emerald-800{color:rgb(110,231,183)}
+    html[data-theme="dark"] .text-emerald-900{color:rgb(110,231,183)}
+    html[data-theme="dark"] .text-emerald-950{color:rgb(110,231,183)}
+    html[data-theme="dark"] .text-gray-400{color:#968C81}
+    html[data-theme="dark"] .text-gray-500{color:#B3A99E}
+    html[data-theme="dark"] .text-gray-600{color:#CFC6BB}
+    html[data-theme="dark"] .text-gray-700{color:#E4DCD3}
+    html[data-theme="dark"] .text-gray-800{color:#F5F0EA}
+    html[data-theme="dark"] .text-gray-900{color:#F5F0EA}
+    html[data-theme="dark"] .text-orange-900{color:rgb(253,186,116)}
+    html[data-theme="dark"] .text-pink-900{color:rgb(249,168,212)}
+    html[data-theme="dark"] .text-purple-600{color:rgb(192,132,252)}
+    html[data-theme="dark"] .text-purple-700{color:rgb(216,180,254)}
+    html[data-theme="dark"] .text-purple-800{color:rgb(216,180,254)}
+    html[data-theme="dark"] .text-purple-900{color:rgb(216,180,254)}
+    html[data-theme="dark"] .text-purple-900\/80{color:rgb(216,180,254)}
+    html[data-theme="dark"] .text-purple-950{color:rgb(216,180,254)}
+    html[data-theme="dark"] .text-rose-600{color:rgb(251,113,133)}
+    html[data-theme="dark"] .text-rose-700{color:rgb(253,164,175)}
+    html[data-theme="dark"] .text-rose-800{color:rgb(253,164,175)}
+    html[data-theme="dark"] .text-rose-900{color:rgb(253,164,175)}
+    html[data-theme="dark"] .text-rose-950{color:rgb(253,164,175)}
+    html[data-theme="dark"] .text-sky-600{color:rgb(56,189,248)}
+    html[data-theme="dark"] .text-sky-800{color:rgb(125,211,252)}
+    html[data-theme="dark"] .text-sky-900{color:rgb(125,211,252)}
+    html[data-theme="dark"] .text-sky-950{color:rgb(125,211,252)}
+    html[data-theme="dark"] .text-stone-900{color:#F5F0EA}
+    html[data-theme="dark"] .text-teal-600{color:rgb(45,212,191)}
+    html[data-theme="dark"] .text-teal-700{color:rgb(94,234,212)}
+    html[data-theme="dark"] .text-teal-800{color:rgb(94,234,212)}
+    html[data-theme="dark"] .text-teal-900{color:rgb(94,234,212)}
+    html[data-theme="dark"] .text-yellow-600{color:rgb(250,204,21)}
+    html[data-theme="dark"] .text-yellow-800{color:rgb(253,224,71)}
+    html[data-theme="dark"] .text-yellow-950{color:rgb(253,224,71)}
+    html[data-theme="dark"] [class*="from-amber-50"]{background-image:none;background-color:rgba(245,158,11,0.10)}
+    html[data-theme="dark"] [class*="from-purple-50"]{background-image:none;background-color:rgba(168,85,247,0.10)}
+    html[data-theme="dark"] [class*="from-sky-50"]{background-image:none;background-color:rgba(14,165,233,0.10)}
     @media print {
       #left-desktop-nav, #left-mobile-trigger, #back-to-top, nav, #password-gate {
         display: none !important;
@@ -299,11 +498,9 @@
         <a href="#" class="flex items-center gap-2 group min-w-0">
           <span class="text-xl sm:text-2xl">⛺</span>
           <span class="font-black text-gray-900 text-base sm:text-lg tracking-tight whitespace-nowrap group-hover:text-amber-700 transition">Edward 的小空間</span>
-          <span class="hidden md:inline text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-200">閒情驛棧 包棟特區</span>
         </a>
-        <button id="sync-pill" type="button" onclick="tick(true)" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 text-[12px] font-bold text-gray-700 flex-shrink-0 active:scale-95 transition">
-          <span id="sync-dot" class="w-2 h-2 rounded-full flex-shrink-0 bg-gray-400"></span>
-          <span id="sync-text">僅本機</span>
+        <button id="theme-btn" type="button" onclick="cycleTheme()" class="theme-btn flex-shrink-0" title="切換外觀（跟隨系統／淺色／深色）" aria-label="切換外觀">
+          <i id="theme-icon" class="fa-solid fa-circle-half-stroke"></i>
         </button>
       </div>
 
@@ -316,7 +513,6 @@
         <a href="#section-games" class="nav-chip">🎲 趣味遊戲</a>
         <a href="#section-packing" class="nav-chip">🎒 行李清單</a>
         <a href="#section-album" class="nav-chip">📸 相簿影片</a>
-        <button onclick="lockPage()" class="nav-chip-lock" title="重新鎖定頁面"><i class="fa-solid fa-lock text-[10px]"></i> 鎖定</button>
       </div>
 
     </div>
@@ -785,7 +981,7 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 text-sm">
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 text-sm items-start">
           <div class="sm:col-span-5">
             <label class="block text-gray-600 text-xs font-bold mb-1">消費品項名稱</label>
             <input type="text" id="expense-title" placeholder="如：全聯食材、飲料啤酒..." required class="field-input">
@@ -849,20 +1045,20 @@
       </div>
 
       <!-- 3. 最少轉帳次數完帳指南（小學生都秒懂） -->
-      <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 sm:p-5 border-2 border-amber-300 space-y-3.5">
+      <div class="settle-panel space-y-3.5">
         <div class="flex items-center justify-between flex-wrap gap-2">
           <div class="flex items-center gap-2">
-            <span class="text-xl">🎯</span>
-            <strong class="text-sm sm:text-base font-black text-amber-950">
+            <i class="fa-solid fa-bullseye settle-ico"></i>
+            <strong class="settle-title text-sm sm:text-base font-black">
               最少轉帳次數完帳指南（小學生也能秒懂！）
             </strong>
           </div>
-          <span class="text-xs bg-amber-200 text-amber-900 font-extrabold px-3 py-1 rounded-full shadow-xs">
-            ✨ 每人最多只轉一次錢
+          <span class="settle-badge">
+            <i class="fa-solid fa-check-double"></i> 每人最多只轉一次錢
           </span>
         </div>
 
-        <p class="text-xs text-stone-600 leading-relaxed">
+        <p class="settle-note text-xs leading-relaxed">
           不用互相算老半天！演算法已自動完成債務對沖，以下是全場最少次數的平帳方式，大家對號入座轉帳即可全體結清：
         </p>
 
@@ -871,11 +1067,11 @@
           <!-- 動態渲染最少次數轉帳卡片 -->
         </div>
 
-        <div class="pt-3 border-t border-amber-200/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
-          <span class="text-stone-500">
+        <div class="settle-foot pt-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+          <span class="settle-note">
             💡 轉帳完成後可截圖發在群組中報備核銷～
           </span>
-          <button onclick="copySplitSimplified()" class="font-bold text-amber-800 hover:text-amber-950 underline flex items-center gap-1">
+          <button onclick="copySplitSimplified()" class="settle-link flex items-center gap-1">
             <i class="fa-solid fa-copy"></i> 點我複製這份極簡轉帳名單貼 DC
           </button>
         </div>
@@ -1239,8 +1435,32 @@
                 .replace(/[​-‍﻿]/g, '');
     }
 
+    // ==================== 外觀（跟隨系統 / 淺色 / 深色） ====================
+    function themeMode() { return lsGet('trip_theme') || 'auto'; }
+    function applyTheme() {
+      const m = themeMode();
+      const dark = m === 'dark' || (m === 'auto' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme-mode', m);
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.className = 'fa-solid ' + ({ auto: 'fa-circle-half-stroke', light: 'fa-sun', dark: 'fa-moon' }[m]);
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', dark ? '#14110F' : '#451A03');
+    }
+    function cycleTheme() {
+      const order = ['auto', 'light', 'dark'];
+      const next = order[(order.indexOf(themeMode()) + 1) % 3];
+      lsSet('trip_theme', next);
+      applyTheme();
+      showToast({ auto: '🌗 外觀：跟隨系統', light: '☀️ 外觀：淺色', dark: '🌙 外觀：深色' }[next]);
+    }
+    if (window.matchMedia) {
+      matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (themeMode() === 'auto') applyTheme(); });
+    }
+
     // ==================== 初始化 ====================
     function initApp() {
+      applyTheme();
       checkGate();
       loadMembers();
       loadRoles();
@@ -2011,18 +2231,16 @@
     function renderSettlementList(settlements) {
       const container = document.getElementById('simplified-settlement-list');
       if (settlements.length === 0) {
-        container.innerHTML = `<div class="p-3 bg-white/80 rounded-xl text-center text-sm text-gray-500 font-bold border border-amber-200">🎉 目前帳目已完全平帳，沒有人需要付款或收款！</div>`;
+        container.innerHTML = `<div class="settle-row justify-center text-sm font-bold settle-note">🎉 目前帳目已完全平帳，沒有人需要付款或收款！</div>`;
         return;
       }
       container.innerHTML = settlements.map((s, idx) => `
-        <div class="p-3 rounded-xl bg-white shadow-xs border border-amber-200/80 flex items-center gap-3">
-          <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs font-black flex-shrink-0">${idx + 1}</span>
+        <div class="settle-row">
+          <span class="settle-no">${idx + 1}</span>
           <div class="flex-1 min-w-0 text-sm leading-snug">
-            <span class="font-bold text-gray-800">${esc(s.from)}</span>
-            <span class="text-amber-600 font-black mx-1">→</span>
-            <span class="font-bold text-emerald-800">${esc(s.to)}</span>
+            <span class="font-bold text-gray-800">${esc(s.from)}</span><span class="settle-arrow">→</span><span class="font-bold text-gray-800">${esc(s.to)}</span>
           </div>
-          <div class="font-black text-amber-900 text-base whitespace-nowrap">NT$ ${s.amount.toLocaleString()}</div>
+          <div class="settle-amt">NT$ ${s.amount.toLocaleString()}</div>
         </div>`).join('');
     }
 
