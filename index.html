@@ -1050,12 +1050,12 @@
         </div>
       </div>
 
-      <!-- 照片橫向拖曳展示軌道（支援電腦滑鼠按住拖曳、手機手指左右滑動） -->
+      <!-- 照片橫向拖曳展示軌道（支援電腦滑鼠按住拖曳、手機手指左右滑動，雙列大視野展示） -->
       <div class="space-y-2">
         <div class="flex items-center justify-between text-xs font-bold text-gray-700 px-1">
           <div class="flex items-center gap-1.5 text-amber-900">
             <i class="fa-solid fa-arrows-left-right text-amber-600"></i>
-            <span>出遊精彩照片（支援向旁邊左右拖曳滑動，已包含實景照與上傳區）：</span>
+            <span>出遊精彩照片（一次瀏覽 2 列，支援向旁邊左右拖曳滑動）：</span>
           </div>
           <div class="flex items-center gap-1.5">
             <button onclick="scrollCarousel('carousel-album', -1)" class="w-7 h-7 rounded-lg bg-gray-100 hover:bg-amber-100 text-gray-600 hover:text-amber-800 flex items-center justify-center transition active:scale-90" title="往左看">
@@ -1067,9 +1067,9 @@
           </div>
         </div>
 
-        <div id="carousel-album" class="carousel-container flex gap-3 overflow-x-auto py-2 scroll-smooth cursor-grab active:cursor-grabbing select-none no-scrollbar">
+        <div id="carousel-album" class="carousel-container grid grid-rows-2 grid-flow-col auto-cols-[240px] sm:auto-cols-[288px] gap-3 overflow-x-auto py-2 scroll-smooth cursor-grab active:cursor-grabbing select-none no-scrollbar">
           <!-- 照片 1 -->
-          <div class="carousel-item flex-shrink-0 w-60 sm:w-72 aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+          <div class="w-[240px] sm:w-[288px] aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
             <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c10b5ebb6463.09157873.jpg" alt="庭園與外觀" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
             <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
               <span class="font-bold block">🏡 閒情驛棧日景庭園與木造外觀</span>
@@ -1078,7 +1078,7 @@
           </div>
 
           <!-- 照片 2 -->
-          <div class="carousel-item flex-shrink-0 w-60 sm:w-72 aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+          <div class="w-[240px] sm:w-[288px] aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
             <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c10b992a9496.56236651.jpg" alt="客廳與中島廚房" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
             <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
               <span class="font-bold block">📺 86 吋超大劇院電視 ＆ 中島廚房</span>
@@ -1087,7 +1087,7 @@
           </div>
 
           <!-- 照片 3 -->
-          <div class="carousel-item flex-shrink-0 w-60 sm:w-72 aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+          <div class="w-[240px] sm:w-[288px] aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
             <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c490dfc10198.51955311.jpg" alt="手作烘焙早餐" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
             <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
               <span class="font-bold block">🍳 闆娘烘焙證照・現烤手作早餐</span>
@@ -1095,17 +1095,17 @@
             </div>
           </div>
 
-          <!-- 照片 4: 房型一隅 -->
-          <div class="carousel-item flex-shrink-0 w-60 sm:w-72 aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
-            <img src="https://chill.616stay.tw/uploads/room_images/b4d4481731db67e9.jpg?v=55108b8c" alt="溫馨和室套房" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+          <!-- 照片 4: 寵物友善空間 -->
+          <div class="w-[240px] sm:w-[288px] aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+            <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c1043c828769.64974125.jpg" alt="寵物友善空間" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
             <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
-              <span class="font-bold block">🛏️ 三樓四人和室通鋪套房</span>
-              <span class="text-[10px] text-gray-300">舒適通鋪・夜聊桌遊最盡興</span>
+              <span class="font-bold block">🐶 寵物友善渡假・小型犬同行</span>
+              <span class="text-[10px] text-gray-300">庭園漫步散心・毛孩同享假期</span>
             </div>
           </div>
 
           <!-- 照片 5: 私房下午茶 -->
-          <div class="carousel-item flex-shrink-0 w-60 sm:w-72 aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+          <div class="w-[240px] sm:w-[288px] aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
             <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c490ebc10852.42362132.jpg" alt="精緻午茶點心" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
             <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
               <span class="font-bold block">🍰 迎賓私房法式下午茶</span>
@@ -1113,19 +1113,55 @@
             </div>
           </div>
 
+          <!-- 照片 6: 四樓包層套房 -->
+          <div class="w-[240px] sm:w-[288px] aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+            <img src="https://chill.616stay.tw/uploads/room_images/1e0e3e4ffd8be363.jpg?v=3b79ce06" alt="四樓四人套房" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+            <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
+              <span class="font-bold block">🛏️ 四樓包層：四人套房 ＋ 客廳</span>
+              <span class="text-[10px] text-gray-300">獨立小客廳・採光明亮舒適大氣</span>
+            </div>
+          </div>
+
+          <!-- 照片 7: 三樓和室套房 -->
+          <div class="w-[240px] sm:w-[288px] aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+            <img src="https://chill.616stay.tw/uploads/room_images/b4d4481731db67e9.jpg?v=55108b8c" alt="溫馨和室套房" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+            <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
+              <span class="font-bold block">🛏️ 三樓：四人和室通鋪套房</span>
+              <span class="text-[10px] text-gray-300">舒適通鋪・夜聊桌遊最盡興</span>
+            </div>
+          </div>
+
+          <!-- 照片 8: 二樓雙人套房 -->
+          <div class="w-[240px] sm:w-[288px] aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+            <img src="https://chill.616stay.tw/uploads/room_images/8be28beedbc74465.jpg?v=dc134d87" alt="二樓雙人套房" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+            <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
+              <span class="font-bold block">🛏️ 二樓：南洋風獨立雙人套房</span>
+              <span class="text-[10px] text-gray-300">峇里島風質感裝潢・私密靜謐</span>
+            </div>
+          </div>
+
+          <!-- 照片 9: 戶外全景外觀 -->
+          <div class="w-[240px] sm:w-[288px] aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+            <img src="https://chill.616stay.tw/uploads/carousel_images/chill/carousel_20260320_152149_d55d7a.jpg" alt="閒情驛棧全貌" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+            <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
+              <span class="font-bold block">🏡 閒情驛棧獨棟全貌 ＆ 綠意藍天</span>
+              <span class="text-[10px] text-gray-300">台中石岡放鬆包棟首選</span>
+            </div>
+          </div>
+
           <!-- 上傳卡片（點擊直通 iCloud 共享相簿） -->
           <a href="https://photos.icloud.com/shared/album/067IhirbH9LZtsUpBeqGsjZIA" target="_blank" rel="noopener noreferrer"
-            class="carousel-item flex-shrink-0 w-60 sm:w-72 aspect-4/3 rounded-2xl border-2 border-dashed border-sky-300 hover:border-blue-500 bg-sky-50/60 hover:bg-sky-50 transition flex flex-col items-center justify-center p-5 text-center group cursor-pointer shadow-xs">
-            <div class="w-14 h-14 rounded-2xl bg-white shadow-md text-blue-600 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition duration-300">
-              <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
+            class="w-[240px] sm:w-[288px] aspect-4/3 rounded-2xl border-2 border-dashed border-sky-300 hover:border-blue-500 bg-sky-50/60 hover:bg-sky-50 transition flex flex-col items-center justify-center p-5 text-center group cursor-pointer shadow-xs">
+            <div class="w-12 h-12 rounded-2xl bg-white shadow-md text-blue-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition duration-300">
+              <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
             </div>
-            <strong class="text-sm font-black text-sky-950 group-hover:text-blue-700 transition block">
+            <strong class="text-xs sm:text-sm font-black text-sky-950 group-hover:text-blue-700 transition block">
               點此開啟 iCloud 上傳
             </strong>
-            <span class="text-[11px] text-sky-800 mt-1 block">
+            <span class="text-[10px] text-sky-800 mt-0.5 block">
               「115.12月19、20 大家出去玩」
             </span>
-            <span class="text-[10px] text-gray-500 mt-2 bg-white/80 px-2.5 py-1 rounded-full border border-sky-200">
+            <span class="text-[9px] text-gray-500 mt-1.5 bg-white/80 px-2 py-0.5 rounded-full border border-sky-200">
               4K 影片 ＆ 原圖不壓縮無損同步 ↗
             </span>
           </a>
