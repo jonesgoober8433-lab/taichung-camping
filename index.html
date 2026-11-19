@@ -51,6 +51,45 @@
   </style>
 </head>
 <body class="min-h-screen pb-32 antialiased selection:bg-emerald-200">
+  <!-- 全螢幕出遊通關密碼鎖 -->
+  <div id="password-gate" class="fixed inset-0 z-[100] bg-gradient-to-br from-emerald-950 via-stone-900 to-black flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-white/95 backdrop-blur-xl rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20 text-center relative overflow-hidden animate-fade-in">
+      <div class="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-800 text-3xl flex items-center justify-center mx-auto mb-4 shadow-inner">
+        ⛺
+      </div>
+      <h2 class="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
+        Edward 的小空間
+      </h2>
+      <p class="text-xs sm:text-sm text-gray-500 mt-1 mb-6 font-medium">
+        台中露營＆包棟木屋・專屬出遊特區
+      </p>
+
+      <form onsubmit="handleUnlock(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-gray-700 text-left mb-1.5 flex items-center justify-between">
+            <span>🔑 請輸入出遊通關密碼</span>
+            <span class="text-[11px] text-gray-400 font-normal">主揪專屬設定</span>
+          </label>
+          <input type="password" id="trip-password-input" placeholder="請輸入通關密碼..." autocomplete="current-password" required
+            class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-emerald-600 focus:ring-4 focus:ring-emerald-100 outline-none text-center text-sm font-bold tracking-widest transition">
+          <p id="password-error" class="hidden text-xs text-rose-600 font-bold mt-2 flex items-center justify-center gap-1">
+            <i class="fa-solid fa-circle-exclamation"></i> 密碼不正確，請詢問主揪 Edward 唷！
+          </p>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-extrabold text-sm shadow-lg transition active:scale-95 flex items-center justify-center gap-2">
+          <span>解鎖進入出遊特區</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+      </form>
+
+      <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400">
+        <span>🔒 本機自動記住密碼</span>
+        <span>忘記密碼請洽主揪 Edward</span>
+      </div>
+    </div>
+  </div>
+
 
   <!-- 最頂部常駐導覽列（左上角大字標示：Edward 的小空間） -->
   <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm py-2.5 px-3 sm:px-6">
@@ -67,6 +106,11 @@
         </span>
       </a>
 
+            <div class="flex items-center gap-1.5">
+        <button onclick="lockPage()" class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition flex items-center gap-1" title="點擊重新鎖定頁面測試">
+          <i class="fa-solid fa-lock text-[10px]"></i> 鎖定
+        </button>
+      </div>
       <!-- 中間/右側：分類篩選按鈕 -->
       <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5">
         <button onclick="filterCamp('all')" class="filter-btn active px-3 py-1 rounded-full text-xs sm:text-sm font-bold bg-emerald-700 text-white shadow-sm transition whitespace-nowrap">
@@ -117,6 +161,190 @@
 
   <!-- 主內容容器 -->
   <main class="max-w-4xl mx-auto px-4 sm:px-6 mt-6 space-y-10">
+
+    
+    <!-- ==================== 旅程規劃模組（行程、分帳、回憶導出） ==================== -->
+    <section class="space-y-6">
+
+      <!-- 1. 活動行程流程與人員分工 -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 card-shadow">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <h3 class="text-base sm:text-lg font-black text-gray-900 flex items-center gap-2">
+            <i class="fa-solid fa-route text-emerald-600"></i> 活動時程安排 ＆ 人員分工表
+          </h3>
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+            2天1夜出遊參考
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Day 1 -->
+          <div class="bg-emerald-50/40 rounded-xl p-4 border border-emerald-100 space-y-3">
+            <div class="font-black text-sm text-emerald-900 flex items-center gap-2 border-b border-emerald-200/60 pb-2">
+              <span class="w-6 h-6 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-xs">D1</span>
+              <span>第一天：集合出發 ＆ 露營派對</span>
+            </div>
+            <div class="space-y-2 text-xs sm:text-sm text-gray-700">
+              <div class="flex items-start gap-2.5">
+                <span class="font-bold text-emerald-800 w-14 flex-shrink-0">10:00</span>
+                <div>台中高鐵站 / 市區集合出發（車手與乘客配對）</div>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <span class="font-bold text-emerald-800 w-14 flex-shrink-0">11:30</span>
+                <div>採買火烤兩吃食材、零食酒水（全聯 / 在地超市）</div>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <span class="font-bold text-emerald-800 w-14 flex-shrink-0">14:00</span>
+                <div>抵達營區辦理入住、放行李、下午茶放空</div>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <span class="font-bold text-emerald-800 w-14 flex-shrink-0">17:30</span>
+                <div>傍晚開火！烤肉 BBQ、火鍋派對、開喝聊天</div>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <span class="font-bold text-emerald-800 w-14 flex-shrink-0">20:30</span>
+                <div>星空電影院、麻將大賽、KTV歡唱、看星星</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Day 2 -->
+          <div class="bg-amber-50/40 rounded-xl p-4 border border-amber-100 space-y-3">
+            <div class="font-black text-sm text-amber-900 flex items-center gap-2 border-b border-amber-200/60 pb-2">
+              <span class="w-6 h-6 rounded-lg bg-amber-600 text-white flex items-center justify-center text-xs">D2</span>
+              <span>第二天：慢活晨光 ＆ 景點散策</span>
+            </div>
+            <div class="space-y-2 text-xs sm:text-sm text-gray-700">
+              <div class="flex items-start gap-2.5">
+                <span class="font-bold text-amber-800 w-14 flex-shrink-0">08:30</span>
+                <div>營區活力晨光早餐、手沖咖啡、拍早晨美照</div>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <span class="font-bold text-amber-800 w-14 flex-shrink-0">11:00</span>
+                <div>收行李退房、合照紀念出發</div>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <span class="font-bold text-amber-800 w-14 flex-shrink-0">12:30</span>
+                <div>在地特色午餐（東勢甕仔雞 / 谷關鱘龍魚 / 新社香菇料理）</div>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <span class="font-bold text-amber-800 w-14 flex-shrink-0">14:30</span>
+                <div>周邊順遊景點（東勢林場 / 高美濕地 / 谷關溫泉泡腳）</div>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <span class="font-bold text-amber-800 w-14 flex-shrink-0">17:00</span>
+                <div>平安賦歸，期待下次再一起出遊！⛺</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 露營記帳 ＆ 即時分帳計算機 -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 card-shadow">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div>
+            <h3 class="text-base sm:text-lg font-black text-gray-900 flex items-center gap-2">
+              <i class="fa-solid fa-calculator text-emerald-600"></i> 出遊記帳 ＆ 自動分帳計算機
+            </h3>
+            <p class="text-xs text-gray-500 mt-0.5">誰先墊錢隨手記，自動算出每人應退/應補多少錢！</p>
+          </div>
+          <button onclick="copySplitResult()" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition active:scale-95 inline-flex items-center gap-1">
+            <i class="fa-solid fa-copy"></i> 複製分帳明細貼 DC
+          </button>
+        </div>
+
+        <!-- 快速記帳清單 -->
+        <div class="space-y-3">
+          <div class="overflow-x-auto rounded-xl border border-gray-200">
+            <table class="w-full text-left text-xs sm:text-sm whitespace-nowrap">
+              <thead class="bg-gray-50 text-gray-700 border-b border-gray-200">
+                <tr>
+                  <th class="p-2.5">消費品項</th>
+                  <th class="p-2.5">金額 (NT$)</th>
+                  <th class="p-2.5">先墊付款人</th>
+                  <th class="p-2.5">參與分攤人數</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 text-gray-700" id="expense-list">
+                <tr>
+                  <td class="p-2.5 font-bold">露營/木屋住宿費</td>
+                  <td class="p-2.5 text-emerald-700 font-extrabold">$8,800</td>
+                  <td class="p-2.5">Edward</td>
+                  <td class="p-2.5">8 人 (全體)</td>
+                </tr>
+                <tr>
+                  <td class="p-2.5 font-bold">全聯食材與酒水</td>
+                  <td class="p-2.5 text-emerald-700 font-extrabold">$3,200</td>
+                  <td class="p-2.5">小明</td>
+                  <td class="p-2.5">8 人 (全體)</td>
+                </tr>
+                <tr>
+                  <td class="p-2.5 font-bold">Day 2 在地合菜午餐</td>
+                  <td class="p-2.5 text-emerald-700 font-extrabold">$2,400</td>
+                  <td class="p-2.5">阿華</td>
+                  <td class="p-2.5">8 人 (全體)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 自動分帳試算結果區 -->
+          <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm">
+            <div class="space-y-1 text-center sm:text-left">
+              <div class="text-gray-500">總支出累計：<strong class="text-gray-900 text-base font-black">NT$ 14,400</strong>（8人平均每人 <strong class="text-emerald-700 font-black">NT$ 1,800</strong>）</div>
+              <div class="text-emerald-800 font-bold">💡 試算結算：其他人每人各給 Edward NT$ 1,800（由 Edward 與小明、阿華結清墊款）</div>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-extrabold text-xs whitespace-nowrap">
+              即時精準結清
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 出遊時光相簿 ＆ 下載回憶包 (HTML / PDF) -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 card-shadow">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div>
+            <h3 class="text-base sm:text-lg font-black text-gray-900 flex items-center gap-2">
+              <i class="fa-solid fa-camera-retro text-emerald-600"></i> 照片時光相簿 ＆ 一鍵下載出遊回憶錄
+            </h3>
+            <p class="text-xs text-gray-500 mt-0.5">出遊結束後，直接將行程、照片與分帳打包成專屬離線時光膠囊！</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="downloadHtmlMemory()" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white shadow-sm transition active:scale-95 inline-flex items-center gap-1.5">
+              <i class="fa-solid fa-file-code"></i> 下載 HTML 離線時光膠囊
+            </button>
+            <button onclick="exportToPdf()" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition inline-flex items-center gap-1">
+              <i class="fa-solid fa-print"></i> 列印 / 存為 PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- 相簿照片牆展示雛形 -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div class="aspect-square rounded-xl overflow-hidden bg-gray-100 relative group">
+            <img src="https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <span class="absolute bottom-1.5 left-1.5 bg-black/60 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded">營區合照</span>
+          </div>
+          <div class="aspect-square rounded-xl overflow-hidden bg-gray-100 relative group">
+            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <span class="absolute bottom-1.5 left-1.5 bg-black/60 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded">烤肉晚餐</span>
+          </div>
+          <div class="aspect-square rounded-xl overflow-hidden bg-gray-100 relative group">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <span class="absolute bottom-1.5 left-1.5 bg-black/60 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded">黃昏夕陽</span>
+          </div>
+          <div class="aspect-square rounded-xl overflow-hidden bg-gray-100 relative group flex items-center justify-center border-2 border-dashed border-gray-300 hover:border-emerald-500 cursor-pointer transition p-4 text-center">
+            <div class="text-gray-400 group-hover:text-emerald-600 transition">
+              <i class="fa-solid fa-cloud-arrow-up text-2xl mb-1 block"></i>
+              <span class="text-[11px] font-bold block">上傳更多精彩照片</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
 
     <!-- ==================== 01 向海那漾 ==================== -->
     <article id="camp-01" class="camp-card bg-white rounded-2xl border border-gray-200 card-shadow overflow-hidden" data-category="all-inclusive">
@@ -1634,6 +1862,72 @@
 
   <!-- 互動腳本 -->
   <script>
+    
+    const TRIP_PASSWORD = "boa19950303";
+    const STORAGE_KEY = "trip_unlocked_taichung";
+
+    // 檢查通關密碼狀態
+    function checkGate() {
+      const gate = document.getElementById('password-gate');
+      if (!gate) return;
+      if (localStorage.getItem(STORAGE_KEY) === 'true') {
+        gate.classList.add('hidden');
+      } else {
+        gate.classList.remove('hidden');
+      }
+    }
+
+    // 密碼驗證解鎖
+    function handleUnlock(e) {
+      e.preventDefault();
+      const input = document.getElementById('trip-password-input');
+      const err = document.getElementById('password-error');
+      if (input.value.trim() === TRIP_PASSWORD) {
+        localStorage.setItem(STORAGE_KEY, 'true');
+        err.classList.add('hidden');
+        const gate = document.getElementById('password-gate');
+        gate.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+        setTimeout(() => {
+          gate.classList.add('hidden');
+        }, 500);
+      } else {
+        err.classList.remove('hidden');
+        input.classList.add('border-rose-500', 'shake');
+        setTimeout(() => input.classList.remove('shake'), 500);
+      }
+    }
+
+    // 重新上鎖（方便主人測試）
+    function lockPage() {
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+
+    // 複製分帳結果貼在 DC
+    function copySplitResult() {
+      const textToCopy = `📋 【台中露營出遊・費用結算明細】⛺\n總支出：NT$ 14,400 (8人平均每人 NT$ 1,800)\n- 住宿費：$8,800 (Edward 代墊)\n- 食材酒水：$3,200 (小明 代墊)\n- Day2午餐：$2,400 (阿華 代墊)\n👉 結算：其他人每人各給 Edward NT$ 1,800，由 Edward 與代墊人結清！(來自 DC 出遊記帳回報)`;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        showToast('✅ 已複製分帳明細！<br><span class="text-amber-300 font-bold">請直接貼在 Discord (DC) 群組！</span>');
+      });
+    }
+
+    // 下載單頁 HTML 離線回憶包
+    function downloadHtmlMemory() {
+      const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `Edward的小空間_台中露營出遊時光紀念_${new Date().toISOString().slice(0,10)}.html`;
+      a.click();
+      showToast('🎉 已打包下載 HTML 離線時光膠囊！<br>隨時傳進 LINE / 電腦點開即刻重溫回憶！');
+    }
+
+    // 列印或另存為 PDF
+    function exportToPdf() {
+      window.print();
+    }
+
+    window.addEventListener('DOMContentLoaded', checkGate);
+
     const campNames = {
       '01': '向海那漾 Nayang Beach（大安海邊豪華露營）',
       '02': '聚元營地 GIINN Glamping（新社頂級露營車）',
