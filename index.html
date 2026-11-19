@@ -725,10 +725,26 @@
       </div>
 
       <!-- 3. 趣味任務分工（主揪、統籌、大廚、首席攝影師、採買官） -->
-      <div class="space-y-3 pt-2 border-t border-gray-100">
-        <h4 class="text-xs sm:text-sm font-black text-amber-950 flex items-center gap-1.5">
-          <i class="fa-solid fa-users-gear text-amber-600"></i> 趣味任務分工（讓大家自己認領或指派）
-        </h4>
+      <div class="space-y-3.5 pt-3 border-t border-gray-100">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <h4 class="text-xs sm:text-sm font-black text-amber-950 flex items-center gap-1.5">
+            <i class="fa-solid fa-users-gear text-amber-600"></i> 趣味任務分工（讓大家自己認領或指派）
+          </h4>
+          <span class="text-[11px] text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full font-bold">
+            ✨ 常駐可重複拖曳指派（頭像不會消失）
+          </span>
+        </div>
+
+        <!-- 任務分工專屬常駐成員池（拖曳/點選後永遠不消失） -->
+        <div class="bg-amber-50/50 rounded-xl p-3 border border-amber-200 space-y-2">
+          <div class="text-[11px] text-amber-900 font-bold flex items-center justify-between">
+            <span>👥 選擇成員拖曳或點選加入下方職位：</span>
+            <span class="text-gray-400 font-normal">一人可身兼多職</span>
+          </div>
+          <div id="role-members-pool" class="flex flex-wrap gap-2 pt-0.5 min-h-[38px]">
+            <!-- 動態渲染常駐成員標籤 -->
+          </div>
+        </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
           <!-- 職位 1: 主揪 -->
@@ -1225,6 +1241,7 @@
     function saveMembers() {
       localStorage.setItem(MEMBERS_KEY, JSON.stringify(members));
       renderMembers();
+      renderRoleMembersPool();
       renderExpenseFormOptions();
     }
 
@@ -1334,6 +1351,7 @@
     // ==================== 渲染系統 ====================
     function renderAll() {
       renderMembers();
+      renderRoleMembersPool();
       renderRoles();
       renderExpenseFormOptions();
       renderExpensesTable();
@@ -1373,11 +1391,28 @@
       if (selectedMemberId) {
         const sel = members.find(m => m.id === selectedMemberId);
         if (sel) {
-          hint.innerHTML = `<span class="text-amber-900 font-extrabold animate-bounce inline-block mr-1">👉</span>已選取【${sel.icon} ${sel.name}】，請點擊下方 1 號車、2 號車或任務職位即可放入！`;
+          hint.innerHTML = `<span class="text-amber-900 font-extrabold animate-bounce inline-block mr-1">👉</span>已選取【${sel.icon} ${sel.name}】，請點擊下方 1 號車或 2 號車即可放入！`;
         }
       } else {
         hint.innerHTML = `💡 拖曳或點選成員放入車次後，上方自動消失！`;
       }
+    }
+
+    // 渲染任務分工專屬常駐成員池（拖曳或指派後【永遠不會消失】，可重複身兼多職）
+    let selectedRoleMemberId = null;
+    function renderRoleMembersPool() {
+      const container = document.getElementById('role-members-pool');
+      if (!container) return;
+      container.innerHTML = members.map(m => {
+        const isSelected = selectedRoleMemberId === m.id;
+        return `
+          <div draggable="true" ondragstart="handleDragStart(event, '${m.name}')" onclick="selectRoleMember('${m.id}')"
+            class="member-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border cursor-grab active:cursor-grabbing shadow-xs transition hover:scale-105 ${m.color} ${isSelected ? 'ring-2 ring-amber-500 scale-105 shadow-md' : ''}">
+            <span>${m.icon}</span>
+            <span>${m.name}</span>
+          </div>
+        `;
+      }).join('');
     }
 
     function selectMember(id) {
@@ -1385,8 +1420,21 @@
         selectedMemberId = null;
       } else {
         selectedMemberId = id;
+        selectedRoleMemberId = null; // 切換清除任務池選取狀態
       }
       renderMembers();
+      renderRoleMembersPool();
+    }
+
+    function selectRoleMember(id) {
+      if (selectedRoleMemberId === id) {
+        selectedRoleMemberId = null;
+      } else {
+        selectedRoleMemberId = id;
+        selectedMemberId = null; // 切換清除待分配車次選取狀態
+      }
+      renderMembers();
+      renderRoleMembersPool();
     }
 
     // 核心指派邏輯
@@ -1401,29 +1449,31 @@
         if (!rolesData[targetKey].includes(name)) {
           rolesData[targetKey].push(name);
           saveRoles();
-          showToast(`已將 ${name} 安排至 ${targetKey === 'car_1' ? '1 號車' : '2 號車'}（上方已移出）！`);
+          showToast(`已將 ${name} 安排至 ${targetKey === 'car_1' ? '1 號車' : '2 號車'}（待分配名單已移出）！`);
         }
       } else {
-        // 趣味任務分工
+        // 趣味任務分工：頭像永遠保留在常駐池，不影響其他指派
         if (!rolesData[targetKey]) rolesData[targetKey] = [];
         if (!rolesData[targetKey].includes(name)) {
           rolesData[targetKey].push(name);
           saveRoles();
           showToast(`已指派 ${name} 擔任任務！`);
         } else {
-          showToast(`${name} 已經在名單中囉！`);
+          showToast(`${name} 已經在該任務名單中囉！`);
         }
       }
     }
 
     // 處理點選目的地加入成員
     function handleZoneClick(targetKey) {
-      if (!selectedMemberId) return;
-      const member = members.find(m => m.id === selectedMemberId);
+      const activeId = targetKey.startsWith('role_') ? (selectedRoleMemberId || selectedMemberId) : (selectedMemberId || selectedRoleMemberId);
+      if (!activeId) return;
+      const member = members.find(m => m.id === activeId);
       if (!member) return;
 
       assignMemberToZone(member.name, targetKey);
       selectedMemberId = null;
+      selectedRoleMemberId = null;
       renderAll();
     }
 
@@ -1434,7 +1484,11 @@
       rolesData[targetKey] = rolesData[targetKey].filter(n => n !== memberName);
       saveRoles();
       renderAll();
-      showToast(`已將 ${memberName} 卸下並放回上方待安排名單！`);
+      if (targetKey === 'car_1' || targetKey === 'car_2') {
+        showToast(`已將 ${memberName} 卸下並放回上方待分配名單！`);
+      } else {
+        showToast(`已將 ${memberName} 從任務中卸下！`);
+      }
     }
 
     // 渲染車次與分工
