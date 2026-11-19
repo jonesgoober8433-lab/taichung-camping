@@ -11,6 +11,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden !important;
+      position: relative;
+    }
     body {
       font-family: 'Noto Sans TC', 'Plus Jakarta Sans', sans-serif;
       background-color: #F8FAF7;
@@ -92,45 +97,46 @@
 
 
   <!-- 最頂部常駐導覽列（左上角大字標示：Edward 的小空間） -->
-  <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm py-2.5 px-3 sm:px-6">
-    <div class="max-w-5xl mx-auto flex items-center justify-between gap-3">
+    <!-- 最頂部常駐導覽列 -->
+  <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm py-2 px-3 sm:px-6">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-3">
       
-      <!-- ★ 螢幕最左上角：Edward 的小空間 ★ -->
-      <a href="#" class="flex items-center gap-2 flex-shrink-0 group">
-        <span class="text-xl sm:text-2xl">⛺</span>
-        <span class="font-black text-gray-900 text-base sm:text-lg tracking-tight whitespace-nowrap group-hover:text-emerald-700 transition">
-          Edward 的小空間
-        </span>
-        <span class="hidden sm:inline-block text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
-          出遊特區
-        </span>
-      </a>
+      <!-- 手機第 1 行 / 電腦左側：Edward 的小空間（獨立單行） -->
+      <div class="w-full sm:w-auto flex items-center justify-between">
+        <a href="#" class="flex items-center gap-2 group flex-shrink-0">
+          <span class="text-xl sm:text-2xl">⛺</span>
+          <span class="font-black text-gray-900 text-base sm:text-lg tracking-tight whitespace-nowrap group-hover:text-emerald-700 transition">
+            Edward 的小空間
+          </span>
+          <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+            出遊特區
+          </span>
+        </a>
+      </div>
 
-            <div class="flex items-center gap-1.5">
-        <button onclick="lockPage()" class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition flex items-center gap-1" title="點擊重新鎖定頁面測試">
+      <!-- 手機第 2 行 / 電腦右側：[🔒 鎖定] + 分類標籤（橫向滑動列） -->
+      <div class="w-full sm:w-auto flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5 flex-nowrap">
+        <button onclick="lockPage()" class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition flex items-center gap-1 flex-shrink-0" title="點擊重新鎖定頁面測試">
           <i class="fa-solid fa-lock text-[10px]"></i> 鎖定
         </button>
-      </div>
-      <!-- 中間/右側：分類篩選按鈕 -->
-      <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5">
-        <button onclick="filterCamp('all')" class="filter-btn active px-3 py-1 rounded-full text-xs sm:text-sm font-bold bg-emerald-700 text-white shadow-sm transition whitespace-nowrap">
+        <button onclick="filterCamp('all')" class="filter-btn active px-3 py-1 rounded-full text-xs sm:text-sm font-bold bg-emerald-700 text-white shadow-sm transition whitespace-nowrap flex-shrink-0">
           全部 (8)
         </button>
-        <button onclick="filterCamp('cabin')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
+        <button onclick="filterCamp('cabin')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap flex-shrink-0">
           包棟小木屋 🏡
         </button>
-        <button onclick="filterCamp('all-inclusive')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
+        <button onclick="filterCamp('all-inclusive')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap flex-shrink-0">
           一泊三食全包
         </button>
-        <button onclick="filterCamp('mountain')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
+        <button onclick="filterCamp('mountain')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap flex-shrink-0">
           高山星空
         </button>
-        <button onclick="filterCamp('pet')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
+        <button onclick="filterCamp('pet')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap flex-shrink-0">
           寵物友善 🐶
         </button>
       </div>
 
-      </div>
+    </div>
   </nav>
 
   <!-- 頂部 Header 橫幅 -->
@@ -1684,10 +1690,23 @@
 
   </main>
 
-    <!-- 右側貼邊懸浮跳號按鈕（跟隨視窗滾動） -->
-  <aside id="floating-jump-pill" onclick="toggleJumpDrawer()" class="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#34302D]/95 hover:bg-[#1E1B19] text-white shadow-2xl rounded-l-2xl py-3 px-2 flex flex-col items-center justify-center cursor-pointer border-l-2 border-t border-b border-amber-500/40 backdrop-blur-md transition-all duration-200 active:scale-95 select-none group" title="快速跳號">
+    <!-- 【手機版專用】右側貼邊懸浮膠囊 [ ≡ 跳號 ]（螢幕小於 md 時顯示） -->
+  <aside id="floating-jump-pill" onclick="toggleJumpDrawer()" class="flex md:hidden fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#34302D]/95 hover:bg-[#1E1B19] text-white shadow-2xl rounded-l-2xl py-3 px-2 flex-col items-center justify-center cursor-pointer border-l-2 border-t border-b border-amber-500/40 backdrop-blur-md transition-all duration-200 active:scale-95 select-none group" title="快速跳號">
     <i class="fa-solid fa-bars text-amber-400 text-sm mb-1 group-hover:scale-110 transition"></i>
     <span class="text-[11px] font-black tracking-widest [writing-mode:vertical-rl] text-stone-200">跳號</span>
+  </aside>
+
+  <!-- 【電腦版專用】右側直向數字列表（大螢幕 md 以上顯示，直接點擊跳轉） -->
+  <aside id="desktop-jump-bar" class="hidden md:flex fixed right-3 top-1/2 -translate-y-1/2 z-40 flex-col items-center gap-1.5 bg-stone-900/90 backdrop-blur-md p-2 rounded-2xl shadow-2xl border border-stone-700/60 select-none">
+    <span class="text-[10px] font-black text-amber-400 mb-0.5 tracking-tighter">跳號</span>
+    <a href="#camp-01" class="w-7 h-7 rounded-lg bg-emerald-600/80 hover:bg-emerald-600 text-white font-black text-xs flex items-center justify-center transition hover:scale-110 shadow-sm" title="01 向海那漾">01</a>
+    <a href="#camp-02" class="w-7 h-7 rounded-lg bg-emerald-600/80 hover:bg-emerald-600 text-white font-black text-xs flex items-center justify-center transition hover:scale-110 shadow-sm" title="02 聚元營地">02</a>
+    <a href="#camp-03" class="w-7 h-7 rounded-lg bg-emerald-600/80 hover:bg-emerald-600 text-white font-black text-xs flex items-center justify-center transition hover:scale-110 shadow-sm" title="03 哈比雪兒">03</a>
+    <a href="#camp-04" class="w-7 h-7 rounded-lg bg-emerald-600/80 hover:bg-emerald-600 text-white font-black text-xs flex items-center justify-center transition hover:scale-110 shadow-sm" title="04 覓靜莊園">04</a>
+    <a href="#camp-05" class="w-7 h-7 rounded-lg bg-emerald-600/80 hover:bg-emerald-600 text-white font-black text-xs flex items-center justify-center transition hover:scale-110 shadow-sm" title="05 呆呆的家">05</a>
+    <a href="#camp-06" class="w-7 h-7 rounded-lg bg-emerald-600/80 hover:bg-emerald-600 text-white font-black text-xs flex items-center justify-center transition hover:scale-110 shadow-sm" title="06 曉晴新社">06</a>
+    <a href="#camp-07" class="w-7 h-7 rounded-lg bg-amber-500/90 hover:bg-amber-500 text-white font-black text-xs flex items-center justify-center transition hover:scale-110 shadow-sm" title="07 月亮小木屋">07</a>
+    <a href="#camp-08" class="w-7 h-7 rounded-lg bg-amber-500/90 hover:bg-amber-500 text-white font-black text-xs flex items-center justify-center transition hover:scale-110 shadow-sm ring-2 ring-amber-400" title="08 吾居無束 (本次決定出遊首選！)">08</a>
   </aside>
 
   <!-- 快速跳號抽屜面板 -->
