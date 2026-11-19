@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台中懶人露營推薦清單 ⛺ 投票選區</title>
+  <meta name="description" content="精選 6 間台中免搭帳、豪華露營營區懶人包！照片滑動、價格人數、評價比一比，直接回報號碼給主揪！">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Phosphor Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+    body {
+      font-family: 'Noto Sans TC', 'Plus Jakarta Sans', sans-serif;
+      background-color: #F8FAF7;
+      color: #2D3748;
+    }
+    .carousel-container {
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .carousel-container::-webkit-scrollbar {
+      display: none;
+    }
+    .carousel-item {
+      scroll-snap-align: start;
+    }
+    .badge-number {
+      box-shadow: 0 4px 14px rgba(22, 101, 52, 0.35);
+    }
+    .card-shadow {
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-shadow:hover {
+      box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 10px 15px -5px rgba(0, 0, 0, 0.05);
+      transform: translateY(-2px);
+    }
+    /* 複製成功提示動畫 */
+    .toast-msg {
+      animation: fadeInOut 2.5s ease-in-out forwards;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translate(-50%, 20px); }
+      15% { opacity: 1; transform: translate(-50%, 0); }
+      85% { opacity: 1; transform: translate(-50%, 0); }
+      100% { opacity: 0; transform: translate(-50%, -20px); }
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-20 antialiased selection:bg-emerald-200">
+
+  <!-- 頂部 Header 橫幅 -->
+  <header class="relative bg-gradient-to-r from-emerald-800 via-teal-800 to-emerald-900 text-white overflow-hidden py-12 px-4 sm:px-6 lg:px-8 shadow-lg">
+    <div class="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-700/60 border border-emerald-400/30 text-emerald-200 text-xs sm:text-sm font-semibold mb-3">
+        <span>✨ 2026 最新精選・台中免搭帳露營</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white mb-4">
+        台中懶人露營・揪團決策名單 ⛺
+      </h1>
+      <p class="text-emerald-100 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+        免收搭帳篷、帶齊換洗衣物直接入住！請大家滑滑看照片、比比評價，<strong class="text-amber-300 font-bold underline decoration-amber-400 underline-offset-4">直接告訴主揪你想去的「號碼（01~06）」</strong>，讓我們光速成團出發！
+      </p>
+
+      <!-- 快速指引標籤 -->
+      <div class="mt-6 flex flex-wrap justify-center gap-2 sm:gap-3 text-xs">
+        <span class="bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/20">🍽️ 一泊三食全包</span>
+        <span class="bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/20">❄️ 獨立衛浴冷暖氣</span>
+        <span class="bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/20">⭐ 真實旅客高分評價</span>
+        <span class="bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/20">📲 一鍵點擊投號碼</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 快速導覽與分類篩選列 -->
+  <div class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm py-3 px-4">
+    <div class="max-w-4xl mx-auto flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <button onclick="filterCamp('all')" class="filter-btn active px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-emerald-700 text-white shadow-sm transition">
+          全部 (6)
+        </button>
+        <button onclick="filterCamp('all-inclusive')" class="filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
+          一泊三食免動腦
+        </button>
+        <button onclick="filterCamp('mountain')" class="filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
+          高山星空與秘境
+        </button>
+        <button onclick="filterCamp('pet')" class="filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
+          寵物友善 🐶
+        </button>
+      </div>
+
+      <!-- 快速跳轉快捷鈕 -->
+      <div class="hidden sm:flex items-center text-xs text-gray-500 font-medium whitespace-nowrap">
+        <span>快速跳號：</span>
+        <div class="flex gap-1 ml-1">
+          <a href="#camp-01" class="w-6 h-6 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">1</a>
+          <a href="#camp-02" class="w-6 h-6 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">2</a>
+          <a href="#camp-03" class="w-6 h-6 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">3</a>
+          <a href="#camp-04" class="w-6 h-6 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">4</a>
+          <a href="#camp-05" class="w-6 h-6 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">5</a>
+          <a href="#camp-06" class="w-6 h-6 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">6</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主內容容器 -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 mt-8 space-y-10">
+
+    <!-- ==================== 01 向海那漾 ==================== -->
+    <article id="camp-01" class="camp-card bg-white rounded-2xl border border-gray-200 card-shadow overflow-hidden" data-category="all-inclusive">
+      <!-- 頂部編號與主標題列 -->
+      <div class="p-5 sm:p-6 pb-4 border-b border-gray-100 flex flex-wrap items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="badge-number bg-emerald-600 text-white font-black text-xl sm:text-2xl px-3.5 py-1 rounded-xl shadow-md flex items-center gap-1.5">
+            <span class="text-xs uppercase tracking-wider font-semibold opacity-90">NO.</span>01
+          </span>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-800">豪華一泊三食</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-blue-100 text-blue-800">全台首座海邊露營</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mt-1">向海那漾 Nayang Beach</h2>
+            <p class="text-xs sm:text-sm text-gray-500 flex items-center gap-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-emerald-600"></i> 台中市大安區（鄰近高美濕地・大安濱海樂園）
+            </p>
+          </div>
+        </div>
+
+        <!-- 投票推薦按鈕 -->
+        <button onclick="voteCamp('01', '向海那漾 Nayang Beach')" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl transition shadow hover:shadow-md active:scale-95">
+          <i class="fa-solid fa-check"></i> 我投 01 號 (複製回報)
+        </button>
+      </div>
+
+      <!-- 照片輪播滑動區 -->
+      <div class="relative bg-gray-900 group">
+        <div id="carousel-01" class="carousel-container flex overflow-x-auto w-full h-64 sm:h-80 md:h-96">
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80" alt="向海那漾 帳篷與自然景觀" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              ⛺ 園區海風與豪華帳篷外觀
+            </div>
+          </div>
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80" alt="向海那漾 帳篷內部舒適床鋪與冷氣" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              🛏️ 帳內配備獨立衛浴與冷暖空調
+            </div>
+          </div>
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" alt="大安海邊日落夕陽美景" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              🌅 步行即達海邊絕美夕陽與沙灘
+            </div>
+          </div>
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=80" alt="晚餐火烤兩吃自助吧" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              🥘 一泊三食：下午茶＋火烤兩吃吃到飽
+            </div>
+          </div>
+        </div>
+
+        <!-- 左右滑動控制箭頭 -->
+        <button onclick="scrollCarousel('carousel-01', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-chevron-left text-sm"></i>
+        </button>
+        <button onclick="scrollCarousel('carousel-01', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-chevron-right text-sm"></i>
+        </button>
+        <div class="absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm text-white/90 text-[11px] px-2 py-0.5 rounded">
+          左右滑動看照片 (共4張)
+        </div>
+      </div>
+
+      <!-- 營區核心規格網格 -->
+      <div class="p-5 sm:p-6 space-y-5">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-50 rounded-xl p-4 border border-gray-100 text-xs sm:text-sm">
+          <div>
+            <span class="text-gray-400 block text-xs">💰 參考價格</span>
+            <span class="font-bold text-emerald-800 text-sm sm:text-base">NT$ 4,600 起</span>
+            <span class="block text-[11px] text-gray-500">含一泊三食 (平假日不同)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">👥 適合人數</span>
+            <span class="font-bold text-gray-800 text-sm sm:text-base">2 人 / 3 人 / 4 人</span>
+            <span class="block text-[11px] text-gray-500">一大床 / 兩大床 / 四小床</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">🚿 衛浴配備</span>
+            <span class="font-bold text-gray-800 text-sm sm:text-base">每帳獨立衛浴</span>
+            <span class="block text-[11px] text-gray-500">免共用・附冷暖氣</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">📞 預約方式</span>
+            <a href="tel:0426868513" class="font-bold text-emerald-600 hover:underline block text-sm sm:text-base">04-2686-8513</a>
+            <span class="block text-[11px] text-gray-500">官網 / AsiaYo 預訂</span>
+          </div>
+        </div>
+
+        <!-- 營區特色重點 -->
+        <div>
+          <h3 class="text-sm font-bold text-gray-900 mb-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-sparkles text-amber-500"></i> 營區亮點與特色
+          </h3>
+          <ul class="text-xs sm:text-sm text-gray-600 space-y-1.5 list-disc list-inside">
+            <li><strong>全台首創海邊合法豪華露營</strong>：緊鄰大安濱海步道與沙灘，走幾步就能踏浪賞夕陽。</li>
+            <li><strong>超充裕一泊三食</strong>：迎賓精緻下午茶 ＋ 晚餐火烤兩吃自助百匯吃到飽 ＋ 隔日晨光活力早餐。</li>
+            <li><strong>園區設施極豐富</strong>：戶外大型戲水池、生態導覽教室、大草皮活動區，服務人員以高爾夫球車接送行李。</li>
+          </ul>
+        </div>
+
+        <!-- 詳細地址與地圖導航 -->
+        <div class="flex flex-wrap items-center justify-between text-xs sm:text-sm bg-emerald-50/60 p-3 rounded-lg border border-emerald-100 gap-2">
+          <div class="flex items-center gap-2 text-emerald-900">
+            <i class="fa-solid fa-map-location-dot text-emerald-700 text-base"></i>
+            <span>地址：台中市大安區北汕路86巷1號</span>
+          </div>
+          <a href="https://maps.google.com/?q=向海那漾" target="_blank" class="text-emerald-700 hover:text-emerald-900 font-bold underline inline-flex items-center gap-1">
+            開啟 Google 地圖導航 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </a>
+        </div>
+
+        <!-- 真實旅客評價 -->
+        <div class="border-t border-gray-100 pt-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-gray-700 flex items-center gap-1">
+              <i class="fa-solid fa-star text-amber-400"></i> 旅客綜合評價 4.5 / 5.0
+            </span>
+            <span class="text-[11px] text-gray-400">真實露友心得總結</span>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-3 text-xs sm:text-sm space-y-2 text-gray-700">
+            <p>💬 <strong>露友 A：</strong>「免搭帳篷又有獨立衛浴超級舒服！火烤兩吃晚餐很澎湃，晚上吹著海風散步很悠哉，很適合朋友聚會喝點小酒。」</p>
+            <p>💬 <strong>露友 B：</strong>「下午茶跟早餐都好吃，帳篷空間大且隔音比想像中好。唯一注意海風比較大，戶外建議帶件防風外套。」</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+
+    <!-- ==================== 02 聚元營地 ==================== -->
+    <article id="camp-02" class="camp-card bg-white rounded-2xl border border-gray-200 card-shadow overflow-hidden" data-category="all-inclusive pet">
+      <div class="p-5 sm:p-6 pb-4 border-b border-gray-100 flex flex-wrap items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="badge-number bg-emerald-600 text-white font-black text-xl sm:text-2xl px-3.5 py-1 rounded-xl shadow-md flex items-center gap-1.5">
+            <span class="text-xs uppercase tracking-wider font-semibold opacity-90">NO.</span>02
+          </span>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">身心靈放鬆療癒</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-purple-100 text-purple-800">高質感露營車</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mt-1">聚元營地 GIINN Glamping</h2>
+            <p class="text-xs sm:text-sm text-gray-500 flex items-center gap-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-emerald-600"></i> 台中市新社區（近台中市區40分鐘・清幽山林）
+            </p>
+          </div>
+        </div>
+
+        <button onclick="voteCamp('02', '聚元營地 GIINN Glamping')" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl transition shadow hover:shadow-md active:scale-95">
+          <i class="fa-solid fa-check"></i> 我投 02 號 (複製回報)
+        </button>
+      </div>
+
+      <!-- 照片輪播滑動區 -->
+      <div class="relative bg-gray-900 group">
+        <div id="carousel-02" class="carousel-container flex overflow-x-auto w-full h-64 sm:h-80 md:h-96">
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=1200&q=80" alt="聚元營地 露營車外觀與綠意" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              🚐 美式/北歐風質感露營車與私人休憩露台
+            </div>
+          </div>
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1563298723-dcfebaa392e3?auto=format&fit=crop&w=1200&q=80" alt="露營車內獨立衛浴與冷暖氣" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              ✨ 車內高規格裝潢、獨立衛浴與柔軟大床
+            </div>
+          </div>
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1200&q=80" alt="新社山林森呼吸與療癒氛圍" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              🌿 森林頌缽體驗、滿天星空電影院與營火
+            </div>
+          </div>
+        </div>
+
+        <button onclick="scrollCarousel('carousel-02', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-chevron-left text-sm"></i>
+        </button>
+        <button onclick="scrollCarousel('carousel-02', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-chevron-right text-sm"></i>
+        </button>
+        <div class="absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm text-white/90 text-[11px] px-2 py-0.5 rounded">
+          左右滑動看照片 (共3張)
+        </div>
+      </div>
+
+      <!-- 營區核心規格網格 -->
+      <div class="p-5 sm:p-6 space-y-5">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-50 rounded-xl p-4 border border-gray-100 text-xs sm:text-sm">
+          <div>
+            <span class="text-gray-400 block text-xs">💰 參考價格</span>
+            <span class="font-bold text-emerald-800 text-sm sm:text-base">NT$ 6,500 ~ 9,000</span>
+            <span class="block text-[11px] text-gray-500">一泊三食全包 (以2人為基準)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">👥 適合人數</span>
+            <span class="font-bold text-gray-800 text-sm sm:text-base">2 ~ 4 人 / 車</span>
+            <span class="block text-[11px] text-gray-500">露營車/獨立山房 (超員可加價)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">🚿 衛浴配備</span>
+            <span class="font-bold text-gray-800 text-sm sm:text-base">車內獨立衛浴</span>
+            <span class="block text-[11px] text-gray-500">免走出戶外・隱私極佳</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">📞 預約電話</span>
+            <a href="tel:0919519690" class="font-bold text-emerald-600 hover:underline block text-sm sm:text-base">0919-519-690</a>
+            <span class="block text-[11px] text-gray-500">官網線上訂位系統</span>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-bold text-gray-900 mb-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-sparkles text-amber-500"></i> 營區亮點與特色
+          </h3>
+          <ul class="text-xs sm:text-sm text-gray-600 space-y-1.5 list-disc list-inside">
+            <li><strong>極佳隱私與設計感</strong>：頂級露營車具備獨立露台，戶外放空互不干擾。</li>
+            <li><strong>心靈慢活療癒</strong>：不定期舉辦森林頌缽、冥想體驗，退房贈送手繪心靈小卡，被譽為「心靈充電所」。</li>
+            <li><strong>特定房型寵物友善</strong>：北歐露營車房型可攜帶毛小孩同樂（清潔費 NT$600/隻）。</li>
+          </ul>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between text-xs sm:text-sm bg-emerald-50/60 p-3 rounded-lg border border-emerald-100 gap-2">
+          <div class="flex items-center gap-2 text-emerald-900">
+            <i class="fa-solid fa-map-location-dot text-emerald-700 text-base"></i>
+            <span>地址：台中市新社區崑南街29巷5號</span>
+          </div>
+          <a href="https://maps.google.com/?q=聚元營地" target="_blank" class="text-emerald-700 hover:text-emerald-900 font-bold underline inline-flex items-center gap-1">
+            開啟 Google 地圖導航 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </a>
+        </div>
+
+        <div class="border-t border-gray-100 pt-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-gray-700 flex items-center gap-1">
+              <i class="fa-solid fa-star text-amber-400"></i> 旅客綜合評價 4.9 / 5.0（近滿分零差評）
+            </span>
+            <span class="text-[11px] text-gray-400">Google 與各大平台高度推薦</span>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-3 text-xs sm:text-sm space-y-2 text-gray-700">
+            <p>💬 <strong>露友 C：</strong>「真的太棒了！露營車比很多飯店還要乾淨，晚上看得到很多星星，頌缽聲音一出來整個人被療癒到不行，食材也都是在地健康蔬果！」</p>
+            <p>💬 <strong>露友 D：</strong>「很適合想要安靜、放慢節奏的朋友。營主很熱心，下午茶甜點精緻，早餐的現沖咖啡也很有水準。」</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+
+    <!-- ==================== 03 哈比雪兒 ==================== -->
+    <article id="camp-03" class="camp-card bg-white rounded-2xl border border-gray-200 card-shadow overflow-hidden" data-category="mountain pet">
+      <div class="p-5 sm:p-6 pb-4 border-b border-gray-100 flex flex-wrap items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="badge-number bg-emerald-600 text-white font-black text-xl sm:text-2xl px-3.5 py-1 rounded-xl shadow-md flex items-center gap-1.5">
+            <span class="text-xs uppercase tracking-wider font-semibold opacity-90">NO.</span>03
+          </span>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-orange-100 text-orange-800">團體包區首選</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-teal-100 text-teal-800">娛樂項目最多</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mt-1">哈比雪兒-森光秘境露營區</h2>
+            <p class="text-xs sm:text-sm text-gray-500 flex items-center gap-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-emerald-600"></i> 台中市東勢區（近東勢林場・森林系秘境）
+            </p>
+          </div>
+        </div>
+
+        <button onclick="voteCamp('03', '哈比雪兒-森光秘境')" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl transition shadow hover:shadow-md active:scale-95">
+          <i class="fa-solid fa-check"></i> 我投 03 號 (複製回報)
+        </button>
+      </div>
+
+      <div class="relative bg-gray-900 group">
+        <div id="carousel-03" class="carousel-container flex overflow-x-auto w-full h-64 sm:h-80 md:h-96">
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80" alt="哈比雪兒 豪華遊牧帳與山林景觀" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              🏕️ 豪華遊牧帳、小木屋與綠意盎然森林
+            </div>
+          </div>
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1200&q=80" alt="夜間星空電影院與營火烤棉花糖" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              🔥 營火晚會烤棉花糖、星空電影院、麻將桌球
+            </div>
+          </div>
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80" alt="親子遊戲設施與彩虹滑梯" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              🌈 彩虹滑梯、白沙坑與大草皮遊戲區
+            </div>
+          </div>
+        </div>
+
+        <button onclick="scrollCarousel('carousel-03', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-chevron-left text-sm"></i>
+        </button>
+        <button onclick="scrollCarousel('carousel-03', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-chevron-right text-sm"></i>
+        </button>
+        <div class="absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm text-white/90 text-[11px] px-2 py-0.5 rounded">
+          左右滑動看照片 (共3張)
+        </div>
+      </div>
+
+      <div class="p-5 sm:p-6 space-y-5">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-50 rounded-xl p-4 border border-gray-100 text-xs sm:text-sm">
+          <div>
+            <span class="text-gray-400 block text-xs">💰 參考價格</span>
+            <span class="font-bold text-emerald-800 text-sm sm:text-base">NT$ 5,200 ~ 6,580</span>
+            <span class="block text-[11px] text-gray-500">含一泊二食 (雙人起)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">👥 適合人數</span>
+            <span class="font-bold text-gray-800 text-sm sm:text-base">2 ~ 4 人 (支援大包區)</span>
+            <span class="block text-[11px] text-gray-500">遊牧帳/小木屋/VIP蒙古包</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">🚿 衛浴配備</span>
+            <span class="font-bold text-gray-800 text-sm sm:text-base">專屬/共用衛浴</span>
+            <span class="block text-[11px] text-gray-500">小木屋有獨立戶外廁所</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">📞 預約方式</span>
+            <a href="tel:0907621008" class="font-bold text-emerald-600 hover:underline block text-sm sm:text-base">0907-621-008</a>
+            <span class="block text-[11px] text-gray-500">官方 LINE: @happy_share</span>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-bold text-gray-900 mb-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-sparkles text-amber-500"></i> 營區亮點與特色
+          </h3>
+          <ul class="text-xs sm:text-sm text-gray-600 space-y-1.5 list-disc list-inside">
+            <li><strong>娛樂設施最豐富</strong>：園區內有麻將、撞球、桌球、飛鏢機、星空電影院與晚間營火晚會，晚上完全不怕無聊！</li>
+            <li><strong>朋友大包區超好玩</strong>：支援小團體包區與客製化派對，大家聚在一起烤肉聊天氣氛極佳。</li>
+            <li><strong>寵物友善</strong>：可攜帶狗狗入住（清潔費 NT$500/隻）。</li>
+          </ul>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between text-xs sm:text-sm bg-emerald-50/60 p-3 rounded-lg border border-emerald-100 gap-2">
+          <div class="flex items-center gap-2 text-emerald-900">
+            <i class="fa-solid fa-map-location-dot text-emerald-700 text-base"></i>
+            <span>地址：台中市東勢區上新里勢林街63-6號</span>
+          </div>
+          <a href="https://maps.google.com/?q=哈比雪兒森光秘境" target="_blank" class="text-emerald-700 hover:text-emerald-900 font-bold underline inline-flex items-center gap-1">
+            開啟 Google 地圖導航 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </a>
+        </div>
+
+        <div class="border-t border-gray-100 pt-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-gray-700 flex items-center gap-1">
+              <i class="fa-solid fa-star text-amber-400"></i> 旅客綜合評價 4.8 / 5.0
+            </span>
+            <span class="text-[11px] text-gray-400">團體聚會與親子最推</span>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-3 text-xs sm:text-sm space-y-2 text-gray-700">
+            <p>💬 <strong>露友 E：</strong>「跟一群朋友去玩瘋了！晚上烤肉加營火烤棉花糖，大家還一起打麻將跟飛鏢，工作人員態度超級熱情親切！」</p>
+            <p>💬 <strong>露友 F：</strong>「帳篷裡冷氣很強、床很舒服，一泊二食不用煩惱吃什麼，隔天去東勢林場走走也很順路。」</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+
+    <!-- ==================== 04 覓靜莊園 ==================== -->
+    <article id="camp-04" class="camp-card bg-white rounded-2xl border border-gray-200 card-shadow overflow-hidden" data-category="mountain">
+      <div class="p-5 sm:p-6 pb-4 border-b border-gray-100 flex flex-wrap items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="badge-number bg-emerald-600 text-white font-black text-xl sm:text-2xl px-3.5 py-1 rounded-xl shadow-md flex items-center gap-1.5">
+            <span class="text-xs uppercase tracking-wider font-semibold opacity-90">NO.</span>04
+          </span>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-blue-100 text-blue-800">海拔1200M高山景觀</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-indigo-100 text-indigo-800">壯闊雲海與滿天星空</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mt-1">覓靜莊園</h2>
+            <p class="text-xs sm:text-sm text-gray-500 flex items-center gap-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-emerald-600"></i> 台中市和平區（谷關裡冷部落・高海拔避暑勝地）
+            </p>
+          </div>
+        </div>
+
+        <button onclick="voteCamp('04', '覓靜莊園')" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl transition shadow hover:shadow-md active:scale-95">
+          <i class="fa-solid fa-check"></i> 我投 04 號 (複製回報)
+        </button>
+      </div>
+
+      <div class="relative bg-gray-900 group">
+        <div id="carousel-04" class="carousel-container flex overflow-x-auto w-full h-64 sm:h-80 md:h-96">
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt="覓靜莊園 壯麗雲海與群山視野" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              ⛰️ 海拔 1,200 米坐擁無敵雲海與層疊山景
+            </div>
+          </div>
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80" alt="夜間無光害星空銀河" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              ✨ 零光害滿天星斗與清涼高山空氣
+            </div>
+          </div>
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1496545672447-f699b503d270?auto=format&fit=crop&w=1200&q=80" alt="免裝備神殿帳與印第安帳" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              🏕️ 免裝備印第安神殿帳、專屬休閒桌椅
+            </div>
+          </div>
+        </div>
+
+        <button onclick="scrollCarousel('carousel-04', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-chevron-left text-sm"></i>
+        </button>
+        <button onclick="scrollCarousel('carousel-04', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-chevron-right text-sm"></i>
+        </button>
+        <div class="absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm text-white/90 text-[11px] px-2 py-0.5 rounded">
+          左右滑動看照片 (共3張)
+        </div>
+      </div>
+
+      <div class="p-5 sm:p-6 space-y-5">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-50 rounded-xl p-4 border border-gray-100 text-xs sm:text-sm">
+          <div>
+            <span class="text-gray-400 block text-xs">💰 參考價格</span>
+            <span class="font-bold text-emerald-800 text-sm sm:text-base">NT$ 3,000 ~ 3,500</span>
+            <span class="block text-[11px] text-gray-500">免搭帳神殿帳 / 帳 (超划算)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">👥 適合人數</span>
+            <span class="font-bold text-gray-800 text-sm sm:text-base">2 ~ 4 人 / 帳</span>
+            <span class="block text-[11px] text-gray-500">配有舒適床墊與休閒桌椅</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">🚿 衛浴配備</span>
+            <span class="font-bold text-gray-800 text-sm sm:text-base">共用衛浴 (維護極佳)</span>
+            <span class="block text-[11px] text-gray-500">熱水水壓穩定・乾淨整潔</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">📞 預約電話</span>
+            <a href="tel:0932534105" class="font-bold text-emerald-600 hover:underline block text-sm sm:text-base">0932-534-105</a>
+            <span class="block text-[11px] text-gray-500">Traiwan / Klook 線上訂位</span>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-bold text-gray-900 mb-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-sparkles text-amber-500"></i> 營區亮點與特色
+          </h3>
+          <ul class="text-xs sm:text-sm text-gray-600 space-y-1.5 list-disc list-inside">
+            <li><strong>極致高山大自然景觀</strong>：谷關裡冷部落深山，雲海奔騰、夕陽落日與無光害銀河星空盡收眼底。</li>
+            <li><strong>CP 值超高免搭帳</strong>：三千多元就能享受神殿帳露營，可自備食材或請營區代訂烤肉套餐。</li>
+            <li><strong>鄰近谷關溫泉區</strong>：下山只需十幾分鐘就能泡湯舒壓，行程安排超完美。</li>
+          </ul>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between text-xs sm:text-sm bg-emerald-50/60 p-3 rounded-lg border border-emerald-100 gap-2">
+          <div class="flex items-center gap-2 text-emerald-900">
+            <i class="fa-solid fa-map-location-dot text-emerald-700 text-base"></i>
+            <span>地址：台中市和平區東關路一段裡冷巷99號</span>
+          </div>
+          <a href="https://maps.google.com/?q=覓靜莊園" target="_blank" class="text-emerald-700 hover:text-emerald-900 font-bold underline inline-flex items-center gap-1">
+            開啟 Google 地圖導航 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </a>
+        </div>
+
+        <div class="border-t border-gray-100 pt-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-gray-700 flex items-center gap-1">
+              <i class="fa-solid fa-star text-amber-400"></i> 旅客綜合評價 4.7 / 5.0
+            </span>
+            <span class="text-[11px] text-gray-400">景觀控與大自然愛好者推薦</span>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-3 text-xs sm:text-sm space-y-2 text-gray-700">
+            <p>💬 <strong>露友 G：</strong>「風景真的無敵震撼！早上的雲海像仙境一樣，晚上滿天都是星星，空氣很清新，帳篷內部也佈置得很舒適溫馨。」</p>
+            <p>💬 <strong>露友 H：</strong>「上山有段山路稍微陡一點，建議老司機開車，但抵達後看到視野完全值得！衛浴熱水很足很舒服。」</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+
+    <!-- ==================== 05 呆呆的家 ==================== -->
+    <article id="camp-05" class="camp-card bg-white rounded-2xl border border-gray-200 card-shadow overflow-hidden" data-category="mountain">
+      <div class="p-5 sm:p-6 pb-4 border-b border-gray-100 flex flex-wrap items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="badge-number bg-emerald-600 text-white font-black text-xl sm:text-2xl px-3.5 py-1 rounded-xl shadow-md flex items-center gap-1.5">
+            <span class="text-xs uppercase tracking-wider font-semibold opacity-90">NO.</span>05
+          </span>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">六星級超乾淨衛浴</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-800">高 CP 值首選</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mt-1">呆呆的家-免搭帳露營</h2>
+            <p class="text-xs sm:text-sm text-gray-500 flex items-center gap-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-emerald-600"></i> 台中市和平區（近谷關溫泉・八仙山國家森林）
+            </p>
+          </div>
+        </div>
+
+        <button onclick="voteCamp('05', '呆呆的家')" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl transition shadow hover:shadow-md active:scale-95">
+          <i class="fa-solid fa-check"></i> 我投 05 號 (複製回報)
+        </button>
+      </div>
+
+      <div class="relative bg-gray-900 group">
+        <div id="carousel-05" class="carousel-container flex overflow-x-auto w-full h-64 sm:h-80 md:h-96">
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?auto=format&fit=crop&w=1200&q=80" alt="呆呆的家 免搭帳鐘型帳外觀" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              ⛺ 溫馨免搭帳冷氣鐘型帳 ＋ 專屬客廳帳
+            </div>
+          </div>
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1540518614846-7ede433c4ef5?auto=format&fit=crop&w=1200&q=80" alt="帳內冷暖氣與舒適雙大床" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              ❄️ 帳內備有變頻冷暖氣空調與兩張舒適雙人床
+            </div>
+          </div>
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80" alt="專屬客廳帳與烤肉設備" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              🍖 每帳提供炭火吊爐與桌椅，自備食材輕鬆烤肉
+            </div>
+          </div>
+        </div>
+
+        <button onclick="scrollCarousel('carousel-05', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-chevron-left text-sm"></i>
+        </button>
+        <button onclick="scrollCarousel('carousel-05', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-chevron-right text-sm"></i>
+        </button>
+        <div class="absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm text-white/90 text-[11px] px-2 py-0.5 rounded">
+          左右滑動看照片 (共3張)
+        </div>
+      </div>
+
+      <div class="p-5 sm:p-6 space-y-5">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-50 rounded-xl p-4 border border-gray-100 text-xs sm:text-sm">
+          <div>
+            <span class="text-gray-400 block text-xs">💰 參考價格</span>
+            <span class="font-bold text-emerald-800 text-sm sm:text-base">NT$ 3,200 ~ 4,800</span>
+            <span class="block text-[11px] text-gray-500">每帳計價 (含烤肉器具)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">👥 適合人數</span>
+            <span class="font-bold text-gray-800 text-sm sm:text-base">2 ~ 4 人 / 帳</span>
+            <span class="block text-[11px] text-gray-500">雙人床兩張 (最大容納4人)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">🚿 衛浴配備</span>
+            <span class="font-bold text-gray-800 text-sm sm:text-base">六星級乾淨衛浴</span>
+            <span class="block text-[11px] text-gray-500">水壓超強・清潔度爆表</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">📞 預約電話</span>
+            <a href="tel:0978609093" class="font-bold text-emerald-600 hover:underline block text-sm sm:text-base">0978-609-093</a>
+            <span class="block text-[11px] text-gray-500">AsiaYo 線上訂房</span>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-bold text-gray-900 mb-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-sparkles text-amber-500"></i> 營區亮點與特色
+          </h3>
+          <ul class="text-xs sm:text-sm text-gray-600 space-y-1.5 list-disc list-inside">
+            <li><strong>露友封為「六星級衛浴」</strong>：乾濕分離乾淨新穎、水壓大又熱，徹底顛覆露營衛浴克難的印象。</li>
+            <li><strong>獨立專屬客廳帳</strong>：每帳外面都有自己的專屬客廳帳與烤肉桌椅，下雨也能安心烤肉開趴。</li>
+            <li><strong>附贈基本烤肉設備</strong>：每帳附炭火吊爐、烤網、木炭、夾子，只要自備食材就大功告成！</li>
+          </ul>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between text-xs sm:text-sm bg-emerald-50/60 p-3 rounded-lg border border-emerald-100 gap-2">
+          <div class="flex items-center gap-2 text-emerald-900">
+            <i class="fa-solid fa-map-location-dot text-emerald-700 text-base"></i>
+            <span>地址：台中市和平區博愛里東關路一段677號</span>
+          </div>
+          <a href="https://maps.google.com/?q=呆呆的家露營" target="_blank" class="text-emerald-700 hover:text-emerald-900 font-bold underline inline-flex items-center gap-1">
+            開啟 Google 地圖導航 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </a>
+        </div>
+
+        <div class="border-t border-gray-100 pt-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-gray-700 flex items-center gap-1">
+              <i class="fa-solid fa-star text-amber-400"></i> 旅客綜合評價 4.9 / 5.0（極高評）
+            </span>
+            <span class="text-[11px] text-gray-400">衛生整潔第一名</span>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-3 text-xs sm:text-sm space-y-2 text-gray-700">
+            <p>💬 <strong>露友 I：</strong>「衛浴真的乾淨到會讓人驚艷，比很多民宿都還要乾淨！車子可以直接停帳篷旁邊超方便，床很好睡、冷氣也很涼。」</p>
+            <p>💬 <strong>露友 J：</strong>「CP 值非常高，客廳帳很寬敞。小提醒是靠馬路的 C 區白天偶爾有車聲，建議訂離馬路遠一點的 A 區最安靜！」</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+
+    <!-- ==================== 06 曉晴新社 ==================== -->
+    <article id="camp-06" class="camp-card bg-white rounded-2xl border border-gray-200 card-shadow overflow-hidden" data-category="mountain pet">
+      <div class="p-5 sm:p-6 pb-4 border-b border-gray-100 flex flex-wrap items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="badge-number bg-emerald-600 text-white font-black text-xl sm:text-2xl px-3.5 py-1 rounded-xl shadow-md flex items-center gap-1.5">
+            <span class="text-xs uppercase tracking-wider font-semibold opacity-90">NO.</span>06
+          </span>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-violet-100 text-violet-800">浪漫球型星空帳</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-pink-100 text-pink-800">帳內獨立衛浴</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mt-1">曉晴新社（曉晴星空三營）</h2>
+            <p class="text-xs sm:text-sm text-gray-500 flex items-center gap-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-emerald-600"></i> 台中市新社區（開闊山谷景緻・遠眺大甲溪）
+            </p>
+          </div>
+        </div>
+
+        <button onclick="voteCamp('06', '曉晴新社')" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl transition shadow hover:shadow-md active:scale-95">
+          <i class="fa-solid fa-check"></i> 我投 06 號 (複製回報)
+        </button>
+      </div>
+
+      <div class="relative bg-gray-900 group">
+        <div id="carousel-06" class="carousel-container flex overflow-x-auto w-full h-64 sm:h-80 md:h-96">
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=1200&q=80" alt="曉晴新社 巨大半球星空帳" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              🔮 6米 / 8米大型球型星空帳，透明景觀窗視野極佳
+            </div>
+          </div>
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80" alt="星空帳內部兩大床與大電視" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              📺 兩張加大雙人床、獨立衛浴、65吋電視與冷氣
+            </div>
+          </div>
+          <div class="carousel-item flex-shrink-0 w-full h-full relative">
+            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&q=80" alt="夜間點燈浪漫氛圍與酒吧休憩區" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
+              🍸 帳外專屬大陽傘烤肉桌、特斯拉充電樁、寵物友善
+            </div>
+          </div>
+        </div>
+
+        <button onclick="scrollCarousel('carousel-06', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-chevron-left text-sm"></i>
+        </button>
+        <button onclick="scrollCarousel('carousel-06', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-chevron-right text-sm"></i>
+        </button>
+        <div class="absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm text-white/90 text-[11px] px-2 py-0.5 rounded">
+          左右滑動看照片 (共3張)
+        </div>
+      </div>
+
+      <div class="p-5 sm:p-6 space-y-5">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-50 rounded-xl p-4 border border-gray-100 text-xs sm:text-sm">
+          <div>
+            <span class="text-gray-400 block text-xs">💰 參考價格</span>
+            <span class="font-bold text-emerald-800 text-sm sm:text-base">NT$ 3,900 ~ 8,000</span>
+            <span class="block text-[11px] text-gray-500">含早餐 (2人~4人方案)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">👥 適合人數</span>
+            <span class="font-bold text-gray-800 text-sm sm:text-base">2 ~ 4 人 / 帳</span>
+            <span class="block text-[11px] text-gray-500">統一兩大床配置 (彈性計費)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">🚿 衛浴配備</span>
+            <span class="font-bold text-gray-800 text-sm sm:text-base">帳內獨立衛浴</span>
+            <span class="block text-[11px] text-gray-500">馬桶淋浴都在帳篷內</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-xs">💬 聯絡預約</span>
+            <span class="font-bold text-emerald-600 block text-sm sm:text-base">LINE: @star957</span>
+            <span class="block text-[11px] text-gray-500">採無人自助入住線上管家</span>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-bold text-gray-900 mb-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-sparkles text-amber-500"></i> 營區亮點與特色
+          </h3>
+          <ul class="text-xs sm:text-sm text-gray-600 space-y-1.5 list-disc list-inside">
+            <li><strong>躺著就能看星星</strong>：巨大球型半透明觀景窗，採光好、拍照極為夢幻浪漫。</li>
+            <li><strong>影音與設備齊全</strong>：帳內配備 65 吋高畫質電視與變頻冷暖空調，如同入住星級飯店。</li>
+            <li><strong>充電與寵物兼顧</strong>：附設特斯拉充電樁，且為寵物友善營區（攜帶毛小孩需提前告知）。</li>
+          </ul>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between text-xs sm:text-sm bg-emerald-50/60 p-3 rounded-lg border border-emerald-100 gap-2">
+          <div class="flex items-center gap-2 text-emerald-900">
+            <i class="fa-solid fa-map-location-dot text-emerald-700 text-base"></i>
+            <span>地址：台中市新社區上坪4-3號</span>
+          </div>
+          <a href="https://maps.google.com/?q=曉晴星空露營區新社" target="_blank" class="text-emerald-700 hover:text-emerald-900 font-bold underline inline-flex items-center gap-1">
+            開啟 Google 地圖導航 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </a>
+        </div>
+
+        <div class="border-t border-gray-100 pt-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-gray-700 flex items-center gap-1">
+              <i class="fa-solid fa-star text-amber-400"></i> 旅客綜合評價 4.6 / 5.0
+            </span>
+            <span class="text-[11px] text-gray-400">浪漫網美拍照打卡首選</span>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-3 text-xs sm:text-sm space-y-2 text-gray-700">
+            <p>💬 <strong>露友 K：</strong>「球型帳拍照真的超級美！帳篷裡面就有自己的衛浴不用出門淋雨吹風，電視很大看電影很爽，床鋪很舒服！」</p>
+            <p>💬 <strong>露友 L：</strong>「營區是自助入住無人櫃台，透過 LINE 聯絡管家回覆很即時。外面的大陽傘跟烤肉桌很適合晚上大家邊喝邊聊。」</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 底部統整比價表格 -->
+    <section class="bg-white rounded-2xl border border-gray-200 p-6 card-shadow">
+      <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-list-check text-emerald-600"></i> 6 大營區快速比價速查表
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs sm:text-sm border-collapse">
+          <thead>
+            <tr class="bg-emerald-50 text-emerald-900 border-b border-emerald-100">
+              <th class="p-3 font-bold">編號 / 營區名稱</th>
+              <th class="p-3 font-bold">區域</th>
+              <th class="p-3 font-bold">參考價格</th>
+              <th class="p-3 font-bold">餐食方案</th>
+              <th class="p-3 font-bold">衛浴模式</th>
+              <th class="p-3 font-bold">最大賣點</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100 text-gray-700">
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 font-bold text-emerald-700">01 向海那漾</td>
+              <td class="p-3">大安區</td>
+              <td class="p-3">約 $4,600 起</td>
+              <td class="p-3">一泊三食 (吃到飽)</td>
+              <td class="p-3">帳內獨立</td>
+              <td class="p-3">海景夕陽、全包免動腦</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 font-bold text-emerald-700">02 聚元營地</td>
+              <td class="p-3">新社區</td>
+              <td class="p-3">約 $6,500 起</td>
+              <td class="p-3">一泊三食 (精緻火烤)</td>
+              <td class="p-3">車內獨立</td>
+              <td class="p-3">頂級露營車、森林頌缽放鬆</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 font-bold text-emerald-700">03 哈比雪兒</td>
+              <td class="p-3">東勢區</td>
+              <td class="p-3">約 $5,200 起</td>
+              <td class="p-3">一泊二食</td>
+              <td class="p-3">部分獨立/共用</td>
+              <td class="p-3">娛樂最多、營火晚會大包區</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 font-bold text-emerald-700">04 覓靜莊園</td>
+              <td class="p-3">和平區谷關</td>
+              <td class="p-3">約 $3,000 起</td>
+              <td class="p-3">自備/代訂烤肉</td>
+              <td class="p-3">乾淨共用</td>
+              <td class="p-3">海拔1200米、雲海與銀河</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 font-bold text-emerald-700">05 呆呆的家</td>
+              <td class="p-3">和平區谷關</td>
+              <td class="p-3">約 $3,200 起</td>
+              <td class="p-3">附烤肉器具/自備食材</td>
+              <td class="p-3">六星級共用</td>
+              <td class="p-3">高CP值、衛浴極致乾淨</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 font-bold text-emerald-700">06 曉晴新社</td>
+              <td class="p-3">新社區</td>
+              <td class="p-3">約 $3,900 起</td>
+              <td class="p-3">一泊一食 (附早餐)</td>
+              <td class="p-3">帳內獨立</td>
+              <td class="p-3">浪漫球型星空帳、特斯拉充電</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 底部固定投票回報浮動條（手機體驗最佳化） -->
+  <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 py-3 px-4 z-40 shadow-lg">
+    <div class="max-w-4xl mx-auto flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="text-xs sm:text-sm font-bold text-gray-800">
+          已選定心儀號碼？
+        </span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="promptQuickVote()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm px-4 py-2 rounded-xl transition shadow active:scale-95 flex items-center gap-1.5">
+          <i class="fa-solid fa-paper-plane"></i> 快速告訴 Edward 號碼
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast 提示訊息容器 -->
+  <div id="toast" class="hidden fixed bottom-16 left-1/2 z-50 bg-gray-900/90 backdrop-blur-md text-white text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full shadow-2xl border border-white/20">
+    <span id="toast-text">已複製投票訊息！</span>
+  </div>
+
+  <!-- 互動腳本 -->
+  <script>
+    // 照片左右滑動
+    function scrollCarousel(id, direction) {
+      const el = document.getElementById(id);
+      const width = el.clientWidth;
+      el.scrollBy({ left: direction * width, behavior: 'smooth' });
+    }
+
+    // 複製投票文字
+    function voteCamp(number, name) {
+      const textToCopy = `哈囉 Edward！台中懶人露營我投【${number}號 - ${name}】一票！⛺ 快點成團出發吧～`;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        showToast(`✅ 已複製：【${number} 號 ${name}】，直接貼到 LINE 回覆主揪！`);
+      }).catch(() => {
+        showToast(`💡 請直接在 LINE 回覆主揪：「我選 ${number} 號 ${name}」！`);
+      });
+    }
+
+    // 底部快速回報彈窗
+    function promptQuickVote() {
+      const num = prompt("請輸入你想選的營區編號（例如 01 到 06）：");
+      if (num) {
+        const cleanNum = num.trim().padStart(2, '0');
+        const textToCopy = `哈囉 Edward！台中懶人露營我選【${cleanNum} 號】！⛺`;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          showToast(`✅ 已複製！快去 LINE 貼給主揪吧！`);
+        }).catch(() => {
+          alert(`請直接傳訊給主揪：「我選 ${cleanNum} 號」！`);
+        });
+      }
+    }
+
+    // 顯示吐司提示
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastText = document.getElementById('toast-text');
+      toastText.innerText = msg;
+      toast.classList.remove('hidden', 'toast-msg');
+      void toast.offsetWidth; // trigger reflow
+      toast.classList.add('toast-msg');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 2500);
+    }
+
+    // 標籤篩選功能
+    function filterCamp(type) {
+      // 標籤樣式切換
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-emerald-700', 'text-white');
+        btn.classList.add('bg-gray-100', 'text-gray-700');
+      });
+      event.target.classList.remove('bg-gray-100', 'text-gray-700');
+      event.target.classList.add('bg-emerald-700', 'text-white');
+
+      // 卡片顯示隱藏
+      const cards = document.querySelectorAll('.camp-card');
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category') || '';
+        if (type === 'all') {
+          card.style.display = 'block';
+        } else if (cat.includes(type)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
