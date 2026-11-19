@@ -1396,21 +1396,24 @@
   </button>
 
   <!-- 底部固定投票回報浮動條（支援 01~08 複選 + 一鍵複製貼在 DC） -->
-  <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 py-2.5 px-3 sm:px-6 z-40 shadow-2xl">
-    <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2.5">
+  <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 py-2 sm:py-2.5 px-3 sm:px-6 z-40 shadow-2xl">
+    <div class="max-w-5xl mx-auto flex flex-wrap md:flex-nowrap items-center justify-between gap-2 sm:gap-3">
       
-      <!-- 提示文字 -->
-      <div class="flex items-center gap-2 self-start md:self-center">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span class="text-xs sm:text-sm font-extrabold text-gray-800 flex items-center gap-1">
-          已選定心儀號碼？<span class="text-emerald-700 font-bold">點選可複選</span>，最後一鍵複製貼在 <span class="text-indigo-600 font-black">DC (Discord)</span> 💬
-        </span>
+      <!-- 提示文字區（固定清晰兩行，禁止任意斷字換行、不被按鈕擠壓） -->
+      <div class="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></span>
+        <div class="flex flex-col text-xs sm:text-sm font-extrabold text-gray-800 leading-snug whitespace-nowrap">
+          <div>已選定心儀號碼？<span class="text-emerald-700 font-bold">點選可複選</span></div>
+          <div class="text-[11px] sm:text-xs text-gray-600 font-semibold">
+            最後一鍵複製貼在 <span class="text-indigo-600 font-black">DC</span> 💬
+          </div>
+        </div>
       </div>
 
-      <!-- 01 到 08 複選按鈕列 + 一鍵複製按鈕 -->
-      <div class="flex items-center gap-1.5 sm:gap-2 w-full md:w-auto justify-between md:justify-end overflow-x-auto no-scrollbar py-0.5">
+      <!-- 01 到 08 複選按鈕列 + 一鍵複製按鈕（保證不遮擋、不重疊） -->
+      <div class="flex items-center gap-1.5 sm:gap-2 flex-nowrap overflow-x-auto no-scrollbar flex-shrink-0 py-0.5">
         
-        <div class="flex items-center gap-1 sm:gap-1.5">
+        <div class="flex items-center gap-1 sm:gap-1.5 flex-shrink-0">
           <button id="vote-btn-01" onclick="toggleCampSelect('01')" class="vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border border-gray-300 bg-gray-50 text-gray-700 font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center hover:bg-gray-100" title="複選 01 向海那漾">01</button>
           <button id="vote-btn-02" onclick="toggleCampSelect('02')" class="vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border border-gray-300 bg-gray-50 text-gray-700 font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center hover:bg-gray-100" title="複選 02 聚元營地">02</button>
           <button id="vote-btn-03" onclick="toggleCampSelect('03')" class="vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border border-gray-300 bg-gray-50 text-gray-700 font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center hover:bg-gray-100" title="複選 03 哈比雪兒">03</button>
