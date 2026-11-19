@@ -596,6 +596,9 @@
           <p class="text-xs text-gray-500 mt-0.5">每個人都有專屬超能力，大家分工合作玩得最盡興！</p>
         </div>
         <div class="flex items-center gap-2">
+          <span class="text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full flex items-center gap-1 shadow-2xs">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 挪移自動即時儲存
+          </span>
           <button onclick="copyCarpoolResult()" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white shadow-sm transition active:scale-95 inline-flex items-center gap-1">
             <i class="fa-solid fa-copy"></i> 複製車次分工貼 DC
           </button>
@@ -794,10 +797,17 @@
         </button>
       </div>
 
-      <!-- 1. 新增記帳表單（品項/金額/代墊人/分攤人） -->
-      <form onsubmit="handleAddExpense(event)" class="bg-yellow-50/40 rounded-2xl p-4 border border-yellow-200 space-y-3">
-        <div class="font-black text-xs text-yellow-950 flex items-center gap-1.5">
-          <i class="fa-solid fa-plus-circle text-yellow-600"></i> 快速新增一筆消費
+      <!-- 1. 新增 / 編輯記帳表單（品項/金額/代墊人/分攤人） -->
+      <form id="expense-form" onsubmit="handleAddExpense(event)" class="bg-yellow-50/40 rounded-2xl p-4 border border-yellow-200 space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="font-black text-xs text-yellow-950 flex items-center gap-1.5" id="expense-form-title">
+            <i class="fa-solid fa-plus-circle text-yellow-600"></i> 快速新增一筆消費
+          </div>
+          <div id="expense-cancel-edit-btn" class="hidden">
+            <button type="button" onclick="cancelEditExpense()" class="text-[11px] text-gray-500 hover:text-gray-800 font-bold underline">
+              ✕ 取消編輯
+            </button>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 text-xs">
@@ -842,9 +852,9 @@
           </div>
         </div>
 
-        <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-black text-xs shadow-md transition active:scale-95 flex items-center justify-center gap-1.5">
+        <button type="submit" id="expense-submit-btn" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-black text-xs shadow-md transition active:scale-95 flex items-center justify-center gap-1.5">
           <i class="fa-solid fa-receipt"></i>
-          <span>儲存並即時計算分帳</span>
+          <span id="expense-submit-text">儲存並即時計算分帳</span>
         </button>
       </form>
 
@@ -1115,14 +1125,14 @@
       { id: "m8", name: "Edward", icon: "⛺", color: "bg-emerald-100 text-emerald-900 border-emerald-300" }
     ];
 
-    // 預設車次與職位分配
+    // 預設車次與職位分配（與 Edward 安排即時同步儲存）
     const DEFAULT_ROLES = {
-      car_1: ["Edward"],
-      car_2: [],
-      car_1_location: "台中高鐵站出口 / 市區指定點",
-      car_1_time: "10:30",
-      car_2_location: "捷運文心中清站旁 / 彈性接送",
-      car_2_time: "10:30",
+      car_1: ["Edward", "CC＋女兒Abby", "紫兒", "Olaf"],
+      car_2: ["蕃薯", "ㄞ恩", "Orca"],
+      car_1_location: "台北",
+      car_1_time: "尚未決定",
+      car_2_location: "尚未決定",
+      car_2_time: "尚未決定",
       notes: "後車廂空間充足，每人可帶一中型行李箱；若有暈車請先告知坐前座！",
       role_leader: ["Edward"],
       role_coordinator: [],
@@ -1542,23 +1552,117 @@
         return;
       }
 
-      const newExpense = {
-        id: "e_" + Date.now(),
-        title,
-        amount,
-        payer,
-        splitters
-      };
+      let editingExpenseId = null;
 
-      expenses.push(newExpense);
+    function startEditExpense(id) {
+      const exp = expenses.find(x => x.id === id);
+      if (!exp) return;
+      editingExpenseId = id;
+
+      document.getElementById('expense-title').value = exp.title;
+      document.getElementById('expense-amount').value = exp.amount;
+
+      // 設定代墊人選單
+      const payerSelect = document.getElementById('expense-payer');
+      const customPayerInput = document.getElementById('custom-payer-input');
+      const hasOption = Array.from(payerSelect.options).some(opt => opt.value === exp.payer);
+      if (hasOption) {
+        payerSelect.value = exp.payer;
+        customPayerInput.classList.add('hidden');
+      } else {
+        payerSelect.value = '__custom__';
+        customPayerInput.value = exp.payer;
+        customPayerInput.classList.remove('hidden');
+      }
+
+      // 設定分攤對象勾選狀態
+      document.querySelectorAll('input[name="expense_splitter"]').forEach(cb => {
+        cb.checked = exp.splitters.includes(cb.value);
+      });
+
+      // 更新表單 UI 提示
+      document.getElementById('expense-form-title').innerHTML = `
+        <i class="fa-solid fa-pen-to-square text-amber-600"></i>
+        <span class="text-amber-950 font-black">正在編輯：【${exp.title}】</span>
+      `;
+      document.getElementById('expense-submit-text').textContent = '💾 儲存修改並重新計算';
+      document.getElementById('expense-cancel-edit-btn').classList.remove('hidden');
+
+      // 滾動至表單方便輸入
+      document.getElementById('expense-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      showToast(`正在編輯：${exp.title}，修改完成後點擊儲存！`);
+    }
+
+    function cancelEditExpense() {
+      editingExpenseId = null;
+      document.getElementById('expense-title').value = '';
+      document.getElementById('expense-amount').value = '';
+      document.getElementById('expense-form-title').innerHTML = `
+        <i class="fa-solid fa-plus-circle text-yellow-600"></i> 快速新增一筆消費
+      `;
+      document.getElementById('expense-submit-text').textContent = '儲存並即時計算分帳';
+      document.getElementById('expense-cancel-edit-btn').classList.add('hidden');
+      selectAllSplitters(true);
+    }
+
+    function handleAddExpense(e) {
+      e.preventDefault();
+      const title = document.getElementById('expense-title').value.trim();
+      const amount = parseFloat(document.getElementById('expense-amount').value);
+      const payerSelect = document.getElementById('expense-payer');
+      let payer = payerSelect.value;
+      if (payer === '__custom__') {
+        payer = document.getElementById('custom-payer-input').value.trim();
+      }
+      if (!payer) {
+        showToast('請指定或輸入先代墊人！');
+        return;
+      }
+
+      const splitters = [];
+      document.querySelectorAll('input[name="expense_splitter"]:checked').forEach(cb => splitters.push(cb.value));
+      if (splitters.length === 0) {
+        showToast('請至少勾選一位分攤人！');
+        return;
+      }
+
+      if (editingExpenseId) {
+        // 更新既有項目
+        const exp = expenses.find(x => x.id === editingExpenseId);
+        if (exp) {
+          exp.title = title;
+          exp.amount = amount;
+          exp.payer = payer;
+          exp.splitters = splitters;
+        }
+        editingExpenseId = null;
+        document.getElementById('expense-form-title').innerHTML = `
+          <i class="fa-solid fa-plus-circle text-yellow-600"></i> 快速新增一筆消費
+        `;
+        document.getElementById('expense-submit-text').textContent = '儲存並即時計算分帳';
+        document.getElementById('expense-cancel-edit-btn').classList.add('hidden');
+        showToast(`✅ 已成功更新支出：${title}！`);
+      } else {
+        // 新增項目
+        const newExpense = {
+          id: "e_" + Date.now(),
+          title,
+          amount,
+          payer,
+          splitters
+        };
+        expenses.push(newExpense);
+        showToast(`已成功記錄：${title} (NT$ ${amount.toLocaleString()})`);
+      }
+
       saveExpenses();
       document.getElementById('expense-title').value = '';
       document.getElementById('expense-amount').value = '';
-      showToast(`已成功記錄：${title} (NT$ ${amount.toLocaleString()})`);
     }
 
     function deleteExpense(id) {
       if (confirm('確定要刪除這筆支出嗎？')) {
+        if (editingExpenseId === id) cancelEditExpense();
         expenses = expenses.filter(x => x.id !== id);
         saveExpenses();
         showToast('已刪除支出項目！');
@@ -1578,9 +1682,14 @@
             <td class="p-2.5 font-medium text-gray-700">${exp.payer}</td>
             <td class="p-2.5 text-gray-500 text-xs">${splitText}</td>
             <td class="p-2.5 text-center">
-              <button onclick="deleteExpense('${exp.id}')" class="text-rose-500 hover:text-rose-700 p-1" title="刪除">
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
+              <div class="inline-flex items-center gap-1.5">
+                <button onclick="startEditExpense('${exp.id}')" class="px-2 py-1 rounded-md bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold transition flex items-center gap-1" title="編輯此筆支出">
+                  <i class="fa-solid fa-pen-to-square text-[10px]"></i> 編輯
+                </button>
+                <button onclick="deleteExpense('${exp.id}')" class="p-1 rounded-md text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition" title="刪除">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
             </td>
           </tr>
         `;
