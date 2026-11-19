@@ -1129,15 +1129,15 @@
     const ROLES_KEY = "trip_roles_data";
     const EXPENSES_KEY = "trip_expenses_data";
 
-    // 預設成員清單（阿寶boa 就是主揪 Edward，共 7 組家庭/個人，計 8 位同行）
+    // 預設成員清單（阿寶boa 就是主揪 Edward，共 7 組家庭/個人，計 8 位同行，標籤前面不帶 emoji）
     const DEFAULT_MEMBERS = [
-      { id: "m1", name: "阿寶boa (Edward)", icon: "👑", color: "bg-amber-100 text-amber-900 border-amber-300" },
-      { id: "m2", name: "蕃薯", icon: "🍠", color: "bg-orange-100 text-orange-900 border-orange-300" },
-      { id: "m3", name: "ㄞ恩", icon: "✨", color: "bg-purple-100 text-purple-900 border-purple-300" },
-      { id: "m4", name: "紫兒", icon: "🌸", color: "bg-pink-100 text-pink-900 border-pink-300" },
-      { id: "m5", name: "CC＋女兒Abby", icon: "👩‍👧", color: "bg-rose-100 text-rose-900 border-rose-300" },
-      { id: "m6", name: "Olaf", icon: "⛄", color: "bg-sky-100 text-sky-900 border-sky-300" },
-      { id: "m7", name: "Orca", icon: "🐋", color: "bg-blue-100 text-blue-900 border-blue-300" }
+      { id: "m1", name: "阿寶boa (Edward)", icon: "", color: "bg-amber-100 text-amber-900 border-amber-300" },
+      { id: "m2", name: "蕃薯", icon: "", color: "bg-orange-100 text-orange-900 border-orange-300" },
+      { id: "m3", name: "ㄞ恩", icon: "", color: "bg-purple-100 text-purple-900 border-purple-300" },
+      { id: "m4", name: "紫兒", icon: "", color: "bg-pink-100 text-pink-900 border-pink-300" },
+      { id: "m5", name: "CC＋女兒Abby", icon: "", color: "bg-rose-100 text-rose-900 border-rose-300" },
+      { id: "m6", name: "Olaf", icon: "", color: "bg-sky-100 text-sky-900 border-sky-300" },
+      { id: "m7", name: "Orca", icon: "", color: "bg-blue-100 text-blue-900 border-blue-300" }
     ];
 
     // 預設車次與職位分配（與最新排定即時同步）
@@ -1211,7 +1211,7 @@
       location.reload();
     }
 
-    // 載入成員（自動合併「阿寶boa」與「Edward」為同一個人）
+    // 載入成員（自動合併「阿寶boa」與「Edward」為同一個人，並確保前面無 emoji）
     function loadMembers() {
       const saved = localStorage.getItem(MEMBERS_KEY);
       let list = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_MEMBERS));
@@ -1235,6 +1235,8 @@
           localStorage.setItem(MEMBERS_KEY, JSON.stringify(list));
         }
       }
+      // 確保所有成員標籤都不帶 emoji
+      list.forEach(m => { m.icon = ""; });
       members = list;
     }
 
@@ -1264,18 +1266,16 @@
         showToast('已有同名參與人囉！');
         return;
       }
-      const icons = ["🌟", "🎈", "🍀", "🚀", "🎸", "🥑", "🧁", "🐾", "🦊"];
-      const randomIcon = icons[Math.floor(Math.random() * icons.length)];
       const newMember = {
         id: "m_" + Date.now(),
         name: name,
-        icon: randomIcon,
+        icon: "",
         color: "bg-teal-100 text-teal-900 border-teal-300"
       };
       members.push(newMember);
       input.value = "";
       saveMembers();
-      showToast(`已成功加入參與人：${randomIcon} ${name}`);
+      showToast(`已成功加入參與人：${name}`);
     }
 
     function deleteMember(id, event) {
@@ -1379,7 +1379,6 @@
           return `
             <div draggable="true" ondragstart="handleDragStart(event, '${m.name}')" onclick="selectMember('${m.id}')"
               class="member-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border cursor-grab active:cursor-grabbing shadow-xs ${m.color} ${isSelected ? 'member-selected' : ''}">
-              <span>${m.icon}</span>
               <span>${m.name}</span>
               <button type="button" onclick="deleteMember('${m.id}', event)" class="ml-1 text-gray-400 hover:text-rose-600 transition" title="刪除此成員">✕</button>
             </div>
@@ -1391,7 +1390,7 @@
       if (selectedMemberId) {
         const sel = members.find(m => m.id === selectedMemberId);
         if (sel) {
-          hint.innerHTML = `<span class="text-amber-900 font-extrabold animate-bounce inline-block mr-1">👉</span>已選取【${sel.icon} ${sel.name}】，請點擊下方 1 號車或 2 號車即可放入！`;
+          hint.innerHTML = `<span class="text-amber-900 font-extrabold animate-bounce inline-block mr-1">👉</span>已選取【${sel.name}】，請點擊下方 1 號車或 2 號車即可放入！`;
         }
       } else {
         hint.innerHTML = `💡 拖曳或點選成員放入車次後，上方自動消失！`;
@@ -1408,7 +1407,6 @@
         return `
           <div draggable="true" ondragstart="handleDragStart(event, '${m.name}')" onclick="selectRoleMember('${m.id}')"
             class="member-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border cursor-grab active:cursor-grabbing shadow-xs transition hover:scale-105 ${m.color} ${isSelected ? 'ring-2 ring-amber-500 scale-105 shadow-md' : ''}">
-            <span>${m.icon}</span>
             <span>${m.name}</span>
           </div>
         `;
@@ -1536,11 +1534,10 @@
     }
 
     function createBadgeHtml(zoneKey, name) {
-      const m = members.find(x => x.name === name) || { icon: "👤", color: "bg-gray-100 text-gray-800 border-gray-200" };
+      const m = members.find(x => x.name === name) || { color: "bg-gray-100 text-gray-800 border-gray-200" };
       return `
         <span draggable="true" ondragstart="handleDragStart(event, '${name}')"
           class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold border shadow-2xs cursor-grab active:cursor-grabbing ${m.color}">
-          <span>${m.icon}</span>
           <span>${name}</span>
           <button type="button" onclick="removeMemberFromZone('${zoneKey}', '${name}', event)" class="ml-1 text-gray-400 hover:text-rose-600 transition" title="卸下移回上方">✕</button>
         </span>
@@ -1596,7 +1593,7 @@
       // 代墊人選單
       const payerSelect = document.getElementById('expense-payer');
       const customPayerInput = document.getElementById('custom-payer-input');
-      payerSelect.innerHTML = members.map(m => `<option value="${m.name}">${m.icon} ${m.name}</option>`).join('')
+      payerSelect.innerHTML = members.map(m => `<option value="${m.name}">${m.name}</option>`).join('')
         + `<option value="__custom__">➕ 其他（自行輸入）</option>`;
       customPayerInput.classList.add('hidden');
 
