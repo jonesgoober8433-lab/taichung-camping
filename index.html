@@ -59,6 +59,23 @@
       visibility: visible;
       opacity: 1;
     }
+    .member-badge {
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .member-badge:active {
+      transform: scale(0.95);
+    }
+    .member-selected {
+      ring: 3px solid #F59E0B;
+      background-color: #FEF3C7 !important;
+      border-color: #D97706 !important;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+    .dropzone-highlight {
+      border-color: #F59E0B !important;
+      background-color: #FFFBEB !important;
+    }
     @media print {
       #left-desktop-nav, #left-mobile-trigger, #back-to-top, nav, #password-gate {
         display: none !important;
@@ -139,10 +156,10 @@
       <span class="nav-icon-tooltip absolute left-12 bg-stone-900 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow-lg whitespace-nowrap">記帳與自動分帳</span>
     </a>
 
-    <!-- E 時光相簿 -->
-    <a href="#section-album" class="nav-icon-btn relative w-9 h-9 rounded-xl bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white flex items-center justify-center transition hover:scale-110 shadow-sm" title="照片時光相簿">
-      <i class="fa-solid fa-camera-retro text-sm"></i>
-      <span class="nav-icon-tooltip absolute left-12 bg-stone-900 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow-lg whitespace-nowrap">相簿 ＆ 時光膠囊</span>
+    <!-- H 趣味小遊戲 -->
+    <a href="#section-games" class="nav-icon-btn relative w-9 h-9 rounded-xl bg-purple-500/20 hover:bg-purple-600 text-purple-300 hover:text-white flex items-center justify-center transition hover:scale-110 shadow-sm" title="趣味小遊戲">
+      <i class="fa-solid fa-dice text-sm"></i>
+      <span class="nav-icon-tooltip absolute left-12 bg-stone-900 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow-lg whitespace-nowrap">趣味小遊戲</span>
     </a>
 
     <!-- G 行李清單 -->
@@ -151,10 +168,10 @@
       <span class="nav-icon-tooltip absolute left-12 bg-stone-900 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow-lg whitespace-nowrap">行李裝備清單</span>
     </a>
 
-    <!-- H 歌單與遊戲 -->
-    <a href="#section-party" class="nav-icon-btn relative w-9 h-9 rounded-xl bg-purple-500/20 hover:bg-purple-600 text-purple-300 hover:text-white flex items-center justify-center transition hover:scale-110 shadow-sm" title="歌單與派對遊戲">
-      <i class="fa-solid fa-music text-sm"></i>
-      <span class="nav-icon-tooltip absolute left-12 bg-stone-900 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow-lg whitespace-nowrap">氣氛歌單 ＆ 破冰遊戲</span>
+    <!-- E 時光相簿 -->
+    <a href="#section-album" class="nav-icon-btn relative w-9 h-9 rounded-xl bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white flex items-center justify-center transition hover:scale-110 shadow-sm" title="照片時光相簿">
+      <i class="fa-solid fa-camera-retro text-sm"></i>
+      <span class="nav-icon-tooltip absolute left-12 bg-stone-900 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow-lg whitespace-nowrap">相簿 ＆ 影片空間</span>
     </a>
   </aside>
 
@@ -197,21 +214,21 @@
         <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 flex items-center justify-center flex-shrink-0 text-sm">👥</div>
         <div>
           <div class="text-gray-900 font-black">車次與人員分工</div>
-          <div class="text-[11px] text-gray-400 font-normal">車手乘客分配・任務認領</div>
+          <div class="text-[11px] text-gray-400 font-normal">成員頭像拖曳・車次與趣味分工</div>
         </div>
       </a>
       <a href="#section-finance" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-3 rounded-xl hover:bg-yellow-50 transition border border-transparent hover:border-yellow-200 font-bold text-gray-800">
         <div class="w-8 h-8 rounded-lg bg-yellow-100 text-yellow-800 flex items-center justify-center flex-shrink-0 text-sm">💰</div>
         <div>
-          <div class="text-gray-900 font-black">出遊記帳 ＆ 分帳</div>
-          <div class="text-[11px] text-gray-400 font-normal">自動精準結算每人費用</div>
+          <div class="text-gray-900 font-black">出遊記帳 ＆ 最少分帳</div>
+          <div class="text-[11px] text-gray-400 font-normal">誰給誰多少・最少次數完帳指南</div>
         </div>
       </a>
-      <a href="#section-album" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-3 rounded-xl hover:bg-rose-50 transition border border-transparent hover:border-rose-200 font-bold text-gray-800">
-        <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-800 flex items-center justify-center flex-shrink-0 text-sm">📸</div>
+      <a href="#section-games" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-3 rounded-xl hover:bg-purple-50 transition border border-transparent hover:border-purple-200 font-bold text-gray-800">
+        <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 flex items-center justify-center flex-shrink-0 text-sm">🎲</div>
         <div>
-          <div class="text-gray-900 font-black">相簿 ＆ 回憶時光膠囊</div>
-          <div class="text-[11px] text-gray-400 font-normal">官方相片展示・一鍵下載打包</div>
+          <div class="text-gray-900 font-black">趣味小遊戲</div>
+          <div class="text-[11px] text-gray-400 font-normal">神秘破冰・當晚現場揭曉</div>
         </div>
       </a>
       <a href="#section-packing" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-3 rounded-xl hover:bg-teal-50 transition border border-transparent hover:border-teal-200 font-bold text-gray-800">
@@ -221,11 +238,11 @@
           <div class="text-[11px] text-gray-400 font-normal">出發前防呆檢查清單</div>
         </div>
       </a>
-      <a href="#section-party" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-3 rounded-xl hover:bg-purple-50 transition border border-transparent hover:border-purple-200 font-bold text-gray-800">
-        <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 flex items-center justify-center flex-shrink-0 text-sm">🎵</div>
+      <a href="#section-album" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-3 rounded-xl hover:bg-rose-50 transition border border-transparent hover:border-rose-200 font-bold text-gray-800">
+        <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-800 flex items-center justify-center flex-shrink-0 text-sm">📸</div>
         <div>
-          <div class="text-gray-900 font-black">歌單 ＆ 破冰遊戲</div>
-          <div class="text-[11px] text-gray-400 font-normal">放鬆音樂・派對遊戲速查</div>
+          <div class="text-gray-900 font-black">相簿 ＆ 影片空間</div>
+          <div class="text-[11px] text-gray-400 font-normal">上傳雲端硬碟・下載時光膠囊</div>
         </div>
       </a>
     </div>
@@ -271,8 +288,11 @@
         <a href="#section-finance" class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap flex-shrink-0">
           💰 分帳計算
         </a>
+        <a href="#section-games" class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap flex-shrink-0">
+          🎲 趣味遊戲
+        </a>
         <a href="#section-album" class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap flex-shrink-0">
-          📸 時光相簿
+          📸 相簿影片
         </a>
       </div>
 
@@ -339,56 +359,48 @@
       <!-- 官方真實照片輪播器 -->
       <div class="relative bg-gray-900 group">
         <div id="carousel-stay" class="carousel-container flex overflow-x-auto w-full h-64 sm:h-80 md:h-96">
-          <!-- 1. 外觀與庭園 -->
           <div class="carousel-item flex-shrink-0 w-full h-full relative">
             <img src="https://chill.616stay.tw/uploads/carousel_images/chill/carousel_20260320_152149_d55d7a.jpg" alt="閒情驛棧日景外觀與庭園" class="w-full h-full object-cover">
             <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
               🏡 閒情驛棧日景外觀與綠意庭園！獨棟空間包棟放鬆不受擾
             </div>
           </div>
-          <!-- 2. 客廳與娛樂 -->
           <div class="carousel-item flex-shrink-0 w-full h-full relative">
             <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c10b992a9496.56236651.jpg" alt="客廳大電視與廚房" class="w-full h-full object-cover">
             <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
               📺 客廳 86 吋超大電視 ＋ 中島廚房 ＆ 麻將桌，歡聚派對一次滿足
             </div>
           </div>
-          <!-- 3. 寵物友善空間 -->
           <div class="carousel-item flex-shrink-0 w-full h-full relative">
             <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c1043c828769.64974125.jpg" alt="寵物友善空間" class="w-full h-full object-cover">
             <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
               🐶 台中寵物友善包棟！可帶小型犬同行，毛孩也能享受假期
             </div>
           </div>
-          <!-- 4. 手作早餐 -->
           <div class="carousel-item flex-shrink-0 w-full h-full relative">
             <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c490dfc10198.51955311.jpg" alt="闆娘手作精緻早餐" class="w-full h-full object-cover">
             <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
               🍳 闆娘烘焙證照現做手作西式早餐套餐，元氣滿滿又健康
             </div>
           </div>
-          <!-- 5. 私房下午茶 -->
           <div class="carousel-item flex-shrink-0 w-full h-full relative">
             <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c490ebc10852.42362132.jpg" alt="私房精緻下午茶" class="w-full h-full object-cover">
             <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
               🍰 私房精緻下午茶甜點，可可麻糬皮搭開心果奶酥風味迷人
             </div>
           </div>
-          <!-- 6. 四樓包層四人套房 -->
           <div class="carousel-item flex-shrink-0 w-full h-full relative">
             <img src="https://chill.616stay.tw/uploads/room_images/1e0e3e4ffd8be363.jpg?v=3b79ce06" alt="四樓四人套房與小客廳" class="w-full h-full object-cover">
             <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
               🛏️ 四樓包層：四人套房 ＋ 獨立小客廳，採光充裕舒適大氣
             </div>
           </div>
-          <!-- 7. 三樓四人和式套房 -->
           <div class="carousel-item flex-shrink-0 w-full h-full relative">
             <img src="https://chill.616stay.tw/uploads/room_images/b4d4481731db67e9.jpg?v=55108b8c" alt="三樓四人和式套房" class="w-full h-full object-cover">
             <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
               🛏️ 三樓：四人和式套房，通鋪寬敞溫馨，朋友夜聊超合適
             </div>
           </div>
-          <!-- 8. 二樓雙人套房 -->
           <div class="carousel-item flex-shrink-0 w-full h-full relative">
             <img src="https://chill.616stay.tw/uploads/room_images/8be28beedbc74465.jpg?v=dc134d87" alt="二樓雙人套房" class="w-full h-full object-cover">
             <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-md">
@@ -571,139 +583,382 @@
 
 
     <!-- ──────────────────────────────────────────────
-         模組 C：車次安排與人員分工表
+         模組 C：車次安排與人員分工表（可編輯拖曳、儲存）
          ────────────────────────────────────────────── -->
-    <article id="section-roles" class="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 card-shadow">
-      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+    <article id="section-roles" class="bg-white rounded-2xl border border-sky-200 p-5 sm:p-6 card-shadow space-y-6">
+      
+      <!-- 標題與複製按鈕 -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 pb-3">
         <div>
           <h3 class="text-base sm:text-lg font-black text-gray-900 flex items-center gap-2">
-            <i class="fa-solid fa-car-side text-sky-600"></i> 車次安排 ＆ 人員任務分工表
+            <i class="fa-solid fa-car-side text-sky-600"></i> 車次安排 ＆ 人員分工表
           </h3>
-          <p class="text-xs text-gray-500 mt-0.5">出發前確定各車車手乘客與集合地點，行車平安第一！</p>
+          <p class="text-xs text-gray-500 mt-0.5">每個人都有專屬超能力，大家分工合作玩得最盡興！</p>
         </div>
-        <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-sky-50 text-sky-700 border border-sky-200">
-          共乘分工超順暢
-        </span>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <!-- 1 號車 -->
-        <div class="border border-sky-100 rounded-xl p-4 bg-sky-50/30 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-black text-sm text-sky-950 flex items-center gap-1.5">
-              <i class="fa-solid fa-car text-sky-600"></i> 1 號車（主揪領航車）
-            </span>
-            <span class="text-[11px] bg-sky-100 text-sky-800 px-2 py-0.5 rounded-full font-bold">4 人座</span>
-          </div>
-          <div class="text-xs text-gray-600 space-y-1">
-            <p><strong>🚗 車手：</strong>Edward</p>
-            <p><strong>👥 乘客：</strong>待填入 / 待填入 / 待填入</p>
-            <p><strong>📍 集合點：</strong>指定捷運站 / 高鐵站出口集合</p>
-          </div>
-        </div>
-
-        <!-- 2 號車 -->
-        <div class="border border-sky-100 rounded-xl p-4 bg-sky-50/30 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-black text-sm text-sky-950 flex items-center gap-1.5">
-              <i class="fa-solid fa-car text-sky-600"></i> 2 號車（後勤應援車）
-            </span>
-            <span class="text-[11px] bg-sky-100 text-sky-800 px-2 py-0.5 rounded-full font-bold">4 人座</span>
-          </div>
-          <div class="text-xs text-gray-600 space-y-1">
-            <p><strong>🚗 車手：</strong>待指定好友車手</p>
-            <p><strong>👥 乘客：</strong>待填入 / 待填入 / 待填入</p>
-            <p><strong>📍 集合點：</strong>台中市區指定地點接送</p>
-          </div>
-        </div>
-
-        <!-- 分工角色認領 -->
-        <div class="sm:col-span-2 bg-stone-50 rounded-xl p-3.5 border border-stone-200 space-y-2">
-          <div class="font-black text-sm text-amber-900 flex items-center gap-1.5">
-            <i class="fa-solid fa-users-gear text-amber-600"></i> 趣味任務分工
-          </div>
-          <div class="grid grid-cols-2 gap-2 text-xs">
-            <div class="p-2 rounded-lg bg-white border border-gray-100">
-              <strong class="text-gray-900 block font-bold">👑 主揪總指揮</strong>
-              <span class="text-gray-500">Edward（統籌一切行程與預訂）</span>
-            </div>
-            <div class="p-2 rounded-lg bg-white border border-gray-100">
-              <strong class="text-gray-900 block font-bold">🥩 烤肉生火大廚</strong>
-              <span class="text-gray-500">掌管庭園炭火與料理</span>
-            </div>
-            <div class="p-2 rounded-lg bg-white border border-gray-100">
-              <strong class="text-gray-900 block font-bold">💰 財務採買官</strong>
-              <span class="text-gray-500">管公積金與超市結帳</span>
-            </div>
-            <div class="p-2 rounded-lg bg-white border border-gray-100">
-              <strong class="text-gray-900 block font-bold">📸 首席攝影師</strong>
-              <span class="text-gray-500">捕捉大家搞笑自然回憶照</span>
-            </div>
-          </div>
+        <div class="flex items-center gap-2">
+          <button onclick="copyCarpoolResult()" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white shadow-sm transition active:scale-95 inline-flex items-center gap-1">
+            <i class="fa-solid fa-copy"></i> 複製車次分工貼 DC
+          </button>
         </div>
       </div>
+
+      <!-- 1. 參與人頭像池（可點擊、可拖曳、可新增編輯） -->
+      <div class="bg-amber-50/60 rounded-2xl p-4 border border-amber-200 space-y-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
+            <strong class="text-xs sm:text-sm font-black text-amber-950">
+              👥 參與人頭像池（點選或拖曳指派，支援手機點擊與電腦拖拉）
+            </strong>
+          </div>
+          <span class="text-[11px] text-amber-800 bg-amber-100/80 px-2.5 py-0.5 rounded-full font-bold" id="selected-member-hint">
+            💡 手機點一下成員再點目的地即可放入！
+          </span>
+        </div>
+
+        <!-- 成員標籤列表 -->
+        <div id="members-pool" class="flex flex-wrap gap-2 pt-1 min-h-[44px]">
+          <!-- 動態渲染成員標籤 -->
+        </div>
+
+        <!-- 新增成員欄位 -->
+        <div class="pt-2 border-t border-amber-200/60 flex items-center gap-2">
+          <input type="text" id="new-member-name" placeholder="輸入新參與人姓名..." maxlength="12"
+            class="text-xs px-3 py-1.5 rounded-lg border border-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white flex-1 max-w-xs">
+          <button onclick="addNewMember()" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white transition active:scale-95 shadow-xs">
+            ➕ 新增參與人
+          </button>
+          <button onclick="resetDefaultMembers()" class="text-[11px] text-gray-500 hover:text-gray-700 underline ml-auto">
+            恢復預設名單
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. 車次乘客配對（1號車 / 2號車） -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h4 class="text-xs sm:text-sm font-black text-sky-950 flex items-center gap-1.5">
+            <i class="fa-solid fa-van-shuttle text-sky-600"></i> 車次乘客配對（點選成員後點車次加入，或電腦直接拖曳）
+          </h4>
+          <span class="text-[11px] text-gray-400">點成員上的 ✕ 可卸下</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- 1 號車 -->
+          <div id="car-1-dropzone" onclick="handleZoneClick('car_1')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'car_1')"
+            class="rounded-2xl p-4 bg-sky-50/40 border-2 border-sky-200 hover:border-sky-400 transition cursor-pointer space-y-3 relative group">
+            <div class="flex items-center justify-between">
+              <span class="font-black text-sm text-sky-950 flex items-center gap-1.5">
+                <i class="fa-solid fa-car-side text-sky-600 text-base"></i> 1 號車（主揪領航車）
+              </span>
+              <span id="car-1-count" class="text-xs bg-sky-100 text-sky-800 px-2.5 py-0.5 rounded-full font-bold">
+                0 人
+              </span>
+            </div>
+
+            <!-- 乘客標籤槽 -->
+            <div class="min-h-[46px] p-2 rounded-xl bg-white/80 border border-sky-100 flex flex-wrap gap-1.5 items-center" id="car-1-passengers">
+              <span class="text-[11px] text-gray-400 italic pointer-events-none empty-hint">尚未安排乘客（點選或拖入頭像）</span>
+            </div>
+
+            <!-- 可編輯集合資訊（防孤字 text-wrap: pretty） -->
+            <div class="space-y-1.5 text-xs text-gray-700 pt-2 border-t border-sky-100" onclick="event.stopPropagation()">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-sky-900 w-14 flex-shrink-0">📍 集合點：</span>
+                <input type="text" id="car-1-location" value="台中高鐵站出口 / 市區指定點" onchange="saveRolesData()"
+                  class="flex-1 px-2.5 py-1 rounded-md border border-gray-200 focus:border-sky-500 focus:outline-none bg-white text-xs text-gray-800">
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-sky-900 w-14 flex-shrink-0">🕒 集合時間：</span>
+                <input type="text" id="car-1-time" value="10:30" onchange="saveRolesData()"
+                  class="flex-1 px-2.5 py-1 rounded-md border border-gray-200 focus:border-sky-500 focus:outline-none bg-white text-xs text-gray-800">
+              </div>
+            </div>
+          </div>
+
+          <!-- 2 號車 -->
+          <div id="car-2-dropzone" onclick="handleZoneClick('car_2')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'car_2')"
+            class="rounded-2xl p-4 bg-sky-50/40 border-2 border-sky-200 hover:border-sky-400 transition cursor-pointer space-y-3 relative group">
+            <div class="flex items-center justify-between">
+              <span class="font-black text-sm text-sky-950 flex items-center gap-1.5">
+                <i class="fa-solid fa-car text-sky-600 text-base"></i> 2 號車（歡樂跟車）
+              </span>
+              <span id="car-2-count" class="text-xs bg-sky-100 text-sky-800 px-2.5 py-0.5 rounded-full font-bold">
+                0 人
+              </span>
+            </div>
+
+            <!-- 乘客標籤槽 -->
+            <div class="min-h-[46px] p-2 rounded-xl bg-white/80 border border-sky-100 flex flex-wrap gap-1.5 items-center" id="car-2-passengers">
+              <span class="text-[11px] text-gray-400 italic pointer-events-none empty-hint">尚未安排乘客（點選或拖入頭像）</span>
+            </div>
+
+            <!-- 可編輯集合資訊 -->
+            <div class="space-y-1.5 text-xs text-gray-700 pt-2 border-t border-sky-100" onclick="event.stopPropagation()">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-sky-900 w-14 flex-shrink-0">📍 集合點：</span>
+                <input type="text" id="car-2-location" value="捷運文心中清站旁 / 彈性接送" onchange="saveRolesData()"
+                  class="flex-1 px-2.5 py-1 rounded-md border border-gray-200 focus:border-sky-500 focus:outline-none bg-white text-xs text-gray-800">
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-sky-900 w-14 flex-shrink-0">🕒 集合時間：</span>
+                <input type="text" id="car-2-time" value="10:30" onchange="saveRolesData()"
+                  class="flex-1 px-2.5 py-1 rounded-md border border-gray-200 focus:border-sky-500 focus:outline-none bg-white text-xs text-gray-800">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 備註輸入區（防止孤字，可打字儲存） -->
+        <div class="bg-sky-50/30 rounded-xl p-3 border border-sky-100 space-y-1.5">
+          <label class="block text-xs font-bold text-sky-900 flex items-center justify-between">
+            <span>📝 車況與行李共乘備註（手機直接打字，自動即時保存）：</span>
+            <span class="text-[11px] text-gray-400 font-normal">防孤字精緻排版</span>
+          </label>
+          <textarea id="car-notes" rows="2" placeholder="例如：後車廂空間充足，每人可帶一中型行李箱；若有暈車請先告知坐前座..." onchange="saveRolesData()"
+            class="w-full text-xs p-2.5 rounded-lg border border-gray-200 focus:border-sky-400 focus:outline-none bg-white leading-relaxed text-gray-800 resize-none"></textarea>
+        </div>
+      </div>
+
+      <!-- 3. 趣味任務分工（主揪、統籌、大廚、首席攝影師、採買官） -->
+      <div class="space-y-3 pt-2 border-t border-gray-100">
+        <h4 class="text-xs sm:text-sm font-black text-amber-950 flex items-center gap-1.5">
+          <i class="fa-solid fa-users-gear text-amber-600"></i> 趣味任務分工（讓大家自己認領或指派）
+        </h4>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
+          <!-- 職位 1: 主揪 -->
+          <div id="role-leader" onclick="handleZoneClick('role_leader')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'role_leader')"
+            class="p-2.5 rounded-xl bg-amber-50/50 border border-amber-200 hover:border-amber-400 cursor-pointer transition text-xs space-y-1.5">
+            <strong class="text-amber-950 font-bold block flex items-center gap-1">👑 主揪</strong>
+            <div id="role-leader-slot" class="min-h-[32px] flex flex-wrap gap-1 items-center">
+              <span class="text-[10px] text-gray-400 italic empty-hint">點選指派</span>
+            </div>
+          </div>
+
+          <!-- 職位 2: 統籌 -->
+          <div id="role-coordinator" onclick="handleZoneClick('role_coordinator')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'role_coordinator')"
+            class="p-2.5 rounded-xl bg-blue-50/50 border border-blue-200 hover:border-blue-400 cursor-pointer transition text-xs space-y-1.5">
+            <strong class="text-blue-950 font-bold block flex items-center gap-1">🧭 統籌</strong>
+            <div id="role-coordinator-slot" class="min-h-[32px] flex flex-wrap gap-1 items-center">
+              <span class="text-[10px] text-gray-400 italic empty-hint">點選指派</span>
+            </div>
+          </div>
+
+          <!-- 職位 3: 大廚 -->
+          <div id="role-chef" onclick="handleZoneClick('role_chef')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'role_chef')"
+            class="p-2.5 rounded-xl bg-rose-50/50 border border-rose-200 hover:border-rose-400 cursor-pointer transition text-xs space-y-1.5">
+            <strong class="text-rose-950 font-bold block flex items-center gap-1">🥩 大廚</strong>
+            <div id="role-chef-slot" class="min-h-[32px] flex flex-wrap gap-1 items-center">
+              <span class="text-[10px] text-gray-400 italic empty-hint">點選指派</span>
+            </div>
+          </div>
+
+          <!-- 職位 4: 首席攝影師 -->
+          <div id="role-photographer" onclick="handleZoneClick('role_photographer')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'role_photographer')"
+            class="p-2.5 rounded-xl bg-purple-50/50 border border-purple-200 hover:border-purple-400 cursor-pointer transition text-xs space-y-1.5">
+            <strong class="text-purple-950 font-bold block flex items-center gap-1">📸 首席攝影師</strong>
+            <div id="role-photographer-slot" class="min-h-[32px] flex flex-wrap gap-1 items-center">
+              <span class="text-[10px] text-gray-400 italic empty-hint">點選指派</span>
+            </div>
+          </div>
+
+          <!-- 職位 5: 採買官 -->
+          <div id="role-buyer" onclick="handleZoneClick('role_buyer')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'role_buyer')"
+            class="p-2.5 rounded-xl bg-emerald-50/50 border border-emerald-200 hover:border-emerald-400 cursor-pointer transition text-xs space-y-1.5">
+            <strong class="text-emerald-950 font-bold block flex items-center gap-1">💰 採買官</strong>
+            <div id="role-buyer-slot" class="min-h-[32px] flex flex-wrap gap-1 items-center">
+              <span class="text-[10px] text-gray-400 italic empty-hint">點選指派</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </article>
 
 
     <!-- ──────────────────────────────────────────────
-         模組 D：出遊記帳與自動分帳計算機
+         模組 D：出遊記帳 ＆ 最少次數完帳指南 (小學生秒懂)
          ────────────────────────────────────────────── -->
-    <article id="section-finance" class="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 card-shadow">
-      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+    <article id="section-finance" class="bg-white rounded-2xl border border-yellow-200 p-5 sm:p-6 card-shadow space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 pb-3">
         <div>
           <h3 class="text-base sm:text-lg font-black text-gray-900 flex items-center gap-2">
-            <i class="fa-solid fa-calculator text-yellow-600"></i> 出遊記帳 ＆ 自動分帳計算機
+            <i class="fa-solid fa-calculator text-yellow-600"></i> 出遊記帳 ＆ 最少轉帳次數計算機
           </h3>
-          <p class="text-xs text-gray-500 mt-0.5">誰先墊錢隨手記，自動精準算出每人各給誰多少錢！</p>
+          <p class="text-xs text-gray-500 mt-0.5">直接打字輸入記帳，自動以最少轉帳次數算出「誰要給誰多少錢」！</p>
         </div>
-        <button onclick="copySplitResult()" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white shadow-sm transition active:scale-95 inline-flex items-center gap-1">
-          <i class="fa-solid fa-copy"></i> 複製分帳明細貼 DC
+        <button onclick="copySplitSimplified()" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white shadow-sm transition active:scale-95 inline-flex items-center gap-1">
+          <i class="fa-solid fa-copy"></i> 複製極簡分帳貼 DC
         </button>
       </div>
 
-      <div class="space-y-3">
+      <!-- 1. 新增記帳表單（品項/金額/代墊人/分攤人） -->
+      <form onsubmit="handleAddExpense(event)" class="bg-yellow-50/40 rounded-2xl p-4 border border-yellow-200 space-y-3">
+        <div class="font-black text-xs text-yellow-950 flex items-center gap-1.5">
+          <i class="fa-solid fa-plus-circle text-yellow-600"></i> 快速新增一筆消費
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 text-xs">
+          <!-- 品項 -->
+          <div class="sm:col-span-5">
+            <label class="block text-gray-600 font-bold mb-1">消費品項名稱</label>
+            <input type="text" id="expense-title" placeholder="如：全聯食材、飲料啤酒..." required
+              class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-yellow-500 focus:outline-none bg-white">
+          </div>
+
+          <!-- 金額 -->
+          <div class="sm:col-span-3">
+            <label class="block text-gray-600 font-bold mb-1">金額 (NT$)</label>
+            <input type="number" id="expense-amount" placeholder="0" min="1" step="1" required
+              class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-yellow-500 focus:outline-none bg-white font-bold text-emerald-800">
+          </div>
+
+          <!-- 代墊人 -->
+          <div class="sm:col-span-4">
+            <label class="block text-gray-600 font-bold mb-1">誰先代墊</label>
+            <div class="flex items-center gap-1">
+              <select id="expense-payer" onchange="checkCustomPayer(this)" class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-yellow-500 focus:outline-none bg-white font-medium">
+                <!-- 動態注入參與人選項 -->
+              </select>
+              <input type="text" id="custom-payer-input" placeholder="手動輸入姓名" class="hidden w-28 px-2 py-2 rounded-xl border border-gray-200 text-xs bg-white">
+            </div>
+          </div>
+        </div>
+
+        <!-- 誰需要分攤 -->
+        <div class="pt-2 border-t border-yellow-200/50 space-y-1.5">
+          <div class="flex items-center justify-between">
+            <label class="text-xs font-bold text-gray-700">👥 誰需要分攤這筆費用？</label>
+            <div class="space-x-2 text-[11px]">
+              <button type="button" onclick="selectAllSplitters(true)" class="text-amber-700 font-bold hover:underline">全體分攤</button>
+              <span class="text-gray-300">|</span>
+              <button type="button" onclick="selectAllSplitters(false)" class="text-gray-500 hover:underline">清空重選</button>
+            </div>
+          </div>
+          <div id="splitters-checkboxes" class="flex flex-wrap gap-2 text-xs">
+            <!-- 動態注入參與人核取膠囊 -->
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-black text-xs shadow-md transition active:scale-95 flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-receipt"></i>
+          <span>儲存並即時計算分帳</span>
+        </button>
+      </form>
+
+      <!-- 2. 消費支出明細列表 -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs text-gray-500 px-1">
+          <span class="font-bold text-gray-800">📋 已登記支出清單</span>
+          <span id="total-expenses-stat" class="font-bold text-amber-900">總計：NT$ 19,300</span>
+        </div>
+
         <div class="overflow-x-auto rounded-xl border border-gray-200">
           <table class="w-full text-left text-xs sm:text-sm whitespace-nowrap">
             <thead class="bg-gray-50 text-gray-700 border-b border-gray-200">
               <tr>
                 <th class="p-2.5">消費品項</th>
                 <th class="p-2.5">金額 (NT$)</th>
-                <th class="p-2.5">先代墊人</th>
-                <th class="p-2.5">分攤人數</th>
+                <th class="p-2.5">代墊人</th>
+                <th class="p-2.5">分攤對象</th>
+                <th class="p-2.5 text-center">操作</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-100 text-gray-700">
-              <tr>
-                <td class="p-2.5 font-bold">閒情驛棧 獨棟包棟住宿</td>
-                <td class="p-2.5 text-emerald-700 font-extrabold">$13,000</td>
-                <td class="p-2.5">Edward</td>
-                <td class="p-2.5">8 人 (全體)</td>
-              </tr>
-              <tr>
-                <td class="p-2.5 font-bold">烤肉食材 ＆ 超市酒水飲料</td>
-                <td class="p-2.5 text-emerald-700 font-extrabold">$3,500</td>
-                <td class="p-2.5">小明</td>
-                <td class="p-2.5">8 人 (全體)</td>
-              </tr>
-              <tr>
-                <td class="p-2.5 font-bold">Day 2 在地客家合菜午餐</td>
-                <td class="p-2.5 text-emerald-700 font-extrabold">$2,800</td>
-                <td class="p-2.5">阿華</td>
-                <td class="p-2.5">8 人 (全體)</td>
-              </tr>
+            <tbody id="expenses-tbody" class="divide-y divide-gray-100 text-gray-700">
+              <!-- 動態渲染記帳清單 -->
             </tbody>
           </table>
         </div>
+      </div>
 
-        <!-- 分帳試算結算卡片 -->
-        <div class="bg-amber-50/50 rounded-xl p-4 border border-amber-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm">
-          <div class="space-y-1 text-center sm:text-left">
-            <div class="text-gray-600">總支出累計：<strong class="text-gray-900 text-base font-black">NT$ 19,300</strong>（8人平均每人約 <strong class="text-amber-800 font-black">NT$ 2,413</strong>）</div>
-            <div class="text-amber-900 font-bold">💡 結算方案：其他人每人各給 Edward NT$ 2,413，由主揪 Edward 與代墊人一併完成結清！</div>
+      <!-- 3. 最少轉帳次數完帳指南（小學生都秒懂） -->
+      <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 sm:p-5 border-2 border-amber-300 space-y-3.5">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🎯</span>
+            <strong class="text-sm sm:text-base font-black text-amber-950">
+              最少轉帳次數完帳指南（小學生也能秒懂！）
+            </strong>
           </div>
-          <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 font-extrabold text-xs whitespace-nowrap">
-            一鍵結清無負擔
+          <span class="text-xs bg-amber-200 text-amber-900 font-extrabold px-3 py-1 rounded-full shadow-xs">
+            ✨ 每人最多只轉一次錢
           </span>
+        </div>
+
+        <p class="text-xs text-stone-600 leading-relaxed">
+          不用互相算老半天！演算法已自動完成債務對沖，以下是全場最少次數的平帳方式，大家對號入座轉帳即可全體結清：
+        </p>
+
+        <!-- 轉帳撮合清單卡片 -->
+        <div id="simplified-settlement-list" class="space-y-2">
+          <!-- 動態渲染最少次數轉帳卡片 -->
+        </div>
+
+        <div class="pt-3 border-t border-amber-200/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+          <span class="text-stone-500">
+            💡 轉帳完成後可截圖發在群組中報備核銷～
+          </span>
+          <button onclick="copySplitSimplified()" class="font-bold text-amber-800 hover:text-amber-950 underline flex items-center gap-1">
+            <i class="fa-solid fa-copy"></i> 點我複製這份極簡轉帳名單貼 DC
+          </button>
+        </div>
+      </div>
+
+    </article>
+
+
+    <!-- ──────────────────────────────────────────────
+         模組 H：趣味小遊戲（保持神秘感・賣關子）
+         ────────────────────────────────────────────── -->
+    <article id="section-games" class="bg-white rounded-2xl border border-purple-200 p-5 sm:p-6 card-shadow space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 pb-3">
+        <div>
+          <h3 class="text-base sm:text-lg font-black text-gray-900 flex items-center gap-2">
+            <i class="fa-solid fa-dice text-purple-600"></i> 趣味小遊戲 🎲
+          </h3>
+          <p class="text-xs text-gray-500 mt-0.5">主揪精心策劃神秘環節，當晚現場準時開箱！</p>
+        </div>
+        <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-purple-100 text-purple-800 border border-purple-200">
+          🤫 機密企劃中
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+        <!-- 關子 1 -->
+        <div class="p-4 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-200 space-y-2 relative overflow-hidden">
+          <div class="text-2xl">🤫</div>
+          <strong class="text-purple-950 font-black text-sm block">特級破冰・神秘企劃</strong>
+          <p class="text-xs text-purple-900/80 leading-relaxed">
+            「規則不能先說，說了就不刺激了！」主揪準備了讓全場笑到肚子痛的破冰互動，當晚庭園烤肉生火後準時宣佈規則！
+          </p>
+          <div class="text-[11px] font-bold text-purple-700 bg-white/80 inline-block px-2 py-0.5 rounded-md border border-purple-200">
+            ✨ 敬請期待
+          </div>
+        </div>
+
+        <!-- 關子 2 -->
+        <div class="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 space-y-2">
+          <div class="text-2xl">🀄</div>
+          <strong class="text-emerald-950 font-black text-sm block">石岡雀王爭霸戰</strong>
+          <p class="text-xs text-emerald-900/80 leading-relaxed">
+            閒情驛棧專屬麻將桌！8位高手誰能在南洋風木屋中胡牌登頂、奪得本屆石岡雀王稱號？當晚準時摸八圈！
+          </p>
+          <div class="text-[11px] font-bold text-emerald-700 bg-white/80 inline-block px-2 py-0.5 rounded-md border border-emerald-200">
+            🏆 冠軍獎品現場揭曉
+          </div>
+        </div>
+
+        <!-- 關子 3 -->
+        <div class="p-4 rounded-xl bg-gradient-to-br from-rose-50 to-amber-50 border border-rose-200 space-y-2">
+          <div class="text-2xl">🍷</div>
+          <strong class="text-rose-950 font-black text-sm block">深夜微醺・靈魂拷問</strong>
+          <p class="text-xs text-rose-900/80 leading-relaxed">
+            吃飽喝足後的宵夜場，配點小酒，還有專為大家量身定制的隱藏版神秘遊戲。想知道有多精彩？千萬別太早睡著！
+          </p>
+          <div class="text-[11px] font-bold text-rose-700 bg-white/80 inline-block px-2 py-0.5 rounded-md border border-rose-200">
+            🌙 深夜限定神秘解鎖
+          </div>
         </div>
       </div>
     </article>
@@ -763,73 +1018,15 @@
 
 
     <!-- ──────────────────────────────────────────────
-         模組 H：露營聚會氣氛歌單 ＆ 破冰遊戲
+         模組 E：照片相簿牆 ＆ 影片空間 ＆ 一鍵下載回憶錄
          ────────────────────────────────────────────── -->
-    <article id="section-party" class="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 card-shadow">
-      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+    <article id="section-album" class="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 card-shadow space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
         <div>
           <h3 class="text-base sm:text-lg font-black text-gray-900 flex items-center gap-2">
-            <i class="fa-solid fa-music text-purple-600"></i> 聚會氣氛歌單 ＆ 派對破冰遊戲
+            <i class="fa-solid fa-camera-retro text-rose-600"></i> 照片時光相簿 ＆ 影片空間
           </h3>
-          <p class="text-xs text-gray-500 mt-0.5">烤肉喝點小酒，客廳 86 吋電視播音樂，氣氛直接拉滿！</p>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- 推薦歌單 -->
-        <div class="p-4 rounded-xl bg-purple-50/40 border border-purple-100 space-y-3">
-          <div class="font-black text-sm text-purple-900 flex items-center gap-1.5">
-            <i class="fa-solid fa-headphones text-purple-600"></i> 精選放鬆 Chill 歌單
-          </div>
-          <div class="space-y-2 text-xs sm:text-sm">
-            <a href="https://open.spotify.com/search/chill%20acoustic%20pop" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-lg bg-white border border-purple-100 shadow-xs flex items-center justify-between hover:bg-purple-50 transition group">
-              <div class="flex items-center gap-2">
-                <i class="fa-brands fa-spotify text-green-500 text-lg"></i>
-                <span class="font-bold text-gray-800 group-hover:text-purple-700">Spotify 渡假放鬆 Chill 歌單</span>
-              </div>
-              <i class="fa-solid fa-play text-xs text-gray-400 group-hover:text-purple-600"></i>
-            </a>
-            <a href="https://www.youtube.com/results?search_query=acoustic+chill+music" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-lg bg-white border border-purple-100 shadow-xs flex items-center justify-between hover:bg-purple-50 transition group">
-              <div class="flex items-center gap-2">
-                <i class="fa-brands fa-youtube text-red-500 text-lg"></i>
-                <span class="font-bold text-gray-800 group-hover:text-purple-700">YouTube 輕音樂・不間斷 BGM</span>
-              </div>
-              <i class="fa-solid fa-play text-xs text-gray-400 group-hover:text-purple-600"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- 破冰遊戲速查 -->
-        <div class="p-4 rounded-xl bg-purple-50/40 border border-purple-100 space-y-3">
-          <div class="font-black text-sm text-purple-900 flex items-center gap-1.5">
-            <i class="fa-solid fa-dice text-purple-600"></i> 聚會小遊戲玩法
-          </div>
-          <div class="space-y-2 text-xs">
-            <div class="p-2 bg-white rounded-lg border border-purple-100">
-              <strong class="text-purple-950 font-bold">🀄 閒情麻將大賽</strong>：民宿備有專用麻將桌，8人輪番上陣切磋手氣！
-            </div>
-            <div class="p-2 bg-white rounded-lg border border-purple-100">
-              <strong class="text-purple-950 font-bold">🐢 海龜湯 ＆ 誰是臥底</strong>：手機打開即可玩，推理腦洞大開笑料百出！
-            </div>
-            <div class="p-2 bg-white rounded-lg border border-purple-100">
-              <strong class="text-purple-950 font-bold">🍺 真心話大冒險</strong>：宵夜小酌的最佳催化劑，聊出平時不知道的趣事！
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
-
-
-    <!-- ──────────────────────────────────────────────
-         模組 E：照片時光相簿 ＆ 下載出遊回憶錄
-         ────────────────────────────────────────────── -->
-    <article id="section-album" class="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 card-shadow">
-      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-        <div>
-          <h3 class="text-base sm:text-lg font-black text-gray-900 flex items-center gap-2">
-            <i class="fa-solid fa-camera-retro text-rose-600"></i> 照片時光相簿 ＆ 一鍵下載出遊回憶錄
-          </h3>
-          <p class="text-xs text-gray-500 mt-0.5">活動結束後，點擊一鍵打包下載，永遠珍藏專屬美好回憶！</p>
+          <p class="text-xs text-gray-500 mt-0.5">精彩出遊回憶隨手拍，大容量雲端影片上傳與離線打包下載！</p>
         </div>
         <div class="flex items-center gap-2">
           <button onclick="downloadHtmlMemory()" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white shadow-sm transition active:scale-95 inline-flex items-center gap-1.5">
@@ -838,6 +1035,24 @@
           <button onclick="exportToPdf()" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition inline-flex items-center gap-1">
             <i class="fa-solid fa-print"></i> 列印 / 存為 PDF
           </button>
+        </div>
+      </div>
+
+      <!-- 🎬 上傳影片專區（Google Drive 零成本無損直存推薦方案） -->
+      <div class="bg-gradient-to-r from-sky-50 via-indigo-50 to-purple-50 rounded-2xl p-4 border border-sky-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="space-y-1 text-center sm:text-left">
+          <div class="flex items-center justify-center sm:justify-start gap-2">
+            <span class="text-xl">🎬</span>
+            <strong class="text-sm font-black text-sky-950">出遊高畫質影片 ＆ 原圖共享雲端相簿</strong>
+          </div>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            手機拍的 4K 影片與連拍大片，直接上傳到 Google Drive 共享資料夾！免壓縮、原畫質永久保存。
+          </p>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white text-xs font-black shadow-md transition active:scale-95 inline-flex items-center gap-1.5">
+            <i class="fa-brands fa-google-drive"></i> 開啟 Google 雲端上傳影片
+          </a>
         </div>
       </div>
 
@@ -879,10 +1094,62 @@
   </div>
 
 
-  <!-- ==================== 互動腳本 ==================== -->
+  <!-- ==================== 核心互動腳本 ==================== -->
   <script>
     const TRIP_PASSWORD = "boa19950303";
     const STORAGE_KEY = "trip_unlocked_taichung";
+    const MEMBERS_KEY = "trip_members_data";
+    const ROLES_KEY = "trip_roles_data";
+    const EXPENSES_KEY = "trip_expenses_data";
+
+    // 預設成員清單
+    const DEFAULT_MEMBERS = [
+      { id: "m1", name: "阿寶boa", icon: "👑", color: "bg-amber-100 text-amber-900 border-amber-300" },
+      { id: "m2", name: "蕃薯", icon: "🍠", color: "bg-orange-100 text-orange-900 border-orange-300" },
+      { id: "m3", name: "ㄞ恩", icon: "✨", color: "bg-purple-100 text-purple-900 border-purple-300" },
+      { id: "m4", name: "紫兒", icon: "🌸", color: "bg-pink-100 text-pink-900 border-pink-300" },
+      { id: "m5", name: "CC＋女兒Abby", icon: "👩‍👧", color: "bg-rose-100 text-rose-900 border-rose-300" },
+      { id: "m6", name: "Olaf", icon: "⛄", color: "bg-sky-100 text-sky-900 border-sky-300" },
+      { id: "m7", name: "Orca", icon: "🐋", color: "bg-blue-100 text-blue-900 border-blue-300" },
+      { id: "m8", name: "Edward", icon: "⛺", color: "bg-emerald-100 text-emerald-900 border-emerald-300" }
+    ];
+
+    // 預設車次與職位分配
+    const DEFAULT_ROLES = {
+      car_1: ["Edward"],
+      car_2: [],
+      car_1_location: "台中高鐵站出口 / 市區指定點",
+      car_1_time: "10:30",
+      car_2_location: "捷運文心中清站旁 / 彈性接送",
+      car_2_time: "10:30",
+      notes: "後車廂空間充足，每人可帶一中型行李箱；若有暈車請先告知坐前座！",
+      role_leader: ["Edward"],
+      role_coordinator: [],
+      role_chef: [],
+      role_photographer: [],
+      role_buyer: []
+    };
+
+    // 預設記帳支出清單
+    const DEFAULT_EXPENSES = [
+      { id: "e1", title: "閒情驛棧 獨棟包棟住宿", amount: 13000, payer: "Edward", splitters: ["阿寶boa", "蕃薯", "ㄞ恩", "紫兒", "CC＋女兒Abby", "Olaf", "Orca", "Edward"] },
+      { id: "e2", title: "烤肉食材 ＆ 超市酒水飲料", amount: 3500, payer: "阿寶boa", splitters: ["阿寶boa", "蕃薯", "ㄞ恩", "紫兒", "CC＋女兒Abby", "Olaf", "Orca", "Edward"] },
+      { id: "e3", title: "Day 2 在地客家合菜午餐", amount: 2800, payer: "蕃薯", splitters: ["阿寶boa", "蕃薯", "ㄞ恩", "紫兒", "CC＋女兒Abby", "Olaf", "Orca", "Edward"] }
+    ];
+
+    let members = [];
+    let rolesData = {};
+    let expenses = [];
+    let selectedMemberId = null;
+
+    // 初始化載入
+    function initApp() {
+      checkGate();
+      loadMembers();
+      loadRoles();
+      loadExpenses();
+      renderAll();
+    }
 
     // 檢查通關密碼狀態
     function checkGate() {
@@ -895,7 +1162,7 @@
       }
     }
 
-    // 密碼驗證解鎖
+    // 密碼解鎖
     function handleUnlock(e) {
       e.preventDefault();
       const input = document.getElementById('trip-password-input');
@@ -905,9 +1172,7 @@
         err.classList.add('hidden');
         const gate = document.getElementById('password-gate');
         gate.classList.add('opacity-0', 'transition-opacity', 'duration-500');
-        setTimeout(() => {
-          gate.classList.add('hidden');
-        }, 500);
+        setTimeout(() => gate.classList.add('hidden'), 500);
       } else {
         err.classList.remove('hidden');
         input.classList.add('border-rose-500');
@@ -915,10 +1180,482 @@
       }
     }
 
-    // 重新上鎖
     function lockPage() {
       localStorage.removeItem(STORAGE_KEY);
       location.reload();
+    }
+
+    // 載入成員
+    function loadMembers() {
+      const saved = localStorage.getItem(MEMBERS_KEY);
+      members = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_MEMBERS));
+    }
+
+    function saveMembers() {
+      localStorage.setItem(MEMBERS_KEY, JSON.stringify(members));
+      renderMembers();
+      renderExpenseFormOptions();
+    }
+
+    function resetDefaultMembers() {
+      if (confirm('確定恢復為預設 8 位參與人名單嗎？')) {
+        members = JSON.parse(JSON.stringify(DEFAULT_MEMBERS));
+        rolesData = JSON.parse(JSON.stringify(DEFAULT_ROLES));
+        saveMembers();
+        saveRoles();
+        renderAll();
+        showToast('已恢復預設參與人名單！');
+      }
+    }
+
+    function addNewMember() {
+      const input = document.getElementById('new-member-name');
+      const name = input.value.trim();
+      if (!name) return;
+      if (members.some(m => m.name === name)) {
+        showToast('已有同名參與人囉！');
+        return;
+      }
+      const icons = ["🌟", "🎈", "🍀", "🚀", "🎸", "🥑", "🧁", "🐾", "🦊"];
+      const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+      const newMember = {
+        id: "m_" + Date.now(),
+        name: name,
+        icon: randomIcon,
+        color: "bg-teal-100 text-teal-900 border-teal-300"
+      };
+      members.push(newMember);
+      input.value = "";
+      saveMembers();
+      showToast(`已成功加入參與人：${randomIcon} ${name}`);
+    }
+
+    function deleteMember(id, event) {
+      if (event) event.stopPropagation();
+      const m = members.find(x => x.id === id);
+      if (!m) return;
+      if (confirm(`確定要移除「${m.name}」嗎？`)) {
+        members = members.filter(x => x.id !== id);
+        // 從車次與分工移除
+        Object.keys(rolesData).forEach(k => {
+          if (Array.isArray(rolesData[k])) {
+            rolesData[k] = rolesData[k].filter(n => n !== m.name);
+          }
+        });
+        saveMembers();
+        saveRoles();
+        renderAll();
+      }
+    }
+
+    // 載入車次與分工
+    function loadRoles() {
+      const saved = localStorage.getItem(ROLES_KEY);
+      rolesData = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_ROLES));
+    }
+
+    function saveRoles() {
+      // 讀取輸入框
+      rolesData.car_1_location = document.getElementById('car-1-location').value;
+      rolesData.car_1_time = document.getElementById('car-1-time').value;
+      rolesData.car_2_location = document.getElementById('car-2-location').value;
+      rolesData.car_2_time = document.getElementById('car-2-time').value;
+      rolesData.notes = document.getElementById('car-notes').value;
+      localStorage.setItem(ROLES_KEY, JSON.stringify(rolesData));
+    }
+
+    function saveRolesData() {
+      saveRoles();
+      showToast('已即時儲存車次與備註！');
+    }
+
+    // 載入記帳資料
+    function loadExpenses() {
+      const saved = localStorage.getItem(EXPENSES_KEY);
+      expenses = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
+    }
+
+    function saveExpenses() {
+      localStorage.setItem(EXPENSES_KEY, JSON.stringify(expenses));
+      renderExpensesTable();
+      calculateSettlement();
+    }
+
+    // ==================== 渲染系統 ====================
+    function renderAll() {
+      renderMembers();
+      renderRoles();
+      renderExpenseFormOptions();
+      renderExpensesTable();
+      calculateSettlement();
+    }
+
+    // 渲染成員池
+    function renderMembers() {
+      const container = document.getElementById('members-pool');
+      container.innerHTML = members.map(m => {
+        const isSelected = selectedMemberId === m.id;
+        return `
+          <div draggable="true" ondragstart="handleDragStart(event, '${m.name}')" onclick="selectMember('${m.id}')"
+            class="member-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border cursor-grab active:cursor-grabbing shadow-xs ${m.color} ${isSelected ? 'member-selected' : ''}">
+            <span>${m.icon}</span>
+            <span>${m.name}</span>
+            <button type="button" onclick="deleteMember('${m.id}', event)" class="ml-1 text-gray-400 hover:text-rose-600 transition" title="刪除">✕</button>
+          </div>
+        `;
+      }).join('');
+
+      const hint = document.getElementById('selected-member-hint');
+      if (selectedMemberId) {
+        const sel = members.find(m => m.id === selectedMemberId);
+        hint.innerHTML = `<span class="text-amber-900 font-extrabold animate-bounce inline-block mr-1">👉</span>已選取【${sel.icon} ${sel.name}】，請點擊下方任一車次或職位即可放入！`;
+      } else {
+        hint.innerHTML = `💡 手機點一下成員再點目的地即可放入！`;
+      }
+    }
+
+    function selectMember(id) {
+      if (selectedMemberId === id) {
+        selectedMemberId = null;
+      } else {
+        selectedMemberId = id;
+      }
+      renderMembers();
+    }
+
+    // 處理點選目的地加入成員
+    function handleZoneClick(targetKey) {
+      if (!selectedMemberId) return;
+      const member = members.find(m => m.id === selectedMemberId);
+      if (!member) return;
+
+      if (!rolesData[targetKey]) rolesData[targetKey] = [];
+      if (!rolesData[targetKey].includes(member.name)) {
+        rolesData[targetKey].push(member.name);
+        saveRoles();
+        renderRoles();
+        showToast(`已將 ${member.name} 放入！`);
+      } else {
+        showToast(`${member.name} 已經在裡面囉！`);
+      }
+      selectedMemberId = null;
+      renderMembers();
+    }
+
+    // 從特定職位或車次移除成員
+    function removeMemberFromZone(targetKey, memberName, event) {
+      if (event) event.stopPropagation();
+      if (!rolesData[targetKey]) return;
+      rolesData[targetKey] = rolesData[targetKey].filter(n => n !== memberName);
+      saveRoles();
+      renderRoles();
+      showToast(`已將 ${memberName} 移出！`);
+    }
+
+    // 渲染車次與分工
+    function renderRoles() {
+      // 1 號車
+      const c1Slot = document.getElementById('car-1-passengers');
+      const c1List = rolesData.car_1 || [];
+      document.getElementById('car-1-count').textContent = `${c1List.length} 人`;
+      c1Slot.innerHTML = c1List.length === 0 
+        ? `<span class="text-[11px] text-gray-400 italic pointer-events-none empty-hint">尚未安排乘客（點選或拖入頭像）</span>`
+        : c1List.map(name => createBadgeHtml('car_1', name)).join('');
+
+      // 2 號車
+      const c2Slot = document.getElementById('car-2-passengers');
+      const c2List = rolesData.car_2 || [];
+      document.getElementById('car-2-count').textContent = `${c2List.length} 人`;
+      c2Slot.innerHTML = c2List.length === 0 
+        ? `<span class="text-[11px] text-gray-400 italic pointer-events-none empty-hint">尚未安排乘客（點選或拖入頭像）</span>`
+        : c2List.map(name => createBadgeHtml('car_2', name)).join('');
+
+      // 5 大職位
+      const roleKeys = ['role_leader', 'role_coordinator', 'role_chef', 'role_photographer', 'role_buyer'];
+      const slotMap = {
+        role_leader: 'role-leader-slot',
+        role_coordinator: 'role-coordinator-slot',
+        role_chef: 'role-chef-slot',
+        role_photographer: 'role-photographer-slot',
+        role_buyer: 'role-buyer-slot'
+      };
+
+      roleKeys.forEach(k => {
+        const slotEl = document.getElementById(slotMap[k]);
+        const list = rolesData[k] || [];
+        slotEl.innerHTML = list.length === 0 
+          ? `<span class="text-[10px] text-gray-400 italic empty-hint">點選指派</span>`
+          : list.map(name => createBadgeHtml(k, name)).join('');
+      });
+
+      // 輸入框賦值
+      if (rolesData.car_1_location !== undefined) document.getElementById('car-1-location').value = rolesData.car_1_location;
+      if (rolesData.car_1_time !== undefined) document.getElementById('car-1-time').value = rolesData.car_1_time;
+      if (rolesData.car_2_location !== undefined) document.getElementById('car-2-location').value = rolesData.car_2_location;
+      if (rolesData.car_2_time !== undefined) document.getElementById('car-2-time').value = rolesData.car_2_time;
+      if (rolesData.notes !== undefined) document.getElementById('car-notes').value = rolesData.notes;
+    }
+
+    function createBadgeHtml(zoneKey, name) {
+      const m = members.find(x => x.name === name) || { icon: "👤", color: "bg-gray-100 text-gray-800 border-gray-200" };
+      return `
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold border shadow-2xs ${m.color}">
+          <span>${m.icon}</span>
+          <span>${name}</span>
+          <button type="button" onclick="removeMemberFromZone('${zoneKey}', '${name}', event)" class="ml-1 text-gray-400 hover:text-rose-600 transition" title="移除">✕</button>
+        </span>
+      `;
+    }
+
+    // HTML5 Drag & Drop
+    function handleDragStart(e, name) {
+      e.dataTransfer.setData('text/plain', name);
+    }
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('dropzone-highlight');
+    }
+    function handleDragLeave(e) {
+      e.currentTarget.classList.remove('dropzone-highlight');
+    }
+    function handleDrop(e, targetKey) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('dropzone-highlight');
+      const name = e.dataTransfer.getData('text/plain');
+      if (!name) return;
+      if (!rolesData[targetKey]) rolesData[targetKey] = [];
+      if (!rolesData[targetKey].includes(name)) {
+        rolesData[targetKey].push(name);
+        saveRoles();
+        renderRoles();
+        showToast(`已將 ${name} 拖曳放入！`);
+      }
+    }
+
+    // ==================== 記帳與分帳表單系統 ====================
+    function renderExpenseFormOptions() {
+      // 代墊人選單
+      const payerSelect = document.getElementById('expense-payer');
+      const customPayerInput = document.getElementById('custom-payer-input');
+      payerSelect.innerHTML = members.map(m => `<option value="${m.name}">${m.icon} ${m.name}</option>`).join('')
+        + `<option value="__custom__">➕ 其他（自行輸入）</option>`;
+      customPayerInput.classList.add('hidden');
+
+      // 分攤人 Checkboxes
+      const splittersDiv = document.getElementById('splitters-checkboxes');
+      splittersDiv.innerHTML = members.map(m => `
+        <label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-gray-200 bg-white cursor-pointer hover:bg-amber-50 transition">
+          <input type="checkbox" name="expense_splitter" value="${m.name}" checked class="rounded text-amber-600 focus:ring-amber-500">
+          <span class="font-medium">${m.name}</span>
+        </label>
+      `).join('');
+    }
+
+    function checkCustomPayer(selectEl) {
+      const customInput = document.getElementById('custom-payer-input');
+      if (selectEl.value === '__custom__') {
+        customInput.classList.remove('hidden');
+        customInput.focus();
+      } else {
+        customInput.classList.add('hidden');
+      }
+    }
+
+    function selectAllSplitters(checked) {
+      document.querySelectorAll('input[name="expense_splitter"]').forEach(cb => cb.checked = checked);
+    }
+
+    function handleAddExpense(e) {
+      e.preventDefault();
+      const title = document.getElementById('expense-title').value.trim();
+      const amount = parseFloat(document.getElementById('expense-amount').value);
+      const payerSelect = document.getElementById('expense-payer');
+      let payer = payerSelect.value;
+      if (payer === '__custom__') {
+        payer = document.getElementById('custom-payer-input').value.trim();
+      }
+      if (!payer) {
+        showToast('請指定或輸入先代墊人！');
+        return;
+      }
+
+      const splitters = [];
+      document.querySelectorAll('input[name="expense_splitter"]:checked').forEach(cb => splitters.push(cb.value));
+      if (splitters.length === 0) {
+        showToast('請至少勾選一位分攤人！');
+        return;
+      }
+
+      const newExpense = {
+        id: "e_" + Date.now(),
+        title,
+        amount,
+        payer,
+        splitters
+      };
+
+      expenses.push(newExpense);
+      saveExpenses();
+      document.getElementById('expense-title').value = '';
+      document.getElementById('expense-amount').value = '';
+      showToast(`已成功記錄：${title} (NT$ ${amount.toLocaleString()})`);
+    }
+
+    function deleteExpense(id) {
+      if (confirm('確定要刪除這筆支出嗎？')) {
+        expenses = expenses.filter(x => x.id !== id);
+        saveExpenses();
+        showToast('已刪除支出項目！');
+      }
+    }
+
+    function renderExpensesTable() {
+      const tbody = document.getElementById('expenses-tbody');
+      let total = 0;
+      tbody.innerHTML = expenses.map(exp => {
+        total += exp.amount;
+        const splitText = exp.splitters.length === members.length ? `全體 (${exp.splitters.length}人)` : `${exp.splitters.length}人 (${exp.splitters.join('、')})`;
+        return `
+          <tr>
+            <td class="p-2.5 font-bold text-gray-800">${exp.title}</td>
+            <td class="p-2.5 font-extrabold text-emerald-700">NT$ ${exp.amount.toLocaleString()}</td>
+            <td class="p-2.5 font-medium text-gray-700">${exp.payer}</td>
+            <td class="p-2.5 text-gray-500 text-xs">${splitText}</td>
+            <td class="p-2.5 text-center">
+              <button onclick="deleteExpense('${exp.id}')" class="text-rose-500 hover:text-rose-700 p-1" title="刪除">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      document.getElementById('total-expenses-stat').textContent = `總計：NT$ ${total.toLocaleString()}`;
+    }
+
+    // ==================== 最少次數完帳演算法 (Debt Simplification) ====================
+    let currentSettlements = [];
+
+    function calculateSettlement() {
+      const balance = {}; // name -> net amount (positive: should receive, negative: should pay)
+      members.forEach(m => balance[m.name] = 0);
+
+      expenses.forEach(exp => {
+        const splitAmount = exp.amount / exp.splitters.length;
+        // 代墊人先增加額度
+        balance[exp.payer] = (balance[exp.payer] || 0) + exp.amount;
+        // 分攤人扣除額度
+        exp.splitters.forEach(person => {
+          balance[person] = (balance[person] || 0) - splitAmount;
+        });
+      });
+
+      // 分離出 debtors (<0) 與 creditors (>0)
+      const debtors = [];
+      const creditors = [];
+
+      Object.keys(balance).forEach(name => {
+        const net = Math.round(balance[name]);
+        if (net < -0.5) {
+          debtors.push({ name, amount: -net });
+        } else if (net > 0.5) {
+          creditors.push({ name, amount: net });
+        }
+      });
+
+      // 貪心演算法撮合最小次數
+      debtors.sort((a, b) => b.amount - a.amount);
+      creditors.sort((a, b) => b.amount - a.amount);
+
+      const settlements = [];
+      let i = 0, j = 0;
+
+      while (i < debtors.length && j < creditors.length) {
+        const settleAmount = Math.min(debtors[i].amount, creditors[j].amount);
+        if (settleAmount > 0) {
+          settlements.push({
+            from: debtors[i].name,
+            to: creditors[j].name,
+            amount: settleAmount
+          });
+        }
+        debtors[i].amount -= settleAmount;
+        creditors[j].amount -= settleAmount;
+
+        if (debtors[i].amount === 0) i++;
+        if (creditors[j].amount === 0) j++;
+      }
+
+      currentSettlements = settlements;
+      renderSettlementList(settlements);
+    }
+
+    function renderSettlementList(settlements) {
+      const container = document.getElementById('simplified-settlement-list');
+      if (settlements.length === 0) {
+        container.innerHTML = `
+          <div class="p-3 bg-white/80 rounded-xl text-center text-xs text-gray-500 font-bold border border-amber-200">
+            🎉 目前全體帳目已完全平帳，沒有任何人需要付款或收款囉！
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = settlements.map((s, idx) => `
+        <div class="flex items-center justify-between p-3 rounded-xl bg-white shadow-xs border border-amber-200/80 text-xs sm:text-sm">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="w-5 h-5 rounded-full bg-amber-600 text-white flex items-center justify-center text-[10px] font-black">${idx + 1}</span>
+            <span class="font-bold text-gray-800">${s.from}</span>
+            <span class="text-amber-600 font-black flex items-center gap-1">
+              <span>轉帳</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </span>
+            <span class="font-bold text-emerald-800">${s.to}</span>
+          </div>
+          <div class="font-black text-amber-900 text-sm sm:text-base flex-shrink-0">
+            NT$ ${s.amount.toLocaleString()}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 複製極簡分帳清單到 DC
+    function copySplitSimplified() {
+      if (currentSettlements.length === 0) {
+        showToast('目前沒有需要結算的帳目！');
+        return;
+      }
+      let text = `📋 【台中石岡 閒情驛棧出遊・最少次數極簡完帳指南】⛺\n`;
+      text += `（小學生都能看懂！每人只要轉一筆，帳目瞬間平帳）\n----------------------------------\n`;
+      currentSettlements.forEach((s, idx) => {
+        text += `${idx + 1}. 【${s.from}】 轉帳給 【${s.to}】：NT$ ${s.amount.toLocaleString()}\n`;
+      });
+      text += `----------------------------------\n💡 轉完帳請在群組中回報打勾確認唷！(來自 DC Edward 的小空間)`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('✅ 已複製極簡完帳清單！<br><span class="text-amber-300 font-bold">請直接貼在 Discord (DC) 群組！</span>');
+      });
+    }
+
+    // 複製車次分工貼 DC
+    function copyCarpoolResult() {
+      const c1List = rolesData.car_1 || [];
+      const c2List = rolesData.car_2 || [];
+      let text = `🚗 【台中石岡 閒情驛棧出遊・車次與人員分工名單】⛺\n`;
+      text += `----------------------------------\n`;
+      text += `🚙 1 號車（主揪領航）：\n- 乘客：${c1List.length ? c1List.join('、') : '待定'}\n- 集合點：${document.getElementById('car-1-location').value}\n- 集合時間：${document.getElementById('car-1-time').value}\n\n`;
+      text += `🚗 2 號車（歡樂跟車）：\n- 乘客：${c2List.length ? c2List.join('、') : '待定'}\n- 集合點：${document.getElementById('car-2-location').value}\n- 集合時間：${document.getElementById('car-2-time').value}\n\n`;
+      text += `📝 車況備註：\n${document.getElementById('car-notes').value || '無'}\n\n`;
+      text += `🎭 趣味分工認領：\n`;
+      text += `- 👑 主揪：${(rolesData.role_leader || []).join('、') || '待認領'}\n`;
+      text += `- 🧭 統籌：${(rolesData.role_coordinator || []).join('、') || '待認領'}\n`;
+      text += `- 🥩 大廚：${(rolesData.role_chef || []).join('、') || '待認領'}\n`;
+      text += `- 📸 攝影：${(rolesData.role_photographer || []).join('、') || '待認領'}\n`;
+      text += `- 💰 採買：${(rolesData.role_buyer || []).join('、') || '待認領'}\n`;
+      text += `----------------------------------\n(來自 DC Edward 的小空間)`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('✅ 已複製車次與分工表！<br><span class="text-sky-300 font-bold">請直接貼在 Discord (DC) 群組！</span>');
+      });
     }
 
     // 手機左側選單抽屜開關
@@ -942,14 +1679,6 @@
       el.scrollBy({ left: direction * width, behavior: 'smooth' });
     }
 
-    // 複製分帳明細貼在 DC
-    function copySplitResult() {
-      const textToCopy = `📋 【台中石岡 閒情驛棧包棟出遊・費用結算明細】⛺\n總支出：NT$ 19,300 (8人平均每人約 NT$ 2,413)\n- 閒情驛棧包棟住宿：$13,000 (Edward 代墊)\n- 烤肉食材與酒水：$3,500 (小明 代墊)\n- Day2在地客家合菜：$2,800 (阿華 代墊)\n👉 結算：其他人每人各給 Edward NT$ 2,413，由 Edward 與代墊人完成結清！(來自 DC 出遊記帳回報)`;
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        showToast('✅ 已複製分帳明細！<br><span class="text-amber-300 font-bold">請直接貼在 Discord (DC) 群組！</span>');
-      });
-    }
-
     // 下載單頁 HTML 離線時光膠囊
     function downloadHtmlMemory() {
       const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html;charset=utf-8' });
@@ -960,12 +1689,11 @@
       showToast('🎉 已打包下載 HTML 離線時光膠囊！<br>隨時傳進 LINE / 電腦點開即刻重溫回憶！');
     }
 
-    // 列印或另存為 PDF
     function exportToPdf() {
       window.print();
     }
 
-    // 監聽滾動控制回到頂端按鈕
+    // 回到頂端按鈕監聽
     window.addEventListener('scroll', () => {
       const btn = document.getElementById('back-to-top');
       if (!btn) return;
@@ -990,7 +1718,7 @@
       }, 3000);
     }
 
-    window.addEventListener('DOMContentLoaded', checkGate);
+    window.addEventListener('DOMContentLoaded', initApp);
   </script>
 </body>
 </html>
