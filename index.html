@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edward 的臨時空間 ⛺ 台中露營＆包棟木屋推薦清單</title>
-  <meta name="description" content="Edward 的臨時空間・精選 8 間台中免搭帳露營與獨立包棟小木屋！照片滑動、價格人數、官方資訊連結與評價，直接點選號碼一鍵複製貼到 Discord (DC) 回報！">
+  <title>Edward 的小空間 ⛺ 台中露營＆包棟木屋推薦清單</title>
+  <meta name="description" content="Edward 的小空間・精選 8 間台中免搭帳露營與獨立包棟小木屋！照片滑動、價格人數、官方資訊連結與評價，直接點選號碼一鍵複製貼到 Discord (DC) 回報！">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
@@ -51,13 +51,64 @@
 </head>
 <body class="min-h-screen pb-32 antialiased selection:bg-emerald-200">
 
+  <!-- 最頂部常駐導覽列（左上角大字標示：Edward 的小空間） -->
+  <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm py-2.5 px-3 sm:px-6">
+    <div class="max-w-5xl mx-auto flex items-center justify-between gap-3">
+      
+      <!-- ★ 螢幕最左上角：Edward 的小空間 ★ -->
+      <a href="#" class="flex items-center gap-2 flex-shrink-0 group">
+        <span class="text-xl sm:text-2xl">⛺</span>
+        <span class="font-black text-gray-900 text-base sm:text-lg tracking-tight whitespace-nowrap group-hover:text-emerald-700 transition">
+          Edward 的小空間
+        </span>
+        <span class="hidden sm:inline-block text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+          出遊特區
+        </span>
+      </a>
+
+      <!-- 中間/右側：分類篩選按鈕 -->
+      <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5">
+        <button onclick="filterCamp('all')" class="filter-btn active px-3 py-1 rounded-full text-xs sm:text-sm font-bold bg-emerald-700 text-white shadow-sm transition whitespace-nowrap">
+          全部 (8)
+        </button>
+        <button onclick="filterCamp('cabin')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
+          包棟小木屋 🏡
+        </button>
+        <button onclick="filterCamp('all-inclusive')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
+          一泊三食全包
+        </button>
+        <button onclick="filterCamp('mountain')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
+          高山星空
+        </button>
+        <button onclick="filterCamp('pet')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
+          寵物友善 🐶
+        </button>
+      </div>
+
+      <!-- 快速跳號（大螢幕） -->
+      <div class="hidden xl:flex items-center text-xs text-gray-400 font-medium whitespace-nowrap">
+        <span>跳號：</span>
+        <div class="flex gap-1 ml-1">
+          <a href="#camp-01" class="w-5 h-5 rounded bg-gray-100 text-gray-700 flex items-center justify-center font-bold hover:bg-emerald-200">1</a>
+          <a href="#camp-02" class="w-5 h-5 rounded bg-gray-100 text-gray-700 flex items-center justify-center font-bold hover:bg-emerald-200">2</a>
+          <a href="#camp-03" class="w-5 h-5 rounded bg-gray-100 text-gray-700 flex items-center justify-center font-bold hover:bg-emerald-200">3</a>
+          <a href="#camp-04" class="w-5 h-5 rounded bg-gray-100 text-gray-700 flex items-center justify-center font-bold hover:bg-emerald-200">4</a>
+          <a href="#camp-05" class="w-5 h-5 rounded bg-gray-100 text-gray-700 flex items-center justify-center font-bold hover:bg-emerald-200">5</a>
+          <a href="#camp-06" class="w-5 h-5 rounded bg-gray-100 text-gray-700 flex items-center justify-center font-bold hover:bg-emerald-200">6</a>
+          <a href="#camp-07" class="w-5 h-5 rounded bg-amber-100 text-amber-800 flex items-center justify-center font-bold hover:bg-amber-200">7</a>
+          <a href="#camp-08" class="w-5 h-5 rounded bg-amber-100 text-amber-800 flex items-center justify-center font-bold hover:bg-amber-200">8</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
   <!-- 頂部 Header 橫幅 -->
-  <header class="relative bg-gradient-to-r from-emerald-800 via-teal-800 to-emerald-900 text-white overflow-hidden py-9 px-4 sm:px-6 lg:px-8 shadow-lg">
+  <header class="relative bg-gradient-to-r from-emerald-800 via-teal-800 to-emerald-900 text-white overflow-hidden py-8 px-4 sm:px-6 lg:px-8 shadow-md">
     <div class="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
     <div class="max-w-4xl mx-auto text-center relative z-10">
       <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-700/70 border border-emerald-400/40 text-emerald-200 text-xs sm:text-sm font-semibold mb-3 shadow-inner">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-        <span>⛺ Edward 的臨時空間・出遊決策特區</span>
+        <span>⛺ Edward 的小空間・出遊決策特區</span>
       </div>
       <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white mb-3">
         台中露營 ＆ 包棟木屋・揪團名單 ⛺🏡
@@ -67,7 +118,7 @@
       </p>
 
       <!-- 快速指引標籤 -->
-      <div class="mt-5 flex flex-wrap justify-center gap-2 sm:gap-3 text-xs">
+      <div class="mt-4 flex flex-wrap justify-center gap-2 sm:gap-3 text-xs">
         <span class="bg-white/10 backdrop-blur-md px-3 py-1 rounded-lg border border-white/20">🍽️ 一泊三食全包</span>
         <span class="bg-white/10 backdrop-blur-md px-3 py-1 rounded-lg border border-white/20">🏡 獨棟包棟木屋</span>
         <span class="bg-white/10 backdrop-blur-md px-3 py-1 rounded-lg border border-white/20">🎤 KTV・麻將・烤肉</span>
@@ -76,43 +127,6 @@
       </div>
     </div>
   </header>
-
-  <!-- 快速導覽與分類篩選列（左上角清楚標示：Edward 的臨時空間） -->
-  <div class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm py-2.5 px-3 sm:px-4">
-    <div class="max-w-4xl mx-auto flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
-      
-      <!-- 左上角識別：Edward 的臨時空間 -->
-      <div class="flex items-center gap-2 flex-shrink-0 pr-3 border-r border-gray-200">
-        <div class="w-6 h-6 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
-          E
-        </div>
-        <span class="font-extrabold text-gray-900 text-xs sm:text-sm tracking-tight whitespace-nowrap flex items-center gap-1">
-          Edward 的臨時空間
-        </span>
-      </div>
-
-      <!-- 分類篩選按鈕 -->
-      <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
-        <button onclick="filterCamp('all')" class="filter-btn active px-3 py-1 rounded-full text-xs sm:text-sm font-bold bg-emerald-700 text-white shadow-sm transition">
-          全部 (8)
-        </button>
-        <button onclick="filterCamp('cabin')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
-          包棟小木屋 🏡
-        </button>
-        <button onclick="filterCamp('all-inclusive')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
-          一泊三食免動腦
-        </button>
-        <button onclick="filterCamp('mountain')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
-          高山星空與秘境
-        </button>
-        <button onclick="filterCamp('pet')" class="filter-btn px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
-          寵物友善 🐶
-        </button>
-      </div>
-
-      <!-- 快速跳號 -->
-      <div class="hidden lg:flex items-center text-xs text-gray-500 font-medium whitespace-nowrap ml-auto">
-        <span>跳號：</span>
         <div class="flex gap-1 ml-1">
           <a href="#camp-01" class="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">1</a>
           <a href="#camp-02" class="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">2</a>
