@@ -1113,28 +1113,27 @@
     const ROLES_KEY = "trip_roles_data";
     const EXPENSES_KEY = "trip_expenses_data";
 
-    // 預設成員清單
+    // 預設成員清單（阿寶boa 就是主揪 Edward，共 7 組家庭/個人，計 8 位同行）
     const DEFAULT_MEMBERS = [
-      { id: "m1", name: "阿寶boa", icon: "👑", color: "bg-amber-100 text-amber-900 border-amber-300" },
+      { id: "m1", name: "阿寶boa (Edward)", icon: "👑", color: "bg-amber-100 text-amber-900 border-amber-300" },
       { id: "m2", name: "蕃薯", icon: "🍠", color: "bg-orange-100 text-orange-900 border-orange-300" },
       { id: "m3", name: "ㄞ恩", icon: "✨", color: "bg-purple-100 text-purple-900 border-purple-300" },
       { id: "m4", name: "紫兒", icon: "🌸", color: "bg-pink-100 text-pink-900 border-pink-300" },
       { id: "m5", name: "CC＋女兒Abby", icon: "👩‍👧", color: "bg-rose-100 text-rose-900 border-rose-300" },
       { id: "m6", name: "Olaf", icon: "⛄", color: "bg-sky-100 text-sky-900 border-sky-300" },
-      { id: "m7", name: "Orca", icon: "🐋", color: "bg-blue-100 text-blue-900 border-blue-300" },
-      { id: "m8", name: "Edward", icon: "⛺", color: "bg-emerald-100 text-emerald-900 border-emerald-300" }
+      { id: "m7", name: "Orca", icon: "🐋", color: "bg-blue-100 text-blue-900 border-blue-300" }
     ];
 
-    // 預設車次與職位分配（與 Edward 安排即時同步儲存）
+    // 預設車次與職位分配（與最新排定即時同步）
     const DEFAULT_ROLES = {
-      car_1: ["Edward", "CC＋女兒Abby", "紫兒", "Olaf"],
+      car_1: ["阿寶boa (Edward)", "CC＋女兒Abby", "紫兒", "Olaf"],
       car_2: ["蕃薯", "ㄞ恩", "Orca"],
       car_1_location: "台北",
       car_1_time: "尚未決定",
       car_2_location: "尚未決定",
       car_2_time: "尚未決定",
       notes: "後車廂空間充足，每人可帶一中型行李箱；若有暈車請先告知坐前座！",
-      role_leader: ["Edward"],
+      role_leader: ["阿寶boa (Edward)"],
       role_coordinator: [],
       role_chef: [],
       role_photographer: [],
@@ -1143,9 +1142,9 @@
 
     // 預設記帳支出清單
     const DEFAULT_EXPENSES = [
-      { id: "e1", title: "閒情驛棧 獨棟包棟住宿", amount: 13000, payer: "Edward", splitters: ["阿寶boa", "蕃薯", "ㄞ恩", "紫兒", "CC＋女兒Abby", "Olaf", "Orca", "Edward"] },
-      { id: "e2", title: "烤肉食材 ＆ 超市酒水飲料", amount: 3500, payer: "阿寶boa", splitters: ["阿寶boa", "蕃薯", "ㄞ恩", "紫兒", "CC＋女兒Abby", "Olaf", "Orca", "Edward"] },
-      { id: "e3", title: "Day 2 在地客家合菜午餐", amount: 2800, payer: "蕃薯", splitters: ["阿寶boa", "蕃薯", "ㄞ恩", "紫兒", "CC＋女兒Abby", "Olaf", "Orca", "Edward"] }
+      { id: "e1", title: "閒情驛棧 獨棟包棟住宿", amount: 13000, payer: "阿寶boa (Edward)", splitters: ["阿寶boa (Edward)", "蕃薯", "ㄞ恩", "紫兒", "CC＋女兒Abby", "Olaf", "Orca"] },
+      { id: "e2", title: "烤肉食材 ＆ 超市酒水飲料", amount: 3500, payer: "阿寶boa (Edward)", splitters: ["阿寶boa (Edward)", "蕃薯", "ㄞ恩", "紫兒", "CC＋女兒Abby", "Olaf", "Orca"] },
+      { id: "e3", title: "Day 2 在地客家合菜午餐", amount: 2800, payer: "蕃薯", splitters: ["阿寶boa (Edward)", "蕃薯", "ㄞ恩", "紫兒", "CC＋女兒Abby", "Olaf", "Orca"] }
     ];
 
     let members = [];
@@ -1196,10 +1195,31 @@
       location.reload();
     }
 
-    // 載入成員
+    // 載入成員（自動合併「阿寶boa」與「Edward」為同一個人）
     function loadMembers() {
       const saved = localStorage.getItem(MEMBERS_KEY);
-      members = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_MEMBERS));
+      let list = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_MEMBERS));
+      
+      // 自動合併遷移：阿寶boa 就是 Edward
+      const hasOldEdward = list.some(m => m.name === "Edward");
+      const hasBoa = list.some(m => m.name.includes("阿寶boa"));
+      if (hasOldEdward && hasBoa) {
+        list = list.filter(m => m.name !== "Edward");
+        const boa = list.find(m => m.name.includes("阿寶boa"));
+        if (boa) boa.name = "阿寶boa (Edward)";
+        localStorage.setItem(MEMBERS_KEY, JSON.stringify(list));
+      } else if (hasOldEdward && !hasBoa) {
+        const ed = list.find(m => m.name === "Edward");
+        if (ed) ed.name = "阿寶boa (Edward)";
+        localStorage.setItem(MEMBERS_KEY, JSON.stringify(list));
+      } else if (!hasOldEdward && hasBoa) {
+        const boa = list.find(m => m.name === "阿寶boa");
+        if (boa) {
+          boa.name = "阿寶boa (Edward)";
+          localStorage.setItem(MEMBERS_KEY, JSON.stringify(list));
+        }
+      }
+      members = list;
     }
 
     function saveMembers() {
@@ -1209,7 +1229,7 @@
     }
 
     function resetDefaultMembers() {
-      if (confirm('確定恢復為預設 8 位參與人名單嗎？')) {
+      if (confirm('確定恢復為預設參與人名單嗎？')) {
         members = JSON.parse(JSON.stringify(DEFAULT_MEMBERS));
         rolesData = JSON.parse(JSON.stringify(DEFAULT_ROLES));
         saveMembers();
@@ -1259,10 +1279,20 @@
       }
     }
 
-    // 載入車次與分工
+    // 載入車次與分工（自動同步更新稱號）
     function loadRoles() {
       const saved = localStorage.getItem(ROLES_KEY);
-      rolesData = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_ROLES));
+      let data = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_ROLES));
+      
+      // 自動更換車次與職位中的名字
+      ['car_1', 'car_2', 'role_leader', 'role_coordinator', 'role_chef', 'role_photographer', 'role_buyer'].forEach(k => {
+        if (Array.isArray(data[k])) {
+          data[k] = data[k].map(n => (n === "Edward" || n === "阿寶boa") ? "阿寶boa (Edward)" : n);
+          data[k] = [...new Set(data[k])];
+        }
+      });
+      rolesData = data;
+      localStorage.setItem(ROLES_KEY, JSON.stringify(rolesData));
     }
 
     function saveRoles() {
@@ -1280,10 +1310,19 @@
       showToast('已即時儲存車次與備註！');
     }
 
-    // 載入記帳資料
+    // 載入記帳資料（自動同步更新代墊人與分攤對象）
     function loadExpenses() {
       const saved = localStorage.getItem(EXPENSES_KEY);
-      expenses = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
+      let list = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
+      list.forEach(exp => {
+        if (exp.payer === "Edward" || exp.payer === "阿寶boa") {
+          exp.payer = "阿寶boa (Edward)";
+        }
+        exp.splitters = exp.splitters.map(n => (n === "Edward" || n === "阿寶boa") ? "阿寶boa (Edward)" : n);
+        exp.splitters = [...new Set(exp.splitters)];
+      });
+      expenses = list;
+      localStorage.setItem(EXPENSES_KEY, JSON.stringify(expenses));
     }
 
     function saveExpenses() {
