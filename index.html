@@ -342,12 +342,30 @@
     .sch-day { border-radius: 0.9rem; padding: 1rem; border: 1px solid rgba(var(--c), .3); background: rgba(var(--c), .07); }
     .sch-head { display: flex; align-items: center; gap: 0.6rem; font-weight: 900; font-size: 0.95rem; color: rgb(var(--cd)); padding-bottom: 0.7rem; margin-bottom: 0.75rem; border-bottom: 1px solid rgba(var(--c), .25); }
     .sch-code { width: 1.8rem; height: 1.8rem; border-radius: 0.5rem; background: rgb(var(--cd)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; flex-shrink: 0; }
-    .sch-item { display: flex; align-items: flex-start; gap: 0.7rem; background: rgba(255,255,255,.75); border: 1px solid rgba(var(--c), .22); border-radius: 0.75rem; padding: 0.7rem 0.75rem; margin-bottom: 0.5rem; cursor: pointer; transition: border-color .15s, transform .1s; }
-    .sch-item:hover { border-color: rgba(var(--c), .6); }
-    .sch-item:active { transform: scale(0.99); }
+    .sch-item { display: flex; align-items: flex-start; gap: 0.7rem; background: rgba(255,255,255,.75); border: 1px solid rgba(var(--c), .22); border-radius: 0.75rem; padding: 0.7rem 0.75rem; margin-bottom: 0.5rem; transition: border-color .15s; }
     .sch-slot { flex-shrink: 0; min-width: 3.1rem; text-align: center; white-space: nowrap; font-weight: 900; font-size: 0.8rem; padding: 0.25rem 0.55rem; border-radius: 0.45rem; background: rgba(var(--c), .18); color: rgb(var(--cd)); }
-    .sch-text { flex: 1; min-width: 0; font-weight: 500; font-size: 0.92rem; line-height: 1.55; color: #1F2937; overflow-wrap: anywhere; padding-top: 0.1rem; }
+    .sch-text { white-space: pre-wrap; flex: 1; min-width: 0; font-weight: 500; font-size: 0.92rem; line-height: 1.55; color: #1F2937; overflow-wrap: anywhere; padding-top: 0.1rem; }
     .sch-pen { color: rgba(var(--cd), .45); font-size: 0.72rem; margin-top: 0.35rem; flex-shrink: 0; }
+    .sch-ta { resize: none; min-height: 3rem; line-height: 1.5; overflow: hidden; padding-top: 0.7rem; padding-bottom: 0.7rem; height: auto; }
+    .sch-edit-btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 0.75rem; font-weight: 800; font-size: 0.85rem; background: #1C1917; color: #FDE68A; transition: transform .15s; }
+    .sch-edit-btn:active, .sch-save-btn:active, .sch-btn-plain:active { transform: scale(0.95); }
+    .sch-save-btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1.1rem; border-radius: 0.75rem; font-weight: 800; font-size: 0.85rem; background: #047857; color: #fff; }
+    .sch-btn-plain { padding: 0.5rem 1rem; border-radius: 0.75rem; font-weight: 700; font-size: 0.85rem; background: transparent; color: #57534E; border: 1px solid #D6D3D1; }
+    #sch-bar { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(1rem + env(safe-area-inset-bottom)); z-index: 45; display: none; align-items: center; gap: 0.5rem; padding: 0.5rem 0.55rem 0.5rem 1rem; border-radius: 9999px; background: rgba(28,25,23,.94); box-shadow: 0 10px 30px rgba(0,0,0,.35); backdrop-filter: blur(8px); }
+    #sch-bar.on { display: flex; }
+    .sch-bar-label { color: #FDE68A; font-weight: 800; font-size: 0.85rem; white-space: nowrap; margin-right: 0.25rem; }
+    .sch-bar-cancel { padding: 0.5rem 0.95rem; border-radius: 9999px; font-weight: 700; font-size: 0.88rem; color: #E7E5E4; background: rgba(255,255,255,.1); }
+    .sch-bar-save { padding: 0.5rem 1.1rem; border-radius: 9999px; font-weight: 800; font-size: 0.88rem; color: #fff; background: #059669; display: inline-flex; align-items: center; gap: 0.35rem; }
+    .hang { display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.55; }
+    .hang-mark { flex-shrink: 0; color: #0D9488; margin-top: 0.28em; }
+    .hang-text { flex: 1; min-width: 0; }
+    html[data-theme="dark"] .hang-mark { color: #2DD4BF; }
+    html[data-theme="dark"] .sch-edit-btn { background: #FDE68A; color: #1C1917; }
+    html[data-theme="dark"] .sch-save-btn { background: #10B981; color: #04120C; }
+    html[data-theme="dark"] .sch-btn-plain { color: #D8CFC5; border-color: #4A4239; }
+    html[data-theme="dark"] #sch-bar { background: rgba(250,245,235,.95); }
+    html[data-theme="dark"] .sch-bar-label { color: #78350F; }
+    html[data-theme="dark"] .sch-bar-cancel { color: #44403C; background: rgba(0,0,0,.08); }
     .sch-editing { cursor: default; flex-direction: column; gap: 0.6rem; border-color: rgba(var(--c), .75); box-shadow: 0 0 0 3px rgba(var(--c), .15); }
     .sch-editing:hover, .sch-editing:active { transform: none; }
     .sch-edit-grid { display: grid; grid-template-columns: 5.6rem 1fr; gap: 0.5rem; width: 100%; }
@@ -382,7 +400,7 @@
     html[data-theme="dark"] .sch-dot.is-on { border-color: #14110F; }
     @media (max-width: 639px) { .sch-edit-grid { grid-template-columns: 5rem 1fr; } .sch-day { padding: 0.85rem; } }
     @media print {
-      .sch-add, .sch-add-day, .sch-icon-btn, .sch-pen, .sch-actions { display: none !important; }
+      .sch-add, .sch-add-day, .sch-icon-btn, .sch-pen, .sch-actions, .sch-edit-btn, #sch-bar { display: none !important; }
       #left-desktop-nav, #left-mobile-trigger, #back-to-top, nav, #password-gate {
         display: none !important;
       }
@@ -802,19 +820,26 @@
           <h3 class="text-base sm:text-lg font-black text-gray-900 flex items-center gap-2">
             <i class="fa-solid fa-calendar-check text-emerald-600"></i> 活動時程安排表 (12.26 ~ 12.27 放鬆漫遊)
           </h3>
-          <p class="text-xs text-gray-500 mt-0.5">時間隨心彈性調整！點任何一行就能編輯，所有人即時同步。</p>
+          <p class="text-xs text-gray-500 mt-0.5">時間隨心彈性調整！按右上角「編輯」就能新增、修改、刪除，儲存後所有人即時同步。</p>
         </div>
         
-        <!-- 一鍵加入日曆按鈕群（Google 日曆 ＆ Apple 行事曆） -->
+        <!-- 編輯 / 儲存 ＋ 日曆按鈕 -->
         <div class="flex items-center gap-1.5 flex-wrap">
-          <button type="button" onclick="addToGoogleCalendar()" class="px-3.5 py-2 rounded-xl bg-white border border-gray-300 hover:border-emerald-500 hover:bg-emerald-50 text-gray-700 hover:text-emerald-800 text-xs font-bold shadow-2xs transition active:scale-95 inline-flex items-center gap-1.5" title="一鍵加入 Google 日曆">
-            <i class="fa-brands fa-google text-emerald-600"></i>
-            <span>Google 日曆</span>
-          </button>
-          <button type="button" onclick="addToAppleCalendar()" class="px-3.5 py-2 rounded-xl bg-white border border-gray-300 hover:border-stone-800 hover:bg-stone-50 text-gray-700 hover:text-stone-900 text-xs font-bold shadow-2xs transition active:scale-95 inline-flex items-center gap-1.5" title="一鍵加入 Apple 行事曆">
-            <i class="fa-brands fa-apple text-stone-900"></i>
-            <span>Apple 行事曆</span>
-          </button>
+          <div id="sch-view-btns" class="flex items-center gap-1.5 flex-wrap">
+            <button type="button" onclick="schStartEdit()" class="sch-edit-btn"><i class="fa-solid fa-pen"></i> 編輯</button>
+            <button type="button" onclick="addToGoogleCalendar()" class="px-3.5 py-2 rounded-xl bg-white border border-gray-300 hover:border-emerald-500 hover:bg-emerald-50 text-gray-700 hover:text-emerald-800 text-xs font-bold shadow-2xs transition active:scale-95 inline-flex items-center gap-1.5" title="一鍵加入 Google 日曆">
+              <i class="fa-brands fa-google text-emerald-600"></i>
+              <span>Google 日曆</span>
+            </button>
+            <button type="button" onclick="addToAppleCalendar()" class="px-3.5 py-2 rounded-xl bg-white border border-gray-300 hover:border-stone-800 hover:bg-stone-50 text-gray-700 hover:text-stone-900 text-xs font-bold shadow-2xs transition active:scale-95 inline-flex items-center gap-1.5" title="一鍵加入 Apple 行事曆">
+              <i class="fa-brands fa-apple text-stone-900"></i>
+              <span>Apple 行事曆</span>
+            </button>
+          </div>
+          <div id="sch-edit-btns" class="items-center gap-1.5" style="display:none">
+            <button type="button" onclick="schCancelAll()" class="sch-btn-plain">取消</button>
+            <button type="button" onclick="schSaveAll()" class="sch-save-btn"><i class="fa-solid fa-check"></i> 儲存</button>
+          </div>
         </div>
       </div>
 
@@ -1140,9 +1165,6 @@
           <p class="text-xs text-purple-900/80 leading-relaxed">
             「規則不能先說，說了就不刺激了！」主揪準備了讓全場笑到肚子痛的破冰互動，當晚庭園烤肉生火後準時宣佈規則！
           </p>
-          <div class="text-[11px] font-bold text-purple-700 bg-white/80 inline-block px-2 py-0.5 rounded-md border border-purple-200">
-            ✨ 敬請期待
-          </div>
         </div>
       </div>
     </article>
@@ -1169,10 +1191,10 @@
           <strong class="text-teal-900 font-black flex items-center gap-1.5">
             <i class="fa-solid fa-shirt text-teal-600"></i> 衣物與保暖
           </strong>
-          <ul class="space-y-1 text-gray-600">
-            <li class="flex items-center gap-1.5">☑️ <strong>輕便休閒服裝</strong> 2套</li>
-            <li class="flex items-center gap-1.5">☑️ 防風薄外套（騎鐵馬防曬防涼）</li>
-            <li class="flex items-center gap-1.5">☑️ 好走休閒鞋 / 拖鞋</li>
+          <ul class="space-y-2 text-gray-600">
+            <li class="hang"><i class="fa-regular fa-square-check hang-mark"></i><span class="hang-text"><strong>輕便休閒服裝</strong> 2套</span></li>
+            <li class="hang"><i class="fa-regular fa-square-check hang-mark"></i><span class="hang-text">防風薄外套（騎鐵馬防曬防涼）</span></li>
+            <li class="hang"><i class="fa-regular fa-square-check hang-mark"></i><span class="hang-text">好走休閒鞋 / 拖鞋</span></li>
           </ul>
         </div>
 
@@ -1180,10 +1202,10 @@
           <strong class="text-teal-900 font-black flex items-center gap-1.5">
             <i class="fa-solid fa-pump-soap text-teal-600"></i> 個人衛生盥洗
           </strong>
-          <ul class="space-y-1 text-gray-600">
-            <li class="flex items-center gap-1.5">☑️ 個人牙刷牙膏（響應環保愛地球）</li>
-            <li class="flex items-center gap-1.5">☑️ 個人常用毛巾與基礎保養防曬</li>
-            <li class="flex items-center gap-1.5">☑️ 防蚊液、個人常備隨身藥品</li>
+          <ul class="space-y-2 text-gray-600">
+            <li class="hang"><i class="fa-regular fa-square-check hang-mark"></i><span class="hang-text">個人牙刷牙膏（響應環保愛地球）</span></li>
+            <li class="hang"><i class="fa-regular fa-square-check hang-mark"></i><span class="hang-text">個人常用毛巾與基礎保養防曬</span></li>
+            <li class="hang"><i class="fa-regular fa-square-check hang-mark"></i><span class="hang-text">防蚊液、個人常備隨身藥品</span></li>
           </ul>
         </div>
 
@@ -1191,10 +1213,10 @@
           <strong class="text-teal-900 font-black flex items-center gap-1.5">
             <i class="fa-solid fa-bolt text-teal-600"></i> 3C 與隨身物品
           </strong>
-          <ul class="space-y-1 text-gray-600">
-            <li class="flex items-center gap-1.5">☑️ 行動電源 ＆ 手機充電線</li>
-            <li class="flex items-center gap-1.5">☑️ 健保卡、身分證件</li>
-            <li class="flex items-center gap-1.5">☑️ 現金 / LinePay（分帳結清用）</li>
+          <ul class="space-y-2 text-gray-600">
+            <li class="hang"><i class="fa-regular fa-square-check hang-mark"></i><span class="hang-text">行動電源 ＆ 手機充電線</span></li>
+            <li class="hang"><i class="fa-regular fa-square-check hang-mark"></i><span class="hang-text">健保卡、身分證件</span></li>
+            <li class="hang"><i class="fa-regular fa-square-check hang-mark"></i><span class="hang-text">現金 / LinePay（分帳結清用）</span></li>
           </ul>
         </div>
       </div>
@@ -1376,6 +1398,13 @@
   </div>
 
 
+  <!-- ==================== 時程編輯中：浮動儲存列 ==================== -->
+  <div id="sch-bar" role="toolbar" aria-label="時程編輯">
+    <span class="sch-bar-label"><i class="fa-solid fa-pen"></i> 編輯中</span>
+    <button type="button" onclick="schCancelAll()" class="sch-bar-cancel">取消</button>
+    <button type="button" onclick="schSaveAll()" class="sch-bar-save"><i class="fa-solid fa-check"></i> 儲存</button>
+  </div>
+
   <!-- ==================== 選人面板（手機底部抽屜） ==================== -->
   <div id="picker-backdrop" onclick="closePicker()" class="hidden fixed inset-0 bg-black/50 z-[60]"></div>
   <div id="picker-sheet" role="dialog" aria-modal="true" class="picker-sheet fixed inset-x-0 bottom-0 z-[61] translate-y-full transition-transform duration-300 ease-out bg-white rounded-t-3xl shadow-2xl max-w-xl mx-auto">
@@ -1471,6 +1500,24 @@
                 .replace(/[​-‍﻿]/g, '');
     }
 
+    // ==================== 出遊相簿（photos/photos.json） ====================
+    async function loadTripPhotos() {
+      const track = document.getElementById('carousel-album');
+      if (!track) return;
+      try {
+        const r = await fetch('photos/photos.json?v=' + Date.now(), { cache: 'no-store' });
+        if (!r.ok) return;
+        const list = await r.json();
+        if (!Array.isArray(list) || !list.length) return;
+        const html = list.map(p => `
+          <div class="w-[240px] sm:w-[288px] aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+            <img src="${esc(p.src)}" alt="${esc(p.title || '出遊照片')}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+            ${p.title ? `<div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs"><span class="font-bold block">${esc(p.title)}</span>${p.sub ? `<span class="text-[10px] text-gray-300">${esc(p.sub)}</span>` : ''}</div>` : ''}
+          </div>`).join('');
+        track.insertAdjacentHTML('afterbegin', html);
+      } catch (e) { /* 沒有照片清單就維持原樣 */ }
+    }
+
     // ==================== 外觀（跟隨系統 / 淺色 / 深色） ====================
     function themeMode() { return lsGet('trip_theme') || 'auto'; }
     function applyTheme() {
@@ -1495,7 +1542,7 @@
     }
 
 
-    // ==================== 活動時程（可新增／編輯／刪除，全員同步） ====================
+    // ==================== 活動時程（編輯模式：新增／修改／刪除，按儲存後全員同步） ====================
     const SCHEDULE_KEY = "trip_schedule_data";
     const SCH_COLORS = ['emerald', 'amber', 'sky', 'purple', 'rose', 'teal'];
     const DEFAULT_SCHEDULE = [
@@ -1509,10 +1556,11 @@
         { id: 'i6', slot: '晚上', text: '回家 🏡❤️' } ] }
     ];
     let schedule = [];
-    let schEdit = null; // { type:'item'|'day', dayId, itemId, color, slot, text, title }
+    let schMode = 'view'; // view | edit
+    let schDraft = [];    // 編輯中的草稿（按儲存才會寫入、同步）
 
-    function dayJson(d) { return JSON.stringify(Object.assign({}, d, { items: d.items.filter(i => !i._new) })); }
-    function persistSchedule() { lsSet(SCHEDULE_KEY, JSON.stringify(schedule.filter(d => !d._new).map(d => JSON.parse(dayJson(d))))); }
+    function dayJson(d) { return JSON.stringify(d); }
+    function persistSchedule() { lsSet(SCHEDULE_KEY, JSON.stringify(schedule)); }
     function loadSchedule() {
       const saved = lsGet(SCHEDULE_KEY);
       let list = saved ? parseJson(saved, null) : null;
@@ -1520,211 +1568,146 @@
       schedule = list.sort((a, b) => (a.ord || 0) - (b.ord || 0));
       persistSchedule();
     }
-    function pushDay(d) { push('PUT', 'schedule/' + d.id, dayJson(d)); push('PUT', 'schedule_init', true); }
-    function findDay(id) { return schedule.find(d => d.id === id); }
+    function pushDay(d) { return push('PUT', 'schedule/' + d.id, dayJson(d)); }
     function newId(p) { return p + '_' + Date.now() + '_' + Math.floor(Math.random() * 1000); }
+    function dDay(id) { return schDraft.find(d => d.id === id); }
 
-    function renderScheduleItem(d, it) {
-      const editing = schEdit && schEdit.type === 'item' && schEdit.itemId === it.id;
-      if (!editing) {
-        return `
-          <div class="sch-item" role="button" tabindex="0" onclick="startEditItem(${jsArg(d.id)}, ${jsArg(it.id)})" onkeydown="if(event.key==='Enter')startEditItem(${jsArg(d.id)}, ${jsArg(it.id)})">
+    function renderScheduleView(d, di) {
+      const items = d.items.length
+        ? d.items.map(it => `
+          <div class="sch-item">
             <span class="sch-slot">${esc(it.slot || '—')}</span>
             <span class="sch-text">${esc(it.text)}</span>
-            <i class="fa-solid fa-pen sch-pen"></i>
-          </div>`;
-      }
-      const slot = schEdit.slot != null ? schEdit.slot : it.slot;
-      const text = schEdit.text != null ? schEdit.text : it.text;
+          </div>`).join('')
+        : `<div class="sch-empty">這天還沒有行程，按右上角「編輯」新增</div>`;
       return `
-        <div class="sch-item sch-editing" onclick="event.stopPropagation()">
-          <div class="sch-edit-grid">
-            <input id="sch-slot-in" class="field-input" list="sch-slots" placeholder="時段" maxlength="8" value="${esc(slot)}" onkeydown="schKey(event)">
-            <input id="sch-text-in" data-autofocus class="field-input" placeholder="要做什麼？" maxlength="80" value="${esc(text)}" onkeydown="schKey(event)">
-          </div>
-          <div class="sch-actions">
-            <button type="button" class="sch-btn sch-btn-primary" onclick="schSave()"><i class="fa-solid fa-check"></i> 儲存</button>
-            <button type="button" class="sch-btn" onclick="schCancel()">取消</button>
-            <button type="button" class="sch-btn" onclick="moveItem(${jsArg(d.id)}, ${jsArg(it.id)}, -1)" aria-label="上移"><i class="fa-solid fa-arrow-up"></i></button>
-            <button type="button" class="sch-btn" onclick="moveItem(${jsArg(d.id)}, ${jsArg(it.id)}, 1)" aria-label="下移"><i class="fa-solid fa-arrow-down"></i></button>
-            <button type="button" class="sch-btn sch-btn-danger" onclick="deleteItem(${jsArg(d.id)}, ${jsArg(it.id)})"><i class="fa-solid fa-trash-can"></i> 刪除</button>
-          </div>
-        </div>`;
-    }
-
-    function renderScheduleDay(d, di) {
-      const editingDay = schEdit && schEdit.type === 'day' && schEdit.dayId === d.id;
-      const color = editingDay && schEdit.color ? schEdit.color : d.color;
-      let head;
-      if (editingDay) {
-        const title = schEdit.title != null ? schEdit.title : d.title;
-        head = `
-          <div class="space-y-2.5 pb-3 mb-3" style="border-bottom:1px solid rgba(var(--c), .25)">
-            <div class="flex items-center gap-2">
-              <span class="sch-code">D${di + 1}</span>
-              <input id="sch-day-title" data-autofocus class="field-input" maxlength="20" placeholder="例如：12.28 第三天" value="${esc(title)}" onkeydown="schKey(event)">
-            </div>
-            <div class="sch-dots">
-              ${SCH_COLORS.map(c => `<button type="button" class="sch-dot sch-c-${c} ${c === color ? 'is-on' : ''}" onclick="pickDayColor(${jsArg(c)})" aria-label="顏色 ${c}"></button>`).join('')}
-            </div>
-            <div class="sch-actions">
-              <button type="button" class="sch-btn sch-btn-primary" onclick="schSave()"><i class="fa-solid fa-check"></i> 儲存</button>
-              <button type="button" class="sch-btn" onclick="schCancel()">取消</button>
-              <button type="button" class="sch-btn sch-btn-danger" onclick="deleteDay(${jsArg(d.id)})"><i class="fa-solid fa-trash-can"></i> 刪除這一天</button>
-            </div>
-          </div>`;
-      } else {
-        head = `
+        <div class="sch-day sch-c-${d.color}">
           <div class="sch-head">
             <span class="sch-code">D${di + 1}</span>
             <span class="flex-1 min-w-0" style="overflow-wrap:anywhere">${esc(d.title)}</span>
-            <button type="button" class="sch-icon-btn" onclick="startEditDay(${jsArg(d.id)})" aria-label="編輯這一天"><i class="fa-solid fa-pen"></i></button>
-          </div>`;
-      }
-      const items = d.items.length
-        ? d.items.map(it => renderScheduleItem(d, it)).join('')
-        : `<div class="sch-empty">這天還沒有行程，點下方新增</div>`;
-      return `
-        <div class="sch-day sch-c-${color}">
-          ${head}
+          </div>
           ${items}
-          <button type="button" class="sch-add" onclick="addItem(${jsArg(d.id)})"><i class="fa-solid fa-plus"></i> 新增行程</button>
         </div>`;
     }
+
+    function renderScheduleEdit(d, di) {
+      const items = d.items.map(it => `
+          <div class="sch-item sch-editing">
+            <div class="sch-edit-grid">
+              <input class="field-input" list="sch-slots" placeholder="時段" maxlength="8" value="${esc(it.slot)}" oninput="schSetItem(${jsArg(d.id)}, ${jsArg(it.id)}, 'slot', this.value)">
+              <textarea rows="1" class="field-input sch-ta" placeholder="要做什麼？（可以按 Enter 換行）" data-item="${esc(it.id)}" oninput="schSetItem(${jsArg(d.id)}, ${jsArg(it.id)}, 'text', this.value); schAutosize(this)">${esc(it.text)}</textarea>
+            </div>
+            <div class="sch-actions">
+              <button type="button" class="sch-btn" onclick="schMoveItem(${jsArg(d.id)}, ${jsArg(it.id)}, -1)" aria-label="上移"><i class="fa-solid fa-arrow-up"></i></button>
+              <button type="button" class="sch-btn" onclick="schMoveItem(${jsArg(d.id)}, ${jsArg(it.id)}, 1)" aria-label="下移"><i class="fa-solid fa-arrow-down"></i></button>
+              <button type="button" class="sch-btn sch-btn-danger" onclick="schDelItem(${jsArg(d.id)}, ${jsArg(it.id)})"><i class="fa-solid fa-trash-can"></i> 刪除</button>
+            </div>
+          </div>`).join('');
+      return `
+        <div class="sch-day sch-c-${d.color}">
+          <div class="space-y-2.5 pb-3 mb-3" style="border-bottom:1px solid rgba(var(--c), .25)">
+            <div class="flex items-center gap-2">
+              <span class="sch-code">D${di + 1}</span>
+              <input class="field-input" maxlength="20" placeholder="例如：12.28 第三天" value="${esc(d.title)}" oninput="schSetDay(${jsArg(d.id)}, 'title', this.value)">
+            </div>
+            <div class="flex items-center justify-between gap-2">
+              <div class="sch-dots">
+                ${SCH_COLORS.map(c => `<button type="button" class="sch-dot sch-c-${c} ${c === d.color ? 'is-on' : ''}" onclick="schPickColor(${jsArg(d.id)}, ${jsArg(c)})" aria-label="顏色 ${c}"></button>`).join('')}
+              </div>
+              <button type="button" class="sch-btn sch-btn-danger" style="margin-left:0" onclick="schDelDay(${jsArg(d.id)})"><i class="fa-solid fa-trash-can"></i> 刪除這一天</button>
+            </div>
+          </div>
+          ${items || '<div class="sch-empty">這天還沒有行程，點下方新增</div>'}
+          <button type="button" class="sch-add" onclick="schAddItem(${jsArg(d.id)})"><i class="fa-solid fa-plus"></i> 新增行程</button>
+        </div>`;
+    }
+
+    function schAutosize(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
 
     function renderSchedule() {
       const box = document.getElementById('schedule-days');
       if (!box) return;
-      box.innerHTML = schedule.map((d, i) => renderScheduleDay(d, i)).join('')
-        + `<button type="button" class="sch-add-day" onclick="addDay()"><i class="fa-solid fa-plus"></i> 新增一天</button>`;
-      const f = box.querySelector('[data-autofocus]');
-      if (f) { f.focus(); const v = f.value; f.value = ''; f.value = v; }
+      const editing = schMode === 'edit';
+      const days = editing ? schDraft : schedule;
+      box.innerHTML = days.map((d, i) => editing ? renderScheduleEdit(d, i) : renderScheduleView(d, i)).join('')
+        + (editing ? `<button type="button" class="sch-add-day" onclick="schAddDay()"><i class="fa-solid fa-plus"></i> 新增一天</button>` : '');
+      box.querySelectorAll('.sch-ta').forEach(schAutosize);
+      const vb = document.getElementById('sch-view-btns'), eb = document.getElementById('sch-edit-btns'), bar = document.getElementById('sch-bar');
+      if (vb) vb.style.display = editing ? 'none' : '';
+      if (eb) eb.style.display = editing ? 'flex' : 'none';
+      if (bar) bar.classList.toggle('on', editing);
     }
 
-    // 目前輸入框內容先記下來，避免重新繪製時被洗掉
-    function schDraft() {
-      if (!schEdit) return;
-      const a = document.getElementById('sch-slot-in'), b = document.getElementById('sch-text-in'), c = document.getElementById('sch-day-title');
-      if (a) schEdit.slot = a.value;
-      if (b) schEdit.text = b.value;
-      if (c) schEdit.title = c.value;
-    }
-    function schEndEdit() { schEdit = null; sync.lastSig = ''; }
-
-    function schKey(e) {
-      if (e.key === 'Enter') { e.preventDefault(); schSave(); }
-      else if (e.key === 'Escape') { e.preventDefault(); schCancel(); }
-    }
-
-    function schCancel(noRender) {
-      if (schEdit) {
-        const d = findDay(schEdit.dayId);
-        if (d) {
-          if (schEdit.type === 'item') d.items = d.items.filter(i => !(i.id === schEdit.itemId && i._new));
-          else if (d._new) schedule = schedule.filter(x => x.id !== d.id);
-        }
-      }
-      schEndEdit();
-      if (!noRender) renderSchedule();
-    }
-
-    // 儲存目前正在編輯的項目（quiet：切換到別筆時自動存，不再重繪）
-    function schSave(quiet) {
-      if (!schEdit) return;
-      schDraft();
-      const d = findDay(schEdit.dayId);
-      if (!d) { schEndEdit(); renderSchedule(); return; }
-      if (schEdit.type === 'item') {
-        const it = d.items.find(i => i.id === schEdit.itemId);
-        const slot = (schEdit.slot != null ? schEdit.slot : (it ? it.slot : '')).trim();
-        const text = (schEdit.text != null ? schEdit.text : (it ? it.text : '')).trim();
-        if (!it) { schEndEdit(); if (!quiet) renderSchedule(); return; }
-        if (!slot && !text) { schCancel(quiet); return; }
-        it.slot = slot; it.text = text; delete it._new;
-        persistSchedule(); pushDay(d);
-        if (!quiet) showToast('✅ 行程已儲存，所有人都會看到');
-      } else {
-        const title = (schEdit.title != null ? schEdit.title : d.title).trim() || d.title;
-        d.title = title; d.color = schEdit.color || d.color; delete d._new;
-        persistSchedule(); pushDay(d);
-        if (!quiet) showToast('✅ 已更新這一天');
-      }
-      schEndEdit();
-      if (!quiet) renderSchedule();
-    }
-
-    function startEditItem(dayId, itemId) {
-      schSave(true);
-      schEdit = { type: 'item', dayId, itemId };
+    function schStartEdit() {
+      schDraft = clone(schedule);
+      schMode = 'edit';
       renderSchedule();
     }
-    function startEditDay(dayId) {
-      schSave(true);
-      const d = findDay(dayId);
-      schEdit = { type: 'day', dayId, color: d ? d.color : 'emerald' };
-      renderSchedule();
-    }
-    function pickDayColor(c) { schDraft(); if (schEdit) schEdit.color = c; renderSchedule(); }
-
-    function addItem(dayId) {
-      schSave(true);
-      const d = findDay(dayId);
-      if (!d) return;
-      const it = { id: newId('i'), slot: '', text: '', _new: true };
-      d.items.push(it);
-      schEdit = { type: 'item', dayId, itemId: it.id };
-      renderSchedule();
-    }
-
-    function deleteItem(dayId, itemId) {
-      const d = findDay(dayId);
-      if (!d) return;
-      const it = d.items.find(i => i.id === itemId);
-      if (it && !it._new && !confirm('確定要刪除這個行程嗎？（所有人都會一起刪除）')) return;
-      d.items = d.items.filter(i => i.id !== itemId);
-      schEndEdit();
-      persistSchedule(); pushDay(d);
-      renderSchedule();
-      showToast('已刪除行程');
-    }
-
-    function moveItem(dayId, itemId, dir) {
-      schDraft();
-      const d = findDay(dayId);
-      if (!d) return;
-      const i = d.items.findIndex(x => x.id === itemId), j = i + dir;
+    function schSetDay(id, key, val) { const d = dDay(id); if (d) d[key] = val; }
+    function schSetItem(did, iid, key, val) { const d = dDay(did); const it = d && d.items.find(i => i.id === iid); if (it) it[key] = val; }
+    function schPickColor(id, c) { const d = dDay(id); if (d) { d.color = c; renderSchedule(); } }
+    function schMoveItem(did, iid, dir) {
+      const d = dDay(did); if (!d) return;
+      const i = d.items.findIndex(x => x.id === iid), j = i + dir;
       if (i < 0 || j < 0 || j >= d.items.length) return;
       [d.items[i], d.items[j]] = [d.items[j], d.items[i]];
-      persistSchedule();
-      if (!d.items[i]._new && !d.items[j]._new) pushDay(d);
+      renderSchedule();
+    }
+    function schDelItem(did, iid) {
+      const d = dDay(did); if (!d) return;
+      d.items = d.items.filter(i => i.id !== iid);
+      renderSchedule();
+    }
+    function schAddItem(did) {
+      const d = dDay(did); if (!d) return;
+      const it = { id: newId('i'), slot: '', text: '' };
+      d.items.push(it);
+      renderSchedule();
+      const ta = document.querySelector('textarea[data-item="' + it.id + '"]');
+      if (ta) ta.focus();
+    }
+    function schAddDay() {
+      const nextOrd = schDraft.reduce((m, d) => Math.max(m, d.ord || 0), 0) + 1;
+      schDraft.push({ id: newId('d'), ord: nextOrd, title: '新的一天', color: SCH_COLORS[schDraft.length % SCH_COLORS.length], items: [] });
+      renderSchedule();
+      const inputs = document.querySelectorAll('#schedule-days .sch-day:last-of-type input.field-input');
+      if (inputs.length) { inputs[0].focus(); inputs[0].select(); }
+    }
+    function schDelDay(id) {
+      const d = dDay(id); if (!d) return;
+      if (d.items.length && !confirm(`確定要刪除「${d.title}」嗎？（裡面 ${d.items.length} 個行程也會一起刪除，按儲存後才會生效）`)) return;
+      schDraft = schDraft.filter(x => x.id !== id);
       renderSchedule();
     }
 
-    function addDay() {
-      schSave(true);
-      const nextOrd = schedule.reduce((m, d) => Math.max(m, d.ord || 0), 0) + 1;
-      const d = { id: newId('d'), ord: nextOrd, title: '新的一天', color: SCH_COLORS[schedule.length % SCH_COLORS.length], items: [], _new: true };
-      schedule.push(d);
-      schEdit = { type: 'day', dayId: d.id, color: d.color, title: '' };
+    function schCancelAll() {
+      if (JSON.stringify(schDraft) !== JSON.stringify(schedule) && !confirm('確定放棄這次的修改嗎？')) return;
+      schMode = 'view'; schDraft = [];
+      sync.lastSig = '';
       renderSchedule();
     }
 
-    function deleteDay(dayId) {
-      const d = findDay(dayId);
-      if (!d) return;
-      const n = d.items.length;
-      if (!d._new && !confirm(`確定要刪除「${d.title}」嗎？${n ? `（裡面 ${n} 個行程也會一起刪除，所有人都看不到）` : ''}`)) return;
-      schedule = schedule.filter(x => x.id !== dayId);
-      schEndEdit();
+    function schSaveAll() {
+      const clean = schDraft.map((d, i) => ({
+        id: d.id, ord: i + 1, title: (d.title || '').trim() || '未命名', color: d.color,
+        items: d.items.map(it => ({ id: it.id, slot: (it.slot || '').trim(), text: (it.text || '').replace(/\s+$/, '') }))
+          .filter(it => it.slot || it.text.trim())
+      }));
+      const before = new Map(schedule.map(d => [d.id, JSON.stringify(d)]));
+      schedule = clean;
       persistSchedule();
-      if (!d._new) { push('DELETE', 'schedule/' + dayId); push('PUT', 'schedule_init', true); }
+      schMode = 'view'; schDraft = [];
       renderSchedule();
-      showToast('已刪除這一天');
+      clean.forEach(d => { if (before.get(d.id) !== JSON.stringify(d)) pushDay(d); });
+      before.forEach((_, id) => { if (!clean.find(d => d.id === id)) push('DELETE', 'schedule/' + id); });
+      push('PUT', 'schedule_init', true);
+      sync.lastSig = '';
+      showToast('✅ 已儲存，所有人都會看到最新時程');
     }
 
     function scheduleText() {
-      return schedule.filter(d => !d._new).map(d =>
-        d.title + '：\n' + (d.items.length ? d.items.filter(i => !i._new).map(i => '・' + (i.slot ? i.slot + '：' : '') + i.text).join('\n') : '・（尚未安排）')
+      return schedule.map(d =>
+        d.title + '：\n' + (d.items.length ? d.items.map(i => '・' + (i.slot ? i.slot + '：' : '') + i.text.replace(/\n/g, '\n　')).join('\n') : '・（尚未安排）')
       ).join('\n\n');
     }
 
@@ -1738,6 +1721,7 @@
       loadExpenses();
       renderAll();
       renderSchedule();
+      loadTripPhotos();
       setInterval(updateSyncTime, 1000);
       setupDragScroll('carousel-album');
       setupDragScroll('carousel-stay');
@@ -1852,7 +1836,7 @@
       const exps = {};
       expenses.forEach(e => { exps[e.id] = JSON.stringify(e); });
       const sch = {};
-      schedule.filter(d => !d._new).forEach(d => { sch[d.id] = dayJson(d); });
+      schedule.forEach(d => { sch[d.id] = dayJson(d); });
       return { members: JSON.stringify(members), roles, expenses: exps, schedule: sch, schedule_init: true };
     }
 
@@ -1910,7 +1894,7 @@
       calculateSettlement();
       // 只有成員名單變動才重建表單選項，避免打到一半的記帳被洗掉
       if (JSON.stringify(members) !== oldMembersSig) renderExpenseFormOptions();
-      if (!schEdit) {
+      if (schMode !== 'edit') {
         if (data.schedule && typeof data.schedule === 'object') {
           schedule = Object.keys(data.schedule).map(k => parseJson(data.schedule[k], null)).filter(Boolean).sort((a, b) => (a.ord || 0) - (b.ord || 0));
           persistSchedule();
@@ -1943,7 +1927,7 @@
         }
         if (!data.schedule && !data.schedule_init) {
           // 舊資料庫還沒有時程：把目前的時程補進去
-          for (const d of schedule.filter(x => !x._new)) await push('PUT', 'schedule/' + d.id, dayJson(d));
+          for (const d of schedule) await push('PUT', 'schedule/' + d.id, dayJson(d));
           await push('PUT', 'schedule_init', true);
           sync.lastSig = '';
           return;
