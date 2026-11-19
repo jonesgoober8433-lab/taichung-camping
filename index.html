@@ -311,7 +311,78 @@
     html[data-theme="dark"] [class*="from-amber-50"]{background-image:none;background-color:rgba(245,158,11,0.10)}
     html[data-theme="dark"] [class*="from-purple-50"]{background-image:none;background-color:rgba(168,85,247,0.10)}
     html[data-theme="dark"] [class*="from-sky-50"]{background-image:none;background-color:rgba(14,165,233,0.10)}
+
+    /* ===== 同步狀態膠囊 ===== */
+    .sync-pill { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.8rem 0.32rem 0.7rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 800; border: 1px solid; line-height: 1; white-space: nowrap; transition: background .2s, color .2s, transform .15s; cursor: pointer; }
+    .sync-pill:active { transform: scale(0.96); }
+    .sync-dot { position: relative; width: 0.55rem; height: 0.55rem; border-radius: 9999px; background: currentColor; flex-shrink: 0; }
+    .sync-pill[data-state="ok"] .sync-dot::after, .sync-pill[data-state="connecting"] .sync-dot::after { content: ""; position: absolute; inset: 0; border-radius: 9999px; background: currentColor; animation: syncPing 1.8s cubic-bezier(0,0,.2,1) infinite; }
+    @keyframes syncPing { 0% { transform: scale(1); opacity: .6; } 80%, 100% { transform: scale(2.6); opacity: 0; } }
+    .sync-time { display: none; font-weight: 600; opacity: .72; padding-left: 0.5rem; border-left: 1px solid currentColor; border-left-color: rgba(127,127,127,.35); }
+    .sync-ico { display: none; font-size: 0.7rem; opacity: .6; }
+    .sync-ico.spin { animation: syncSpin .8s linear; }
+    @keyframes syncSpin { to { transform: rotate(360deg); } }
+    @media (min-width: 640px) { .sync-time, .sync-ico { display: inline; } .sync-pill { font-size: 0.85rem; padding: 0.42rem 0.95rem 0.42rem 0.8rem; } }
+    .sync-pill[data-state="ok"] { background: rgba(16,185,129,.12); border-color: rgba(16,185,129,.35); color: #047857; }
+    .sync-pill[data-state="connecting"] { background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.35); color: #B45309; }
+    .sync-pill[data-state="offline"] { background: rgba(244,63,94,.1); border-color: rgba(244,63,94,.35); color: #BE123C; }
+    .sync-pill[data-state="local"] { background: #F3F4F6; border-color: #E5E7EB; color: #6B7280; }
+    html[data-theme="dark"] .sync-pill[data-state="ok"] { background: rgba(16,185,129,.16); border-color: rgba(52,211,153,.4); color: #6EE7B7; }
+    html[data-theme="dark"] .sync-pill[data-state="connecting"] { background: rgba(245,158,11,.16); border-color: rgba(251,191,36,.4); color: #FCD34D; }
+    html[data-theme="dark"] .sync-pill[data-state="offline"] { background: rgba(244,63,94,.16); border-color: rgba(251,113,133,.4); color: #FDA4AF; }
+    html[data-theme="dark"] .sync-pill[data-state="local"] { background: #2E2823; border-color: #3A332D; color: #B3A99E; }
+
+    /* ===== 活動時程（可編輯） ===== */
+    .sch-c-emerald { --c: 16,185,129; --cd: 6,95,70; --cl: 110,231,183; }
+    .sch-c-amber { --c: 245,158,11; --cd: 146,64,14; --cl: 252,211,77; }
+    .sch-c-sky { --c: 14,165,233; --cd: 7,89,133; --cl: 125,211,252; }
+    .sch-c-purple { --c: 168,85,247; --cd: 107,33,168; --cl: 216,180,254; }
+    .sch-c-rose { --c: 244,63,94; --cd: 159,18,57; --cl: 253,164,175; }
+    .sch-c-teal { --c: 20,184,166; --cd: 17,94,89; --cl: 94,234,212; }
+    .sch-day { border-radius: 0.9rem; padding: 1rem; border: 1px solid rgba(var(--c), .3); background: rgba(var(--c), .07); }
+    .sch-head { display: flex; align-items: center; gap: 0.6rem; font-weight: 900; font-size: 0.95rem; color: rgb(var(--cd)); padding-bottom: 0.7rem; margin-bottom: 0.75rem; border-bottom: 1px solid rgba(var(--c), .25); }
+    .sch-code { width: 1.8rem; height: 1.8rem; border-radius: 0.5rem; background: rgb(var(--cd)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; flex-shrink: 0; }
+    .sch-item { display: flex; align-items: flex-start; gap: 0.7rem; background: rgba(255,255,255,.75); border: 1px solid rgba(var(--c), .22); border-radius: 0.75rem; padding: 0.7rem 0.75rem; margin-bottom: 0.5rem; cursor: pointer; transition: border-color .15s, transform .1s; }
+    .sch-item:hover { border-color: rgba(var(--c), .6); }
+    .sch-item:active { transform: scale(0.99); }
+    .sch-slot { flex-shrink: 0; min-width: 3.1rem; text-align: center; white-space: nowrap; font-weight: 900; font-size: 0.8rem; padding: 0.25rem 0.55rem; border-radius: 0.45rem; background: rgba(var(--c), .18); color: rgb(var(--cd)); }
+    .sch-text { flex: 1; min-width: 0; font-weight: 500; font-size: 0.92rem; line-height: 1.55; color: #1F2937; overflow-wrap: anywhere; padding-top: 0.1rem; }
+    .sch-pen { color: rgba(var(--cd), .45); font-size: 0.72rem; margin-top: 0.35rem; flex-shrink: 0; }
+    .sch-editing { cursor: default; flex-direction: column; gap: 0.6rem; border-color: rgba(var(--c), .75); box-shadow: 0 0 0 3px rgba(var(--c), .15); }
+    .sch-editing:hover, .sch-editing:active { transform: none; }
+    .sch-edit-grid { display: grid; grid-template-columns: 5.6rem 1fr; gap: 0.5rem; width: 100%; }
+    .sch-actions { display: flex; flex-wrap: wrap; gap: 0.45rem; width: 100%; }
+    .sch-btn { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.5rem 0.85rem; border-radius: 0.7rem; font-size: 0.85rem; font-weight: 800; background: rgba(var(--c), .14); color: rgb(var(--cd)); border: 1px solid rgba(var(--c), .3); }
+    .sch-btn:active { transform: scale(0.96); }
+    .sch-btn-primary { background: rgb(var(--cd)); color: #fff; border-color: transparent; }
+    .sch-btn-danger { background: rgba(244,63,94,.1); color: #BE123C; border-color: rgba(244,63,94,.3); margin-left: auto; }
+    .sch-add { width: 100%; padding: 0.65rem; border-radius: 0.75rem; border: 2px dashed rgba(var(--c), .45); color: rgb(var(--cd)); font-weight: 800; font-size: 0.88rem; background: transparent; transition: background .15s; }
+    .sch-add:hover { background: rgba(var(--c), .1); }
+    .sch-add-day { min-height: 7rem; border-radius: 0.9rem; border: 2px dashed #C9BFB4; color: #78716C; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: transparent; transition: background .15s, border-color .15s; }
+    .sch-add-day:hover { border-color: #D97706; color: #B45309; background: rgba(245,158,11,.07); }
+    .sch-icon-btn { width: 2rem; height: 2rem; border-radius: 0.6rem; display: inline-flex; align-items: center; justify-content: center; color: rgba(var(--cd), .7); font-size: 0.8rem; }
+    .sch-icon-btn:hover { background: rgba(var(--c), .15); }
+    .sch-empty { text-align: center; font-size: 0.85rem; color: #78716C; padding: 0.6rem 0 0.9rem; }
+    .sch-dots { display: flex; gap: 0.5rem; align-items: center; }
+    .sch-dot { width: 1.6rem; height: 1.6rem; border-radius: 9999px; background: rgb(var(--c)); border: 3px solid transparent; }
+    .sch-dot.is-on { border-color: #fff; box-shadow: 0 0 0 2px rgb(var(--c)); }
+    html[data-theme="dark"] .sch-day { background: rgba(var(--c), .09); border-color: rgba(var(--c), .35); }
+    html[data-theme="dark"] .sch-head { color: rgb(var(--cl)); }
+    html[data-theme="dark"] .sch-code { background: rgb(var(--c)); color: #14110F; }
+    html[data-theme="dark"] .sch-item { background: rgba(33,29,26,.8); }
+    html[data-theme="dark"] .sch-text { color: #F5F0EA; }
+    html[data-theme="dark"] .sch-slot { color: rgb(var(--cl)); background: rgba(var(--c), .2); }
+    html[data-theme="dark"] .sch-pen, html[data-theme="dark"] .sch-icon-btn { color: rgba(var(--cl), .7); }
+    html[data-theme="dark"] .sch-btn { color: rgb(var(--cl)); background: rgba(var(--c), .18); border-color: rgba(var(--c), .4); }
+    html[data-theme="dark"] .sch-btn-primary { background: rgb(var(--c)); color: #14110F; }
+    html[data-theme="dark"] .sch-btn-danger { background: rgba(244,63,94,.16); color: #FDA4AF; }
+    html[data-theme="dark"] .sch-add { color: rgb(var(--cl)); }
+    html[data-theme="dark"] .sch-add-day { border-color: #4A4239; color: #B3A99E; }
+    html[data-theme="dark"] .sch-empty { color: #B3A99E; }
+    html[data-theme="dark"] .sch-dot.is-on { border-color: #14110F; }
+    @media (max-width: 639px) { .sch-edit-grid { grid-template-columns: 5rem 1fr; } .sch-day { padding: 0.85rem; } }
     @media print {
+      .sch-add, .sch-add-day, .sch-icon-btn, .sch-pen, .sch-actions { display: none !important; }
       #left-desktop-nav, #left-mobile-trigger, #back-to-top, nav, #password-gate {
         display: none !important;
       }
@@ -491,7 +562,7 @@
 
   <!-- ==================== 最頂部常駐導覽列 ==================== -->
   <nav class="nav-safe sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm pb-2 px-3 sm:px-6">
-    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-3">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-4">
 
       <!-- 第 1 行：品牌 ＋ 同步狀態 -->
       <div class="w-full sm:w-auto flex items-center justify-between gap-2">
@@ -499,9 +570,17 @@
           <span class="text-xl sm:text-2xl">⛺</span>
           <span class="font-black text-gray-900 text-base sm:text-lg tracking-tight whitespace-nowrap group-hover:text-amber-700 transition">Edward 的小空間</span>
         </a>
-        <button id="theme-btn" type="button" onclick="cycleTheme()" class="theme-btn flex-shrink-0" title="切換外觀（跟隨系統／淺色／深色）" aria-label="切換外觀">
-          <i id="theme-icon" class="fa-solid fa-circle-half-stroke"></i>
-        </button>
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <button id="sync-pill" type="button" onclick="manualSync()" class="sync-pill" data-state="local" title="">
+            <span class="sync-dot"></span>
+            <span id="sync-text">僅本機</span>
+            <span id="sync-time" class="sync-time"></span>
+            <i id="sync-ico" class="fa-solid fa-rotate sync-ico"></i>
+          </button>
+          <button id="theme-btn" type="button" onclick="cycleTheme()" class="theme-btn flex-shrink-0" title="切換外觀（跟隨系統／淺色／深色）" aria-label="切換外觀">
+            <i id="theme-icon" class="fa-solid fa-circle-half-stroke"></i>
+          </button>
+        </div>
       </div>
 
       <!-- 第 2 行：功能標籤（可左右滑動，捲到哪一區就亮哪一顆） -->
@@ -723,7 +802,7 @@
           <h3 class="text-base sm:text-lg font-black text-gray-900 flex items-center gap-2">
             <i class="fa-solid fa-calendar-check text-emerald-600"></i> 活動時程安排表 (12.26 ~ 12.27 放鬆漫遊)
           </h3>
-          <p class="text-xs text-gray-500 mt-0.5">時間隨心彈性調整，大家一起放鬆玩最重要！</p>
+          <p class="text-xs text-gray-500 mt-0.5">時間隨心彈性調整！點任何一行就能編輯，所有人即時同步。</p>
         </div>
         
         <!-- 一鍵加入日曆按鈕群（Google 日曆 ＆ Apple 行事曆） -->
@@ -739,51 +818,8 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Day 1: 12.26 第一天 -->
-        <div class="bg-emerald-50/40 rounded-xl p-4 sm:p-5 border border-emerald-100 space-y-3.5">
-          <div class="font-black text-sm text-emerald-900 flex items-center gap-2 border-b border-emerald-200/60 pb-2.5">
-            <span class="w-7 h-7 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-xs font-black">D1</span>
-            <span>12.26 第一天</span>
-          </div>
-          <div class="space-y-3 text-xs sm:text-sm text-gray-800">
-            <div class="flex items-center gap-3 bg-white/70 p-2.5 rounded-xl border border-emerald-100/60 shadow-2xs">
-              <span class="font-black text-emerald-800 bg-emerald-100/80 px-2 py-1 rounded-md text-xs flex-shrink-0">早上</span>
-              <span class="font-medium text-gray-800">開開心心出門 🚗✨</span>
-            </div>
-            <div class="flex items-center gap-3 bg-white/70 p-2.5 rounded-xl border border-emerald-100/60 shadow-2xs">
-              <span class="font-black text-emerald-800 bg-emerald-100/80 px-2 py-1 rounded-md text-xs flex-shrink-0">下午</span>
-              <span class="font-medium text-gray-800">入住（想打氣場的可以打 😈）</span>
-            </div>
-            <div class="flex items-center gap-3 bg-white/70 p-2.5 rounded-xl border border-emerald-100/60 shadow-2xs">
-              <span class="font-black text-emerald-800 bg-emerald-100/80 px-2 py-1 rounded-md text-xs flex-shrink-0">晚上</span>
-              <span class="font-black text-emerald-900">Party Time 🎉🍹🔥</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Day 2: 12.27 第二天 -->
-        <div class="bg-amber-50/40 rounded-xl p-4 sm:p-5 border border-amber-100 space-y-3.5">
-          <div class="font-black text-sm text-amber-900 flex items-center gap-2 border-b border-amber-200/60 pb-2.5">
-            <span class="w-7 h-7 rounded-lg bg-amber-700 text-white flex items-center justify-center text-xs font-black">D2</span>
-            <span>12.27 第二天</span>
-          </div>
-          <div class="space-y-3 text-xs sm:text-sm text-gray-800">
-            <div class="flex items-center gap-3 bg-white/70 p-2.5 rounded-xl border border-amber-100/60 shadow-2xs">
-              <span class="font-black text-amber-800 bg-amber-100/80 px-2 py-1 rounded-md text-xs flex-shrink-0">早上</span>
-              <span class="font-medium text-gray-800">睡到自然醒（想打氣場的可以打 😈）🍳☀️</span>
-            </div>
-            <div class="flex items-center gap-3 bg-white/70 p-2.5 rounded-xl border border-amber-100/60 shadow-2xs">
-              <span class="font-black text-amber-800 bg-amber-100/80 px-2 py-1 rounded-md text-xs flex-shrink-0">中午</span>
-              <span class="font-medium text-gray-800">吃好吃的（吃飽送走 Olaf ⛄）、玩跳跳格子 🏃‍♂️💨</span>
-            </div>
-            <div class="flex items-center gap-3 bg-white/70 p-2.5 rounded-xl border border-amber-100/60 shadow-2xs">
-              <span class="font-black text-amber-800 bg-amber-100/80 px-2 py-1 rounded-md text-xs flex-shrink-0">晚上</span>
-              <span class="font-medium text-gray-800">回家 🏡❤️</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div id="schedule-days" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      <datalist id="sch-slots"><option value="早上"><option value="中午"><option value="下午"><option value="晚上"><option value="宵夜"></datalist>
     </article>
 
 
@@ -1458,14 +1494,251 @@
       matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (themeMode() === 'auto') applyTheme(); });
     }
 
+
+    // ==================== 活動時程（可新增／編輯／刪除，全員同步） ====================
+    const SCHEDULE_KEY = "trip_schedule_data";
+    const SCH_COLORS = ['emerald', 'amber', 'sky', 'purple', 'rose', 'teal'];
+    const DEFAULT_SCHEDULE = [
+      { id: 'd1', ord: 1, title: '12.26 第一天', color: 'emerald', items: [
+        { id: 'i1', slot: '早上', text: '開開心心出門 🚗✨' },
+        { id: 'i2', slot: '下午', text: '入住（想打氣場的可以打 😈）' },
+        { id: 'i3', slot: '晚上', text: 'Party Time 🎉🍹🔥' } ] },
+      { id: 'd2', ord: 2, title: '12.27 第二天', color: 'amber', items: [
+        { id: 'i4', slot: '早上', text: '睡到自然醒（想打氣場的可以打 😈）🍳☀️' },
+        { id: 'i5', slot: '中午', text: '吃好吃的（吃飽送走 Olaf ⛄）、玩跳跳格子 🏃‍♂️💨' },
+        { id: 'i6', slot: '晚上', text: '回家 🏡❤️' } ] }
+    ];
+    let schedule = [];
+    let schEdit = null; // { type:'item'|'day', dayId, itemId, color, slot, text, title }
+
+    function dayJson(d) { return JSON.stringify(Object.assign({}, d, { items: d.items.filter(i => !i._new) })); }
+    function persistSchedule() { lsSet(SCHEDULE_KEY, JSON.stringify(schedule.filter(d => !d._new).map(d => JSON.parse(dayJson(d))))); }
+    function loadSchedule() {
+      const saved = lsGet(SCHEDULE_KEY);
+      let list = saved ? parseJson(saved, null) : null;
+      if (!Array.isArray(list)) list = clone(DEFAULT_SCHEDULE);
+      schedule = list.sort((a, b) => (a.ord || 0) - (b.ord || 0));
+      persistSchedule();
+    }
+    function pushDay(d) { push('PUT', 'schedule/' + d.id, dayJson(d)); push('PUT', 'schedule_init', true); }
+    function findDay(id) { return schedule.find(d => d.id === id); }
+    function newId(p) { return p + '_' + Date.now() + '_' + Math.floor(Math.random() * 1000); }
+
+    function renderScheduleItem(d, it) {
+      const editing = schEdit && schEdit.type === 'item' && schEdit.itemId === it.id;
+      if (!editing) {
+        return `
+          <div class="sch-item" role="button" tabindex="0" onclick="startEditItem(${jsArg(d.id)}, ${jsArg(it.id)})" onkeydown="if(event.key==='Enter')startEditItem(${jsArg(d.id)}, ${jsArg(it.id)})">
+            <span class="sch-slot">${esc(it.slot || '—')}</span>
+            <span class="sch-text">${esc(it.text)}</span>
+            <i class="fa-solid fa-pen sch-pen"></i>
+          </div>`;
+      }
+      const slot = schEdit.slot != null ? schEdit.slot : it.slot;
+      const text = schEdit.text != null ? schEdit.text : it.text;
+      return `
+        <div class="sch-item sch-editing" onclick="event.stopPropagation()">
+          <div class="sch-edit-grid">
+            <input id="sch-slot-in" class="field-input" list="sch-slots" placeholder="時段" maxlength="8" value="${esc(slot)}" onkeydown="schKey(event)">
+            <input id="sch-text-in" data-autofocus class="field-input" placeholder="要做什麼？" maxlength="80" value="${esc(text)}" onkeydown="schKey(event)">
+          </div>
+          <div class="sch-actions">
+            <button type="button" class="sch-btn sch-btn-primary" onclick="schSave()"><i class="fa-solid fa-check"></i> 儲存</button>
+            <button type="button" class="sch-btn" onclick="schCancel()">取消</button>
+            <button type="button" class="sch-btn" onclick="moveItem(${jsArg(d.id)}, ${jsArg(it.id)}, -1)" aria-label="上移"><i class="fa-solid fa-arrow-up"></i></button>
+            <button type="button" class="sch-btn" onclick="moveItem(${jsArg(d.id)}, ${jsArg(it.id)}, 1)" aria-label="下移"><i class="fa-solid fa-arrow-down"></i></button>
+            <button type="button" class="sch-btn sch-btn-danger" onclick="deleteItem(${jsArg(d.id)}, ${jsArg(it.id)})"><i class="fa-solid fa-trash-can"></i> 刪除</button>
+          </div>
+        </div>`;
+    }
+
+    function renderScheduleDay(d, di) {
+      const editingDay = schEdit && schEdit.type === 'day' && schEdit.dayId === d.id;
+      const color = editingDay && schEdit.color ? schEdit.color : d.color;
+      let head;
+      if (editingDay) {
+        const title = schEdit.title != null ? schEdit.title : d.title;
+        head = `
+          <div class="space-y-2.5 pb-3 mb-3" style="border-bottom:1px solid rgba(var(--c), .25)">
+            <div class="flex items-center gap-2">
+              <span class="sch-code">D${di + 1}</span>
+              <input id="sch-day-title" data-autofocus class="field-input" maxlength="20" placeholder="例如：12.28 第三天" value="${esc(title)}" onkeydown="schKey(event)">
+            </div>
+            <div class="sch-dots">
+              ${SCH_COLORS.map(c => `<button type="button" class="sch-dot sch-c-${c} ${c === color ? 'is-on' : ''}" onclick="pickDayColor(${jsArg(c)})" aria-label="顏色 ${c}"></button>`).join('')}
+            </div>
+            <div class="sch-actions">
+              <button type="button" class="sch-btn sch-btn-primary" onclick="schSave()"><i class="fa-solid fa-check"></i> 儲存</button>
+              <button type="button" class="sch-btn" onclick="schCancel()">取消</button>
+              <button type="button" class="sch-btn sch-btn-danger" onclick="deleteDay(${jsArg(d.id)})"><i class="fa-solid fa-trash-can"></i> 刪除這一天</button>
+            </div>
+          </div>`;
+      } else {
+        head = `
+          <div class="sch-head">
+            <span class="sch-code">D${di + 1}</span>
+            <span class="flex-1 min-w-0" style="overflow-wrap:anywhere">${esc(d.title)}</span>
+            <button type="button" class="sch-icon-btn" onclick="startEditDay(${jsArg(d.id)})" aria-label="編輯這一天"><i class="fa-solid fa-pen"></i></button>
+          </div>`;
+      }
+      const items = d.items.length
+        ? d.items.map(it => renderScheduleItem(d, it)).join('')
+        : `<div class="sch-empty">這天還沒有行程，點下方新增</div>`;
+      return `
+        <div class="sch-day sch-c-${color}">
+          ${head}
+          ${items}
+          <button type="button" class="sch-add" onclick="addItem(${jsArg(d.id)})"><i class="fa-solid fa-plus"></i> 新增行程</button>
+        </div>`;
+    }
+
+    function renderSchedule() {
+      const box = document.getElementById('schedule-days');
+      if (!box) return;
+      box.innerHTML = schedule.map((d, i) => renderScheduleDay(d, i)).join('')
+        + `<button type="button" class="sch-add-day" onclick="addDay()"><i class="fa-solid fa-plus"></i> 新增一天</button>`;
+      const f = box.querySelector('[data-autofocus]');
+      if (f) { f.focus(); const v = f.value; f.value = ''; f.value = v; }
+    }
+
+    // 目前輸入框內容先記下來，避免重新繪製時被洗掉
+    function schDraft() {
+      if (!schEdit) return;
+      const a = document.getElementById('sch-slot-in'), b = document.getElementById('sch-text-in'), c = document.getElementById('sch-day-title');
+      if (a) schEdit.slot = a.value;
+      if (b) schEdit.text = b.value;
+      if (c) schEdit.title = c.value;
+    }
+    function schEndEdit() { schEdit = null; sync.lastSig = ''; }
+
+    function schKey(e) {
+      if (e.key === 'Enter') { e.preventDefault(); schSave(); }
+      else if (e.key === 'Escape') { e.preventDefault(); schCancel(); }
+    }
+
+    function schCancel(noRender) {
+      if (schEdit) {
+        const d = findDay(schEdit.dayId);
+        if (d) {
+          if (schEdit.type === 'item') d.items = d.items.filter(i => !(i.id === schEdit.itemId && i._new));
+          else if (d._new) schedule = schedule.filter(x => x.id !== d.id);
+        }
+      }
+      schEndEdit();
+      if (!noRender) renderSchedule();
+    }
+
+    // 儲存目前正在編輯的項目（quiet：切換到別筆時自動存，不再重繪）
+    function schSave(quiet) {
+      if (!schEdit) return;
+      schDraft();
+      const d = findDay(schEdit.dayId);
+      if (!d) { schEndEdit(); renderSchedule(); return; }
+      if (schEdit.type === 'item') {
+        const it = d.items.find(i => i.id === schEdit.itemId);
+        const slot = (schEdit.slot != null ? schEdit.slot : (it ? it.slot : '')).trim();
+        const text = (schEdit.text != null ? schEdit.text : (it ? it.text : '')).trim();
+        if (!it) { schEndEdit(); if (!quiet) renderSchedule(); return; }
+        if (!slot && !text) { schCancel(quiet); return; }
+        it.slot = slot; it.text = text; delete it._new;
+        persistSchedule(); pushDay(d);
+        if (!quiet) showToast('✅ 行程已儲存，所有人都會看到');
+      } else {
+        const title = (schEdit.title != null ? schEdit.title : d.title).trim() || d.title;
+        d.title = title; d.color = schEdit.color || d.color; delete d._new;
+        persistSchedule(); pushDay(d);
+        if (!quiet) showToast('✅ 已更新這一天');
+      }
+      schEndEdit();
+      if (!quiet) renderSchedule();
+    }
+
+    function startEditItem(dayId, itemId) {
+      schSave(true);
+      schEdit = { type: 'item', dayId, itemId };
+      renderSchedule();
+    }
+    function startEditDay(dayId) {
+      schSave(true);
+      const d = findDay(dayId);
+      schEdit = { type: 'day', dayId, color: d ? d.color : 'emerald' };
+      renderSchedule();
+    }
+    function pickDayColor(c) { schDraft(); if (schEdit) schEdit.color = c; renderSchedule(); }
+
+    function addItem(dayId) {
+      schSave(true);
+      const d = findDay(dayId);
+      if (!d) return;
+      const it = { id: newId('i'), slot: '', text: '', _new: true };
+      d.items.push(it);
+      schEdit = { type: 'item', dayId, itemId: it.id };
+      renderSchedule();
+    }
+
+    function deleteItem(dayId, itemId) {
+      const d = findDay(dayId);
+      if (!d) return;
+      const it = d.items.find(i => i.id === itemId);
+      if (it && !it._new && !confirm('確定要刪除這個行程嗎？（所有人都會一起刪除）')) return;
+      d.items = d.items.filter(i => i.id !== itemId);
+      schEndEdit();
+      persistSchedule(); pushDay(d);
+      renderSchedule();
+      showToast('已刪除行程');
+    }
+
+    function moveItem(dayId, itemId, dir) {
+      schDraft();
+      const d = findDay(dayId);
+      if (!d) return;
+      const i = d.items.findIndex(x => x.id === itemId), j = i + dir;
+      if (i < 0 || j < 0 || j >= d.items.length) return;
+      [d.items[i], d.items[j]] = [d.items[j], d.items[i]];
+      persistSchedule();
+      if (!d.items[i]._new && !d.items[j]._new) pushDay(d);
+      renderSchedule();
+    }
+
+    function addDay() {
+      schSave(true);
+      const nextOrd = schedule.reduce((m, d) => Math.max(m, d.ord || 0), 0) + 1;
+      const d = { id: newId('d'), ord: nextOrd, title: '新的一天', color: SCH_COLORS[schedule.length % SCH_COLORS.length], items: [], _new: true };
+      schedule.push(d);
+      schEdit = { type: 'day', dayId: d.id, color: d.color, title: '' };
+      renderSchedule();
+    }
+
+    function deleteDay(dayId) {
+      const d = findDay(dayId);
+      if (!d) return;
+      const n = d.items.length;
+      if (!d._new && !confirm(`確定要刪除「${d.title}」嗎？${n ? `（裡面 ${n} 個行程也會一起刪除，所有人都看不到）` : ''}`)) return;
+      schedule = schedule.filter(x => x.id !== dayId);
+      schEndEdit();
+      persistSchedule();
+      if (!d._new) { push('DELETE', 'schedule/' + dayId); push('PUT', 'schedule_init', true); }
+      renderSchedule();
+      showToast('已刪除這一天');
+    }
+
+    function scheduleText() {
+      return schedule.filter(d => !d._new).map(d =>
+        d.title + '：\n' + (d.items.length ? d.items.filter(i => !i._new).map(i => '・' + (i.slot ? i.slot + '：' : '') + i.text).join('\n') : '・（尚未安排）')
+      ).join('\n\n');
+    }
+
     // ==================== 初始化 ====================
     function initApp() {
       applyTheme();
+      loadSchedule();
       checkGate();
       loadMembers();
       loadRoles();
       loadExpenses();
       renderAll();
+      renderSchedule();
+      setInterval(updateSyncTime, 1000);
       setupDragScroll('carousel-album');
       setupDragScroll('carousel-stay');
       setupScrollSpy();
@@ -1520,7 +1793,7 @@
     }
 
     // ==================== 共享資料同步（Firebase Realtime Database REST） ====================
-    const sync = { enabled: !!FIREBASE_DB_URL, online: false, dirty: false, pushing: 0, lastSig: '', timer: null, loaded: false };
+    const sync = { enabled: !!FIREBASE_DB_URL, online: false, dirty: false, pushing: 0, lastSig: '', timer: null, loaded: false, lastOk: 0 };
 
     function dbUrl(path) {
       return FIREBASE_DB_URL.replace(/\/+$/, '') + '/' + DB_ROOT + (path ? '/' + path : '') + '.json';
@@ -1539,20 +1812,38 @@
 
     function setSyncState(state) {
       // state: local | ok | offline | connecting
-      const dot = document.getElementById('sync-dot');
-      const text = document.getElementById('sync-text');
       const pill = document.getElementById('sync-pill');
-      if (!dot || !text || !pill) return;
+      const text = document.getElementById('sync-text');
+      if (!pill || !text) return;
       const map = {
-        local: ['bg-gray-400', '僅本機', '尚未連線共享資料庫，目前資料只存在這支手機'],
-        connecting: ['bg-amber-400 animate-pulse', '連線中', '正在連線共享資料庫'],
-        ok: ['bg-emerald-500', '全員同步', '所有人看到的是同一份資料，點一下可立即更新'],
-        offline: ['bg-rose-500', '離線', '連不上共享資料庫，已先存在本機，連線後自動補同步']
+        local: ['僅本機', '尚未連線共享資料庫，目前資料只存在這支手機'],
+        connecting: ['連線中', '正在連線共享資料庫'],
+        ok: ['全員同步', '所有人看到的是同一份資料，點一下可立即更新'],
+        offline: ['離線', '連不上共享資料庫，已先存在本機，連線後自動補同步']
       };
       const m = map[state] || map.local;
-      dot.className = 'w-2 h-2 rounded-full flex-shrink-0 ' + m[0];
-      text.textContent = m[1];
-      pill.title = m[2];
+      pill.dataset.state = state;
+      text.textContent = m[0];
+      pill.title = m[1];
+      if (state === 'ok') sync.lastOk = Date.now();
+      updateSyncTime();
+    }
+
+    function updateSyncTime() {
+      const el = document.getElementById('sync-time');
+      const pill = document.getElementById('sync-pill');
+      if (!el || !pill) return;
+      if (pill.dataset.state !== 'ok' || !sync.lastOk) { el.textContent = ''; el.style.display = 'none'; return; }
+      el.style.display = '';
+      const sec = Math.max(0, Math.round((Date.now() - sync.lastOk) / 1000));
+      el.textContent = sec < 6 ? '剛剛更新' : sec < 60 ? `${sec} 秒前更新` : `${Math.floor(sec / 60)} 分鐘前更新`;
+    }
+
+    function manualSync() {
+      if (!sync.enabled) { showToast('尚未連線共享資料庫'); return; }
+      const ico = document.getElementById('sync-ico');
+      if (ico) { ico.classList.remove('spin'); void ico.offsetWidth; ico.classList.add('spin'); }
+      tick(true);
     }
 
     function buildRemoteSnapshot() {
@@ -1560,7 +1851,9 @@
       Object.keys(rolesData).forEach(k => { roles[k] = JSON.stringify(rolesData[k]); });
       const exps = {};
       expenses.forEach(e => { exps[e.id] = JSON.stringify(e); });
-      return { members: JSON.stringify(members), roles, expenses: exps };
+      const sch = {};
+      schedule.filter(d => !d._new).forEach(d => { sch[d.id] = dayJson(d); });
+      return { members: JSON.stringify(members), roles, expenses: exps, schedule: sch, schedule_init: true };
     }
 
     async function push(method, path, val) {
@@ -1617,6 +1910,17 @@
       calculateSettlement();
       // 只有成員名單變動才重建表單選項，避免打到一半的記帳被洗掉
       if (JSON.stringify(members) !== oldMembersSig) renderExpenseFormOptions();
+      if (!schEdit) {
+        if (data.schedule && typeof data.schedule === 'object') {
+          schedule = Object.keys(data.schedule).map(k => parseJson(data.schedule[k], null)).filter(Boolean).sort((a, b) => (a.ord || 0) - (b.ord || 0));
+          persistSchedule();
+          renderSchedule();
+        } else if (data.schedule_init) {
+          schedule = [];
+          persistSchedule();
+          renderSchedule();
+        }
+      }
       if (pickerTarget) renderPicker();
     }
 
@@ -1635,6 +1939,13 @@
         if (data === null) {
           // 資料庫還是空的：用目前這份（含預設或本機既有資料）當初始內容
           await dbReq('PUT', '', buildRemoteSnapshot());
+          return;
+        }
+        if (!data.schedule && !data.schedule_init) {
+          // 舊資料庫還沒有時程：把目前的時程補進去
+          for (const d of schedule.filter(x => !x._new)) await push('PUT', 'schedule/' + d.id, dayJson(d));
+          await push('PUT', 'schedule_init', true);
+          sync.lastSig = '';
           return;
         }
         const sig = JSON.stringify(data);
@@ -2352,28 +2663,20 @@
       });
     }
 
-    // 一鍵加入 Google 日曆
+    // 一鍵加入 Google 日曆（內容取自目前的活動時程）
     function addToGoogleCalendar() {
       const title = encodeURIComponent("【台中石岡】閒情驛棧出遊・放鬆漫遊 ⛺");
       const loc = encodeURIComponent("臺中市石岡區豐勢路梅子里梅子巷17-10號（閒情驛棧）");
-      const details = encodeURIComponent(
-        "12/26 (六) 第一天：\n" +
-        "・早上：開開心心出門 🚗✨\n" +
-        "・下午：入住（想打氣場的可以打 😈）\n" +
-        "・晚上：Party Time 🎉🍹🔥\n\n" +
-        "12/27 (日) 第二天：\n" +
-        "・早上：睡到自然醒（想打氣場的可以打 😈）🍳☀️\n" +
-        "・中午：吃好吃的（吃飽送走 Olaf ⛄）、玩跳跳格子 🏃‍♂️💨\n" +
-        "・晚上：回家 🏡❤️\n\n" +
-        "專屬出遊網站：https://jonesgoober8433-lab.github.io/taichung-camping/"
-      );
+      const details = encodeURIComponent(scheduleText() + "\n\n專屬出遊網站：https://jonesgoober8433-lab.github.io/taichung-camping/");
       const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=20261226/20261228&details=${details}&location=${loc}`;
       window.open(url, '_blank');
       showToast('📅 已開啟 Google 日曆！點擊「儲存」即可加入！');
     }
 
-    // 一鍵加入 Apple 行事曆 (.ics，相容 iOS / macOS / Outlook)
+    // 一鍵加入 Apple 行事曆 (.ics，相容 iOS / macOS / Outlook；內容取自目前的活動時程)
     function addToAppleCalendar() {
+      const icsEsc = t => t.replace(/\\/g, '\\\\').replace(/;/g, '\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+      const desc = icsEsc(scheduleText() + "\n\n專屬出遊網站：https://jonesgoober8433-lab.github.io/taichung-camping/");
       const icsLines = [
         "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Edward//Camping Trip//TW", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
         "BEGIN:VEVENT",
@@ -2383,7 +2686,7 @@
         "DTEND;VALUE=DATE:20261228",
         "SUMMARY:【台中石岡】閒情驛棧出遊・放鬆漫遊 ⛺",
         "LOCATION:臺中市石岡區豐勢路梅子里梅子巷17-10號（閒情驛棧）",
-        "DESCRIPTION:12/26 (六) 第一天：\\n・早上：開開心心出門 🚗✨\\n・下午：入住（想打氣場的可以打 😈）\\n・晚上：Party Time 🎉🍹🔥\\n\\n12/27 (日) 第二天：\\n・早上：睡到自然醒（想打氣場的可以打 😈）🍳☀️\\n・中午：吃好吃的（吃飽送走 Olaf ⛄）、玩跳跳格子 🏃‍♂️💨\\n・晚上：回家 🏡❤️\\n\\n專屬出遊網站：https://jonesgoober8433-lab.github.io/taichung-camping/",
+        "DESCRIPTION:" + desc,
         "STATUS:CONFIRMED", "END:VEVENT", "END:VCALENDAR"
       ];
       const blob = new Blob([icsLines.join("\r\n")], { type: "text/calendar;charset=utf-8" });
