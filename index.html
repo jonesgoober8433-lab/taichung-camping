@@ -1418,10 +1418,15 @@
       <!-- 提示文字區（固定清晰兩行，禁止任意斷字換行、不被按鈕擠壓） -->
       <div class="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></span>
-        <div class="flex flex-col text-xs sm:text-sm font-extrabold text-gray-800 leading-snug whitespace-nowrap">
-          <div>已選定心儀號碼？<span class="text-emerald-700 font-bold">點選可複選</span></div>
-          <div class="text-[11px] sm:text-xs text-gray-600 font-semibold">
-            最後一鍵複製貼在 <span class="text-indigo-600 font-black">DC</span> 💬
+        <div class="text-xs sm:text-sm font-extrabold text-gray-800 leading-snug whitespace-nowrap">
+          <!-- 電腦/平板寬螢幕：空間充裕，排成大氣完整一行 -->
+          <div class="hidden sm:inline-flex items-center gap-1.5">
+            <span>已選定心儀號碼？<span class="text-emerald-700 font-bold">點選可複選</span>，最後一鍵複製貼在 <span class="text-indigo-600 font-black">DC</span> 💬</span>
+          </div>
+          <!-- 手機直向窄螢幕：空間有限，自動排成乾淨兩行不折字 -->
+          <div class="flex sm:hidden flex-col">
+            <div>已選定心儀號碼？<span class="text-emerald-700 font-bold">點選可複選</span></div>
+            <div class="text-[11px] text-gray-600 font-semibold mt-0.5">最後一鍵複製貼在 <span class="text-indigo-600 font-black">DC</span> 💬</div>
           </div>
         </div>
       </div>
