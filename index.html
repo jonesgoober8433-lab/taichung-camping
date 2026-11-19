@@ -85,21 +85,7 @@
         </button>
       </div>
 
-      <!-- 快速跳號（大螢幕） -->
-      <div class="hidden xl:flex items-center text-xs text-gray-400 font-medium whitespace-nowrap">
-        <span>跳號：</span>
-        <div class="flex gap-1 ml-1">
-          <a href="#camp-01" class="w-5 h-5 rounded bg-gray-100 text-gray-700 flex items-center justify-center font-bold hover:bg-emerald-200">1</a>
-          <a href="#camp-02" class="w-5 h-5 rounded bg-gray-100 text-gray-700 flex items-center justify-center font-bold hover:bg-emerald-200">2</a>
-          <a href="#camp-03" class="w-5 h-5 rounded bg-gray-100 text-gray-700 flex items-center justify-center font-bold hover:bg-emerald-200">3</a>
-          <a href="#camp-04" class="w-5 h-5 rounded bg-gray-100 text-gray-700 flex items-center justify-center font-bold hover:bg-emerald-200">4</a>
-          <a href="#camp-05" class="w-5 h-5 rounded bg-gray-100 text-gray-700 flex items-center justify-center font-bold hover:bg-emerald-200">5</a>
-          <a href="#camp-06" class="w-5 h-5 rounded bg-gray-100 text-gray-700 flex items-center justify-center font-bold hover:bg-emerald-200">6</a>
-          <a href="#camp-07" class="w-5 h-5 rounded bg-amber-100 text-amber-800 flex items-center justify-center font-bold hover:bg-amber-200">7</a>
-          <a href="#camp-08" class="w-5 h-5 rounded bg-amber-100 text-amber-800 flex items-center justify-center font-bold hover:bg-amber-200">8</a>
-        </div>
       </div>
-    </div>
   </nav>
 
   <!-- 頂部 Header 橫幅 -->
@@ -127,19 +113,6 @@
       </div>
     </div>
   </header>
-        <div class="flex gap-1 ml-1">
-          <a href="#camp-01" class="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">1</a>
-          <a href="#camp-02" class="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">2</a>
-          <a href="#camp-03" class="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">3</a>
-          <a href="#camp-04" class="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">4</a>
-          <a href="#camp-05" class="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">5</a>
-          <a href="#camp-06" class="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold hover:bg-emerald-200">6</a>
-          <a href="#camp-07" class="w-5 h-5 rounded bg-amber-200 text-amber-900 flex items-center justify-center font-bold hover:bg-amber-300">7</a>
-          <a href="#camp-08" class="w-5 h-5 rounded bg-amber-200 text-amber-900 flex items-center justify-center font-bold hover:bg-amber-300">8</a>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- 主內容容器 -->
   <main class="max-w-4xl mx-auto px-4 sm:px-6 mt-6 space-y-10">
@@ -1334,51 +1307,133 @@
 
   </main>
 
-  <!-- 底部固定投票回報浮動條（手機體驗最佳化：1~8 直接點選一鍵複製貼 DC） -->
-  <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 py-2.5 px-3 sm:px-4 z-40 shadow-2xl">
-    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
+    <!-- 右側貼邊懸浮跳號按鈕（跟隨視窗滾動） -->
+  <aside id="floating-jump-pill" onclick="toggleJumpDrawer()" class="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#34302D]/95 hover:bg-[#1E1B19] text-white shadow-2xl rounded-l-2xl py-3 px-2 flex flex-col items-center justify-center cursor-pointer border-l-2 border-t border-b border-amber-500/40 backdrop-blur-md transition-all duration-200 active:scale-95 select-none group" title="快速跳號">
+    <i class="fa-solid fa-bars text-amber-400 text-sm mb-1 group-hover:scale-110 transition"></i>
+    <span class="text-[11px] font-black tracking-widest [writing-mode:vertical-rl] text-stone-200">跳號</span>
+  </aside>
+
+  <!-- 快速跳號抽屜面板 -->
+  <div id="jump-drawer-backdrop" onclick="toggleJumpDrawer()" class="hidden fixed inset-0 bg-black/40 backdrop-blur-xs z-50 transition-opacity"></div>
+  <aside id="jump-drawer" class="fixed right-0 top-0 bottom-0 w-80 max-w-[85vw] bg-white/95 backdrop-blur-md shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-out flex flex-col border-l border-gray-200">
+    <div class="p-4 border-b border-gray-100 flex items-center justify-between bg-stone-900 text-white">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-compass text-amber-400 text-lg"></i>
+        <span class="font-black text-sm tracking-wide">快速跳號導覽</span>
+      </div>
+      <button onclick="toggleJumpDrawer()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-stone-300 hover:text-white transition" aria-label="關閉選單">
+        <i class="fa-solid fa-xmark text-sm"></i>
+      </button>
+    </div>
+    
+    <div class="p-3 overflow-y-auto flex-1 space-y-2 no-scrollbar">
+      <a href="#camp-01" onclick="toggleJumpDrawer()" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-emerald-50 transition border border-transparent hover:border-emerald-200 group">
+        <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">01</span>
+        <div class="min-w-0 flex-1">
+          <div class="text-xs font-bold text-gray-800 truncate group-hover:text-emerald-700">向海那漾 Nayang Beach</div>
+          <div class="text-[11px] text-gray-400 truncate">海邊豪華露營・一泊三食全包</div>
+        </div>
+      </a>
+      <a href="#camp-02" onclick="toggleJumpDrawer()" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-emerald-50 transition border border-transparent hover:border-emerald-200 group">
+        <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">02</span>
+        <div class="min-w-0 flex-1">
+          <div class="text-xs font-bold text-gray-800 truncate group-hover:text-emerald-700">聚元營地 GIINN Glamping</div>
+          <div class="text-[11px] text-gray-400 truncate">頂級露營車・新社山景</div>
+        </div>
+      </a>
+      <a href="#camp-03" onclick="toggleJumpDrawer()" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-emerald-50 transition border border-transparent hover:border-emerald-200 group">
+        <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">03</span>
+        <div class="min-w-0 flex-1">
+          <div class="text-xs font-bold text-gray-800 truncate group-hover:text-emerald-700">哈比雪兒-森光秘境</div>
+          <div class="text-[11px] text-gray-400 truncate">東勢遊牧帳・娛樂設施多</div>
+        </div>
+      </a>
+      <a href="#camp-04" onclick="toggleJumpDrawer()" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-emerald-50 transition border border-transparent hover:border-emerald-200 group">
+        <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">04</span>
+        <div class="min-w-0 flex-1">
+          <div class="text-xs font-bold text-gray-800 truncate group-hover:text-emerald-700">覓靜莊園</div>
+          <div class="text-[11px] text-gray-400 truncate">谷關海拔1200M・高山星空</div>
+        </div>
+      </a>
+      <a href="#camp-05" onclick="toggleJumpDrawer()" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-emerald-50 transition border border-transparent hover:border-emerald-200 group">
+        <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">05</span>
+        <div class="min-w-0 flex-1">
+          <div class="text-xs font-bold text-gray-800 truncate group-hover:text-emerald-700">呆呆的家-免搭帳露營</div>
+          <div class="text-[11px] text-gray-400 truncate">谷關鐘型帳・高CP值烤肉</div>
+        </div>
+      </a>
+      <a href="#camp-06" onclick="toggleJumpDrawer()" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-emerald-50 transition border border-transparent hover:border-emerald-200 group">
+        <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">06</span>
+        <div class="min-w-0 flex-1">
+          <div class="text-xs font-bold text-gray-800 truncate group-hover:text-emerald-700">曉晴新社</div>
+          <div class="text-[11px] text-gray-400 truncate">新社球型帳・半透明星空屋</div>
+        </div>
+      </a>
+      <a href="#camp-07" onclick="toggleJumpDrawer()" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-amber-50 transition border border-transparent hover:border-amber-200 group">
+        <span class="w-7 h-7 rounded-lg bg-amber-500 text-white font-black text-xs flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">07</span>
+        <div class="min-w-0 flex-1">
+          <div class="text-xs font-bold text-gray-800 truncate group-hover:text-amber-800">東勢區月亮小木屋 🏡</div>
+          <div class="text-[11px] text-gray-400 truncate">獨棟包棟・KTV麻將烤肉</div>
+        </div>
+      </a>
+      <a href="#camp-08" onclick="toggleJumpDrawer()" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-amber-50 transition border border-transparent hover:border-amber-200 group">
+        <span class="w-7 h-7 rounded-lg bg-amber-500 text-white font-black text-xs flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">08</span>
+        <div class="min-w-0 flex-1">
+          <div class="text-xs font-bold text-gray-800 truncate group-hover:text-amber-800">吾居無束・新社獨棟木屋 🏡</div>
+          <div class="text-[11px] text-gray-400 truncate">獨棟包棟・私密庭院露台</div>
+        </div>
+      </a>
+    </div>
+    
+    <div class="p-3 border-t border-gray-100 bg-gray-50 text-[11px] text-gray-500 text-center font-medium">
+      點號碼直接滾動至該住宿 ⛺
+    </div>
+  </aside>
+
+  <!-- 右下角回到最頂端浮動按鈕（參考樣式：深棕色圓形懸浮按鈕） -->
+  <button id="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="opacity-0 pointer-events-none transition-all duration-300 fixed right-3.5 sm:right-5 bottom-24 sm:bottom-28 z-40 w-11 h-11 rounded-full bg-[#8C5E3C] hover:bg-[#6F472B] text-white shadow-2xl flex items-center justify-center border-2 border-white/50 active:scale-90" title="回到最頂端" aria-label="回到最頂端">
+    <i class="fa-solid fa-arrow-up text-base font-bold"></i>
+  </button>
+
+  <!-- 底部固定投票回報浮動條（支援 01~08 複選 + 一鍵複製貼在 DC） -->
+  <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 py-2.5 px-3 sm:px-6 z-40 shadow-2xl">
+    <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2.5">
       
       <!-- 提示文字 -->
-      <div class="flex items-center gap-2 self-start sm:self-center">
-        <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse"></span>
+      <div class="flex items-center gap-2 self-start md:self-center">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
         <span class="text-xs sm:text-sm font-extrabold text-gray-800 flex items-center gap-1">
-          已選定心儀號碼？點號碼一鍵複製貼在 <span class="text-indigo-600 font-black">DC (Discord)</span> 💬
+          已選定心儀號碼？<span class="text-emerald-700 font-bold">點選可複選</span>，最後一鍵複製貼在 <span class="text-indigo-600 font-black">DC (Discord)</span> 💬
         </span>
       </div>
 
-      <!-- 1 到 8 快速投票按鈕列 -->
-      <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 no-scrollbar">
-        <button onclick="quickVote('01')" class="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center" title="投 01 號 向海那漾">
-          01
+      <!-- 01 到 08 複選按鈕列 + 一鍵複製按鈕 -->
+      <div class="flex items-center gap-1.5 sm:gap-2 w-full md:w-auto justify-between md:justify-end overflow-x-auto no-scrollbar py-0.5">
+        
+        <div class="flex items-center gap-1 sm:gap-1.5">
+          <button id="vote-btn-01" onclick="toggleCampSelect('01')" class="vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border border-gray-300 bg-gray-50 text-gray-700 font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center hover:bg-gray-100" title="複選 01 向海那漾">01</button>
+          <button id="vote-btn-02" onclick="toggleCampSelect('02')" class="vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border border-gray-300 bg-gray-50 text-gray-700 font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center hover:bg-gray-100" title="複選 02 聚元營地">02</button>
+          <button id="vote-btn-03" onclick="toggleCampSelect('03')" class="vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border border-gray-300 bg-gray-50 text-gray-700 font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center hover:bg-gray-100" title="複選 03 哈比雪兒">03</button>
+          <button id="vote-btn-04" onclick="toggleCampSelect('04')" class="vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border border-gray-300 bg-gray-50 text-gray-700 font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center hover:bg-gray-100" title="複選 04 覓靜莊園">04</button>
+          <button id="vote-btn-05" onclick="toggleCampSelect('05')" class="vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border border-gray-300 bg-gray-50 text-gray-700 font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center hover:bg-gray-100" title="複選 05 呆呆的家">05</button>
+          <button id="vote-btn-06" onclick="toggleCampSelect('06')" class="vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border border-gray-300 bg-gray-50 text-gray-700 font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center hover:bg-gray-100" title="複選 06 曉晴新社">06</button>
+          <button id="vote-btn-07" onclick="toggleCampSelect('07')" class="vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border border-gray-300 bg-gray-50 text-gray-700 font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center hover:bg-gray-100" title="複選 07 月亮小木屋">07</button>
+          <button id="vote-btn-08" onclick="toggleCampSelect('08')" class="vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border border-gray-300 bg-gray-50 text-gray-700 font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center hover:bg-gray-100" title="複選 08 吾居無束木屋">08</button>
+        </div>
+
+        <!-- 一鍵複製按鈕 -->
+        <button id="copy-multi-btn" onclick="copyMultiVoteToDC()" class="flex-shrink-0 px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-800 text-white font-extrabold text-xs sm:text-sm shadow-md flex items-center gap-1.5 transition active:scale-95 whitespace-nowrap">
+          <i class="fa-solid fa-copy"></i>
+          <span id="copy-btn-text">一鍵複製 (貼在 DC)</span>
         </button>
-        <button onclick="quickVote('02')" class="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center" title="投 02 號 聚元營地">
-          02
-        </button>
-        <button onclick="quickVote('03')" class="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center" title="投 03 號 哈比雪兒">
-          03
-        </button>
-        <button onclick="quickVote('04')" class="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center" title="投 04 號 覓靜莊園">
-          04
-        </button>
-        <button onclick="quickVote('05')" class="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center" title="投 05 號 呆呆的家">
-          05
-        </button>
-        <button onclick="quickVote('06')" class="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center" title="投 06 號 曉晴新社">
-          06
-        </button>
-        <button onclick="quickVote('07')" class="flex-shrink-0 w-8 h-8 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center" title="投 07 號 月亮小木屋包棟">
-          07
-        </button>
-        <button onclick="quickVote('08')" class="flex-shrink-0 w-8 h-8 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center" title="投 08 號 吾居無束包棟">
-          08
-        </button>
+
       </div>
 
     </div>
   </div>
 
   <!-- Toast 提示訊息容器（清楚說明已複製，請貼在 DC） -->
-  <div id="toast" class="hidden fixed bottom-20 left-1/2 z-50 bg-gray-900/95 backdrop-blur-md text-white text-xs sm:text-sm font-semibold px-5 py-3 rounded-2xl shadow-2xl border border-white/20 text-center">
+  <div id="toast" class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-gray-900/95 backdrop-blur-md text-white text-xs sm:text-sm font-semibold px-5 py-3 rounded-2xl shadow-2xl border border-white/20 text-center max-w-[90vw]">
     <div id="toast-text">已複製！請直接貼在 DC 群組回報！</div>
   </div>
 
@@ -1395,27 +1450,105 @@
       '08': '吾居無束・新社獨棟小木屋（獨棟包棟・前後大露台）'
     };
 
+    // 複選集合
+    const selectedCamps = new Set();
+
     function scrollCarousel(id, direction) {
       const el = document.getElementById(id);
       const width = el.clientWidth;
       el.scrollBy({ left: direction * width, behavior: 'smooth' });
     }
 
-    // 複製投票文字並提示貼在 DC
+    // 開關快速跳號抽屜
+    function toggleJumpDrawer() {
+      const drawer = document.getElementById('jump-drawer');
+      const backdrop = document.getElementById('jump-drawer-backdrop');
+      const isOpen = !drawer.classList.contains('translate-x-full');
+      
+      if (isOpen) {
+        drawer.classList.add('translate-x-full');
+        backdrop.classList.add('hidden');
+      } else {
+        drawer.classList.remove('translate-x-full');
+        backdrop.classList.remove('hidden');
+      }
+    }
+
+    // 監聽滾動事件：控制「回到最頂端」按鈕顯隱
+    window.addEventListener('scroll', () => {
+      const backToTopBtn = document.getElementById('back-to-top');
+      if (!backToTopBtn) return;
+      if (window.scrollY > 220) {
+        backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+        backToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+      } else {
+        backToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+        backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+      }
+    });
+
+    // 點擊底部 01~08 進行複選/取消
+    function toggleCampSelect(num) {
+      const cleanNum = String(num).padStart(2, '0');
+      const btn = document.getElementById(`vote-btn-${cleanNum}`);
+      
+      if (selectedCamps.has(cleanNum)) {
+        selectedCamps.delete(cleanNum);
+        // 還原為未選樣式
+        btn.className = 'vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border border-gray-300 bg-gray-50 text-gray-700 font-black text-xs transition active:scale-90 shadow-sm flex items-center justify-center hover:bg-gray-100';
+      } else {
+        selectedCamps.add(cleanNum);
+        // 選中樣式（07、08 為琥珀金，01~06 為質感綠）
+        if (cleanNum === '07' || cleanNum === '08') {
+          btn.className = 'vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border-2 border-amber-500 bg-amber-500 text-white font-black text-xs transition active:scale-90 shadow-md flex items-center justify-center ring-2 ring-amber-300 scale-105';
+        } else {
+          btn.className = 'vote-num-btn flex-shrink-0 w-8 h-8 rounded-lg border-2 border-emerald-600 bg-emerald-600 text-white font-black text-xs transition active:scale-90 shadow-md flex items-center justify-center ring-2 ring-emerald-300 scale-105';
+        }
+      }
+      
+      updateCopyBtnText();
+    }
+
+    function updateCopyBtnText() {
+      const copyBtnText = document.getElementById('copy-btn-text');
+      const count = selectedCamps.size;
+      if (count > 0) {
+        copyBtnText.innerText = `一鍵複製已選 (${count}間・貼在 DC)`;
+      } else {
+        copyBtnText.innerText = '一鍵複製 (貼在 DC)';
+      }
+    }
+
+    // 一鍵複製複選結果，並提示貼在 DC
+    function copyMultiVoteToDC() {
+      if (selectedCamps.size === 0) {
+        showToast(`💡 請先點選您心儀的號碼（可複選 01~08），<br>再點擊一鍵複製貼在 DC 唷！`);
+        return;
+      }
+
+      const sortedNums = Array.from(selectedCamps).sort();
+      const listText = sortedNums.map(n => `【${n} 號 ${campNames[n]}】`).join('、');
+      const textToCopy = `哈囉 Edward！台中出遊我投給這幾間：${listText}！⛺🏡 大家快點敲定出發吧～ (來自 DC 投票回報)`;
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const numLabels = sortedNums.join('、');
+        showToast(`✅ 已複製【${numLabels} 號】！<br><span class="text-amber-300 font-bold">請直接貼在 Discord (DC) 群組回報！</span>`);
+      }).catch(() => {
+        showToast(`💡 請直接在 DC 群組回覆主揪：「我選 ${sortedNums.join('、')} 號」！`);
+      });
+    }
+
+    // 卡片內部的單一投票按鈕（同時標記選中並複製貼 DC）
     function voteCamp(number, name) {
+      if (!selectedCamps.has(number)) {
+        toggleCampSelect(number);
+      }
       const textToCopy = `哈囉 Edward！台中出遊我投【${number} 號 - ${name}】一票！⛺🏡 快點成團出發吧～ (來自 DC 投票回報)`;
       navigator.clipboard.writeText(textToCopy).then(() => {
         showToast(`✅ 已複製【${number} 號 ${name}】！<br><span class="text-amber-300 font-bold">請直接貼在 Discord (DC) 群組回報！</span>`);
       }).catch(() => {
         showToast(`💡 請直接在 DC 群組回覆主揪：「我選 ${number} 號 ${name}」！`);
       });
-    }
-
-    // 底部 1~8 按鈕快速一鍵投票
-    function quickVote(num) {
-      const cleanNum = String(num).padStart(2, '0');
-      const name = campNames[cleanNum] || `${cleanNum} 號選項`;
-      voteCamp(cleanNum, name);
     }
 
     function showToast(htmlMsg) {
@@ -1427,7 +1560,7 @@
       toast.classList.add('toast-msg');
       setTimeout(() => {
         toast.classList.add('hidden');
-      }, 2800);
+      }, 3000);
     }
 
     function filterCamp(type) {
@@ -1453,4 +1586,5 @@
     }
   </script>
 </body>
+</html>
 </html>
