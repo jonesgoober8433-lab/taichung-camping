@@ -1037,43 +1037,105 @@
         </div>
       </div>
 
-      <!-- 🎬 上傳影片專區（Google Drive 零成本無損直存推薦方案） -->
-      <div class="bg-gradient-to-r from-sky-50 via-indigo-50 to-purple-50 rounded-2xl p-4 border border-sky-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <!-- ☁️ 專屬 Apple iCloud 共享相簿與 4K 影片上傳專區 -->
+      <div class="bg-gradient-to-r from-sky-50 via-blue-50 to-indigo-50 rounded-2xl p-4 sm:p-5 border border-sky-200 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
         <div class="space-y-1 text-center sm:text-left">
           <div class="flex items-center justify-center sm:justify-start gap-2">
-            <span class="text-xl">🎬</span>
-            <strong class="text-sm font-black text-sky-950">出遊高畫質影片 ＆ 原圖共享雲端相簿</strong>
+            <span class="text-2xl">📸</span>
+            <strong class="text-sm sm:text-base font-black text-sky-950">出遊高畫質相片 ＆ 4K 影片・iCloud 共享相簿</strong>
           </div>
-          <p class="text-xs text-gray-600 leading-relaxed">
-            手機拍的 4K 影片與連拍大片，直接上傳到 Google Drive 共享資料夾！免壓縮、原畫質永久保存。
+          <p class="text-xs text-gray-600 leading-relaxed max-w-xl">
+            點擊直達 Edward 建立的<strong>「115.12月19、20 大家出去玩」</strong>專屬相簿！iPhone/iPad 點開可直接在內建相簿中共同發布；Android 與電腦也能免登入直接在網頁端上傳原圖大片！
           </p>
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
-          <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white text-xs font-black shadow-md transition active:scale-95 inline-flex items-center gap-1.5">
-            <i class="fa-brands fa-google-drive"></i> 開啟 Google 雲端上傳影片
+          <a href="https://photos.icloud.com/shared/album/067IhirbH9LZtsUpBeqGsjZIA" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white text-xs sm:text-sm font-black shadow-md transition active:scale-95 inline-flex items-center gap-2 group">
+            <i class="fa-solid fa-cloud-arrow-up text-sm group-hover:-translate-y-0.5 transition"></i>
+            <span>開啟 iCloud 共享相簿上傳</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-80"></i>
           </a>
         </div>
       </div>
 
-      <!-- 官方真實照片展示牆 -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-        <div class="aspect-square rounded-xl overflow-hidden bg-gray-100 relative group">
-          <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c10b5ebb6463.09157873.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-          <span class="absolute bottom-1.5 left-1.5 bg-black/60 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded">庭園與外觀</span>
-        </div>
-        <div class="aspect-square rounded-xl overflow-hidden bg-gray-100 relative group">
-          <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c10b992a9496.56236651.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-          <span class="absolute bottom-1.5 left-1.5 bg-black/60 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded">客廳與中島廚房</span>
-        </div>
-        <div class="aspect-square rounded-xl overflow-hidden bg-gray-100 relative group">
-          <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c490dfc10198.51955311.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-          <span class="absolute bottom-1.5 left-1.5 bg-black/60 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded">手作烘焙早餐</span>
-        </div>
-        <div class="aspect-square rounded-xl overflow-hidden bg-gray-100 relative group flex items-center justify-center border-2 border-dashed border-gray-300 hover:border-amber-500 cursor-pointer transition p-4 text-center">
-          <div class="text-gray-400 group-hover:text-amber-600 transition">
-            <i class="fa-solid fa-cloud-arrow-up text-2xl mb-1 block"></i>
-            <span class="text-[11px] font-bold block">上傳更多精彩照片</span>
+      <!-- 照片橫向拖曳展示軌道（支援電腦滑鼠按住拖曳、手機手指左右滑動） -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs font-bold text-gray-700 px-1">
+          <div class="flex items-center gap-1.5 text-amber-900">
+            <i class="fa-solid fa-arrows-left-right text-amber-600"></i>
+            <span>出遊精彩照片（支援向旁邊左右拖曳滑動，已包含實景照與上傳區）：</span>
           </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="scrollCarousel('carousel-album', -1)" class="w-7 h-7 rounded-lg bg-gray-100 hover:bg-amber-100 text-gray-600 hover:text-amber-800 flex items-center justify-center transition active:scale-90" title="往左看">
+              <i class="fa-solid fa-chevron-left text-xs"></i>
+            </button>
+            <button onclick="scrollCarousel('carousel-album', 1)" class="w-7 h-7 rounded-lg bg-gray-100 hover:bg-amber-100 text-gray-600 hover:text-amber-800 flex items-center justify-center transition active:scale-90" title="往右看">
+              <i class="fa-solid fa-chevron-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="carousel-album" class="carousel-container flex gap-3 overflow-x-auto py-2 scroll-smooth cursor-grab active:cursor-grabbing select-none no-scrollbar">
+          <!-- 照片 1 -->
+          <div class="carousel-item flex-shrink-0 w-60 sm:w-72 aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+            <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c10b5ebb6463.09157873.jpg" alt="庭園與外觀" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+            <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
+              <span class="font-bold block">🏡 閒情驛棧日景庭園與木造外觀</span>
+              <span class="text-[10px] text-gray-300">南洋峇里風情・戶外放鬆烤肉庭院</span>
+            </div>
+          </div>
+
+          <!-- 照片 2 -->
+          <div class="carousel-item flex-shrink-0 w-60 sm:w-72 aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+            <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c10b992a9496.56236651.jpg" alt="客廳與中島廚房" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+            <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
+              <span class="font-bold block">📺 86 吋超大劇院電視 ＆ 中島廚房</span>
+              <span class="text-[10px] text-gray-300">客廳歡聚吃喝放鬆・獨立包棟空間</span>
+            </div>
+          </div>
+
+          <!-- 照片 3 -->
+          <div class="carousel-item flex-shrink-0 w-60 sm:w-72 aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+            <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c490dfc10198.51955311.jpg" alt="手作烘焙早餐" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+            <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
+              <span class="font-bold block">🍳 闆娘烘焙證照・現烤手作早餐</span>
+              <span class="text-[10px] text-gray-300">西式精緻套餐・起床即享現做美味</span>
+            </div>
+          </div>
+
+          <!-- 照片 4: 房型一隅 -->
+          <div class="carousel-item flex-shrink-0 w-60 sm:w-72 aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+            <img src="https://chill.616stay.tw/uploads/room_images/b4d4481731db67e9.jpg?v=55108b8c" alt="溫馨和室套房" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+            <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
+              <span class="font-bold block">🛏️ 三樓四人和室通鋪套房</span>
+              <span class="text-[10px] text-gray-300">舒適通鋪・夜聊桌遊最盡興</span>
+            </div>
+          </div>
+
+          <!-- 照片 5: 私房下午茶 -->
+          <div class="carousel-item flex-shrink-0 w-60 sm:w-72 aspect-4/3 rounded-2xl overflow-hidden bg-gray-100 relative group shadow-sm border border-gray-200">
+            <img src="https://chill.616stay.tw/uploads/content_blocks/chill/cb_69c490ebc10852.42362132.jpg" alt="精緻午茶點心" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 pointer-events-none">
+            <div class="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white text-xs">
+              <span class="font-bold block">🍰 迎賓私房法式下午茶</span>
+              <span class="text-[10px] text-gray-300">可可麻糬佐開心果奶酥・入住驚喜</span>
+            </div>
+          </div>
+
+          <!-- 上傳卡片（點擊直通 iCloud 共享相簿） -->
+          <a href="https://photos.icloud.com/shared/album/067IhirbH9LZtsUpBeqGsjZIA" target="_blank" rel="noopener noreferrer"
+            class="carousel-item flex-shrink-0 w-60 sm:w-72 aspect-4/3 rounded-2xl border-2 border-dashed border-sky-300 hover:border-blue-500 bg-sky-50/60 hover:bg-sky-50 transition flex flex-col items-center justify-center p-5 text-center group cursor-pointer shadow-xs">
+            <div class="w-14 h-14 rounded-2xl bg-white shadow-md text-blue-600 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition duration-300">
+              <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
+            </div>
+            <strong class="text-sm font-black text-sky-950 group-hover:text-blue-700 transition block">
+              點此開啟 iCloud 上傳
+            </strong>
+            <span class="text-[11px] text-sky-800 mt-1 block">
+              「115.12月19、20 大家出去玩」
+            </span>
+            <span class="text-[10px] text-gray-500 mt-2 bg-white/80 px-2.5 py-1 rounded-full border border-sky-200">
+              4K 影片 ＆ 原圖不壓縮無損同步 ↗
+            </span>
+          </a>
         </div>
       </div>
     </article>
@@ -1147,6 +1209,8 @@
       loadRoles();
       loadExpenses();
       renderAll();
+      setupDragScroll('carousel-album');
+      setupDragScroll('carousel-stay');
     }
 
     // 全形轉半形與去除不可見字元
@@ -1903,8 +1967,57 @@
     // 照片輪播器
     function scrollCarousel(id, direction) {
       const el = document.getElementById(id);
-      const width = el.clientWidth;
+      if (!el) return;
+      const width = el.clientWidth * 0.8;
       el.scrollBy({ left: direction * width, behavior: 'smooth' });
+    }
+
+    // 支援水平輪播軌道滑鼠拖曳滑動 (Drag to Scroll)
+    function setupDragScroll(containerId) {
+      const slider = document.getElementById(containerId);
+      if (!slider) return;
+
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+      let hasDragged = false;
+
+      slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        hasDragged = false;
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+        slider.style.cursor = 'grabbing';
+      });
+
+      slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+      });
+
+      slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+        if (hasDragged) {
+          const preventClick = (clickEvent) => {
+            clickEvent.preventDefault();
+            clickEvent.stopPropagation();
+            slider.removeEventListener('click', preventClick, true);
+          };
+          slider.addEventListener('click', preventClick, true);
+        }
+      });
+
+      slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX);
+        if (Math.abs(walk) > 5) {
+          hasDragged = true;
+          e.preventDefault();
+          slider.scrollLeft = scrollLeft - walk;
+        }
+      });
     }
 
     // 下載單頁 HTML 離線時光膠囊
