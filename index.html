@@ -502,9 +502,18 @@
           </h3>
           <p class="text-xs text-gray-500 mt-0.5">時間隨心彈性調整，大家一起放鬆玩最重要！</p>
         </div>
-        <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-          Chill 漫活節奏
-        </span>
+        
+        <!-- 一鍵加入日曆按鈕群（Google 日曆 ＆ Apple 行事曆） -->
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <button type="button" onclick="addToGoogleCalendar()" class="px-2.5 py-1.5 rounded-xl bg-white border border-gray-300 hover:border-emerald-500 hover:bg-emerald-50 text-gray-700 hover:text-emerald-800 text-xs font-bold shadow-2xs transition active:scale-95 inline-flex items-center gap-1.5" title="一鍵加入 Google 日曆">
+            <i class="fa-brands fa-google text-emerald-600"></i>
+            <span>Google 日曆</span>
+          </button>
+          <button type="button" onclick="addToAppleCalendar()" class="px-2.5 py-1.5 rounded-xl bg-white border border-gray-300 hover:border-stone-800 hover:bg-stone-50 text-gray-700 hover:text-stone-900 text-xs font-bold shadow-2xs transition active:scale-95 inline-flex items-center gap-1.5" title="一鍵加入 Apple 行事曆">
+            <i class="fa-brands fa-apple text-stone-900"></i>
+            <span>Apple 行事曆</span>
+          </button>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -2031,6 +2040,60 @@
           slider.scrollLeft = scrollLeft - walk;
         }
       });
+    }
+
+    // 一鍵加入 Google 日曆
+    function addToGoogleCalendar() {
+      const title = encodeURIComponent("【台中石岡】閒情驛棧出遊・放鬆漫遊 ⛺");
+      const loc = encodeURIComponent("臺中市石岡區豐勢路梅子里梅子巷17-10號（閒情驛棧）");
+      const details = encodeURIComponent(
+        "12/26 (六) 第一天：\n" +
+        "・早上：開開心心出門 🚗✨\n" +
+        "・下午：入住（想打氣場的可以打 😈）\n" +
+        "・晚上：Party Time 🎉🍹🔥\n\n" +
+        "12/27 (日) 第二天：\n" +
+        "・早上：睡到自然醒（想打氣場的可以打 😈）🍳☀️\n" +
+        "・中午：吃好吃的（吃飽送走 Olaf ⛄）、玩跳跳格子 🏃‍♂️💨\n" +
+        "・晚上：回家 🏡❤️\n\n" +
+        "專屬出遊網站：https://jonesgoober8433-lab.github.io/taichung-camping/"
+      );
+      // 跨日全天活動（20261226 至 20261228，結束日 28 表示包含 27 日全天）
+      const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=20261226/20261228&details=${details}&location=${loc}`;
+      window.open(url, '_blank');
+      showToast('📅 已開啟 Google 日曆！點擊「儲存」即可加入！');
+    }
+
+    // 一鍵加入 Apple 行事曆 (.ics 格式，相容 iOS / macOS / Outlook)
+    function addToAppleCalendar() {
+      const icsLines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Edward//Camping Trip//TW",
+        "CALSCALE:GREGORIAN",
+        "METHOD:PUBLISH",
+        "BEGIN:VEVENT",
+        "UID:" + Date.now() + "@edward-camping.local",
+        "DTSTAMP:20261119T120000Z",
+        "DTSTART;VALUE=DATE:20261226",
+        "DTEND;VALUE=DATE:20261228",
+        "SUMMARY:【台中石岡】閒情驛棧出遊・放鬆漫遊 ⛺",
+        "LOCATION:臺中市石岡區豐勢路梅子里梅子巷17-10號（閒情驛棧）",
+        "DESCRIPTION:12/26 (六) 第一天：\\n・早上：開開心心出門 🚗✨\\n・下午：入住（想打氣場的可以打 😈）\\n・晚上：Party Time 🎉🍹🔥\\n\\n12/27 (日) 第二天：\\n・早上：睡到自然醒（想打氣場的可以打 😈）🍳☀️\\n・中午：吃好吃的（吃飽送走 Olaf ⛄）、玩跳跳格子 🏃‍♂️💨\\n・晚上：回家 🏡❤️\\n\\n專屬出遊網站：https://jonesgoober8433-lab.github.io/taichung-camping/",
+        "STATUS:CONFIRMED",
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ];
+
+      const blob = new Blob([icsLines.join("\r\n")], { type: "text/calendar;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "12.26-12.27_閒情驛棧出遊行程.ics";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('🍏 已下載行事曆檔案！<br>iPhone/Mac 點開即可一鍵存入 Apple 行事曆！');
     }
 
     // 下載單頁 HTML 離線時光膠囊
