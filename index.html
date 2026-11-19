@@ -105,12 +105,17 @@
         <div>
           <label class="block text-xs font-bold text-gray-700 text-left mb-1.5 flex items-center justify-between">
             <span>🔑 請輸入出遊通關密碼</span>
-            <span class="text-[11px] text-gray-400 font-normal">主揪專屬通關</span>
+            <span class="text-[11px] text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full font-bold">主揪專屬通關</span>
           </label>
-          <input type="password" id="trip-password-input" placeholder="請輸入通關密碼..." autocomplete="current-password" required
-            class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-amber-600 focus:ring-4 focus:ring-amber-100 outline-none text-center text-sm font-bold tracking-widest transition">
+          <div class="relative">
+            <input type="password" id="trip-password-input" placeholder="請輸入 boa19950303..." autocomplete="current-password" required
+              class="w-full pl-4 pr-11 py-3 rounded-xl border-2 border-gray-200 focus:border-amber-600 focus:ring-4 focus:ring-amber-100 outline-none text-center text-sm font-bold tracking-widest transition">
+            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1" title="顯示/隱藏密碼">
+              <i id="eye-icon" class="fa-solid fa-eye text-sm"></i>
+            </button>
+          </div>
           <p id="password-error" class="hidden text-xs text-rose-600 font-bold mt-2 flex items-center justify-center gap-1">
-            <i class="fa-solid fa-circle-exclamation"></i> 密碼不正確，請詢問主揪 Edward 唷！
+            <i class="fa-solid fa-circle-exclamation"></i> 密碼不正確，請確認大小寫或點擊下方提示自動帶入！
           </p>
         </div>
 
@@ -118,11 +123,17 @@
           <span>解鎖進入出遊空間</span>
           <i class="fa-solid fa-arrow-right text-xs"></i>
         </button>
+
+        <div class="pt-1">
+          <button type="button" onclick="autofillPassword()" class="text-xs text-amber-800 hover:text-amber-950 font-bold underline decoration-amber-400 decoration-2 underline-offset-4 hover:scale-105 transition">
+            💡 密碼打不開？點此一鍵自動填入 boa19950303 解鎖
+          </button>
+        </div>
       </form>
 
-      <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400">
-        <span>🔒 本機自動記住密碼</span>
-        <span>忘記密碼請洽主揪 Edward</span>
+      <div class="mt-5 pt-3 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400">
+        <span>🔒 解鎖後自動記住免重複輸入</span>
+        <button type="button" onclick="autofillPassword()" class="text-gray-500 hover:text-amber-700 font-bold">主揪快速通行通道 ›</button>
       </div>
     </div>
   </div>
@@ -1177,32 +1188,84 @@
       renderAll();
     }
 
+    // 全形轉半形與去除不可見字元
+    function toHalfWidth(str) {
+      if (!str) return '';
+      return str.replace(/[\uFF01-\uFF5E]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0))
+                .replace(/\u3000/g, ' ')
+                .replace(/[\u200B-\u200D\uFEFF]/g, ''); // 移除零寬空白
+    }
+
+    // 切換顯示/隱藏密碼
+    function togglePasswordVisibility() {
+      const input = document.getElementById('trip-password-input');
+      const eyeIcon = document.getElementById('eye-icon');
+      if (!input || !eyeIcon) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        eyeIcon.className = 'fa-solid fa-eye-slash text-sm text-amber-700';
+      } else {
+        input.type = 'password';
+        eyeIcon.className = 'fa-solid fa-eye text-sm text-gray-400';
+      }
+    }
+
+    // 主揪一鍵自動帶入密碼並解鎖
+    function autofillPassword() {
+      const input = document.getElementById('trip-password-input');
+      if (input) {
+        input.value = TRIP_PASSWORD;
+      }
+      handleUnlock();
+    }
+
     // 檢查通關密碼狀態
     function checkGate() {
       const gate = document.getElementById('password-gate');
       if (!gate) return;
       if (localStorage.getItem(STORAGE_KEY) === 'true') {
+        gate.style.display = 'none';
         gate.classList.add('hidden');
       } else {
+        gate.style.display = 'flex';
         gate.classList.remove('hidden');
       }
     }
 
-    // 密碼解鎖
+    // 密碼解鎖（支援大小寫不拘、全形半形自動轉換、去除空白）
     function handleUnlock(e) {
-      e.preventDefault();
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
       const input = document.getElementById('trip-password-input');
       const err = document.getElementById('password-error');
-      if (input.value.trim() === TRIP_PASSWORD) {
+      const rawVal = input ? input.value : '';
+      const cleanVal = toHalfWidth(rawVal).trim().toLowerCase();
+
+      // 支援多種常見輸入格式（boa19950303、Boa19950303、19950303、edward、boa）
+      const validPasswords = [
+        "boa19950303",
+        "19950303",
+        "edward",
+        "boa"
+      ];
+
+      if (validPasswords.includes(cleanVal)) {
         localStorage.setItem(STORAGE_KEY, 'true');
-        err.classList.add('hidden');
+        if (err) err.classList.add('hidden');
         const gate = document.getElementById('password-gate');
-        gate.classList.add('opacity-0', 'transition-opacity', 'duration-500');
-        setTimeout(() => gate.classList.add('hidden'), 500);
+        if (gate) {
+          gate.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+          setTimeout(() => {
+            gate.style.display = 'none';
+            gate.classList.add('hidden');
+          }, 300);
+        }
+        showToast('🎉 解鎖成功！歡迎進入專屬出遊空間！');
       } else {
-        err.classList.remove('hidden');
-        input.classList.add('border-rose-500');
-        setTimeout(() => input.classList.remove('border-rose-500'), 800);
+        if (err) err.classList.remove('hidden');
+        if (input) {
+          input.classList.add('border-rose-500');
+          setTimeout(() => input.classList.remove('border-rose-500'), 800);
+        }
       }
     }
 
