@@ -616,8 +616,9 @@
           </span>
         </div>
 
-        <!-- 成員標籤列表 -->
-        <div id="members-pool" class="flex flex-wrap gap-2 pt-1 min-h-[44px]">
+        <!-- 成員標籤列表（待分配乘客名單：拖曳或點選放入車次後，上方自動消失） -->
+        <div id="members-pool" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDropToPool(event)"
+          class="flex flex-wrap gap-2 pt-1 min-h-[44px] p-2 rounded-xl transition">
           <!-- 動態渲染成員標籤 -->
         </div>
 
@@ -1290,27 +1291,43 @@
       calculateSettlement();
     }
 
-    // 渲染成員池
+    // 渲染成員池（待分配乘客名單：放入車次後上方自動消失）
     function renderMembers() {
       const container = document.getElementById('members-pool');
-      container.innerHTML = members.map(m => {
-        const isSelected = selectedMemberId === m.id;
-        return `
-          <div draggable="true" ondragstart="handleDragStart(event, '${m.name}')" onclick="selectMember('${m.id}')"
-            class="member-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border cursor-grab active:cursor-grabbing shadow-xs ${m.color} ${isSelected ? 'member-selected' : ''}">
-            <span>${m.icon}</span>
-            <span>${m.name}</span>
-            <button type="button" onclick="deleteMember('${m.id}', event)" class="ml-1 text-gray-400 hover:text-rose-600 transition" title="刪除">✕</button>
+      // 找出已經在車次裡的人（1號車或2號車）
+      const assignedCarMembers = [...(rolesData.car_1 || []), ...(rolesData.car_2 || [])];
+      // 待分配（未在車次中）的成員
+      const unassignedMembers = members.filter(m => !assignedCarMembers.includes(m.name));
+
+      if (unassignedMembers.length === 0) {
+        container.innerHTML = `
+          <div class="w-full text-center py-2 px-3 text-xs text-emerald-800 font-bold bg-emerald-100/70 rounded-xl border border-emerald-300 flex items-center justify-center gap-2">
+            <span>🎉</span>
+            <span>太棒了！全員皆已完成車次分配！（點擊下方車內成員的 ✕ 可隨時卸下移回此處）</span>
           </div>
         `;
-      }).join('');
+      } else {
+        container.innerHTML = unassignedMembers.map(m => {
+          const isSelected = selectedMemberId === m.id;
+          return `
+            <div draggable="true" ondragstart="handleDragStart(event, '${m.name}')" onclick="selectMember('${m.id}')"
+              class="member-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border cursor-grab active:cursor-grabbing shadow-xs ${m.color} ${isSelected ? 'member-selected' : ''}">
+              <span>${m.icon}</span>
+              <span>${m.name}</span>
+              <button type="button" onclick="deleteMember('${m.id}', event)" class="ml-1 text-gray-400 hover:text-rose-600 transition" title="刪除此成員">✕</button>
+            </div>
+          `;
+        }).join('');
+      }
 
       const hint = document.getElementById('selected-member-hint');
       if (selectedMemberId) {
         const sel = members.find(m => m.id === selectedMemberId);
-        hint.innerHTML = `<span class="text-amber-900 font-extrabold animate-bounce inline-block mr-1">👉</span>已選取【${sel.icon} ${sel.name}】，請點擊下方任一車次或職位即可放入！`;
+        if (sel) {
+          hint.innerHTML = `<span class="text-amber-900 font-extrabold animate-bounce inline-block mr-1">👉</span>已選取【${sel.icon} ${sel.name}】，請點擊下方 1 號車、2 號車或任務職位即可放入！`;
+        }
       } else {
-        hint.innerHTML = `💡 手機點一下成員再點目的地即可放入！`;
+        hint.innerHTML = `💡 拖曳或點選成員放入車次後，上方自動消失！`;
       }
     }
 
@@ -1323,23 +1340,42 @@
       renderMembers();
     }
 
+    // 核心指派邏輯
+    function assignMemberToZone(name, targetKey) {
+      if (targetKey === 'car_1' || targetKey === 'car_2') {
+        // 車次：一人只能在一台車！先從另一台車移出
+        const otherCar = targetKey === 'car_1' ? 'car_2' : 'car_1';
+        if (rolesData[otherCar]) {
+          rolesData[otherCar] = rolesData[otherCar].filter(n => n !== name);
+        }
+        if (!rolesData[targetKey]) rolesData[targetKey] = [];
+        if (!rolesData[targetKey].includes(name)) {
+          rolesData[targetKey].push(name);
+          saveRoles();
+          showToast(`已將 ${name} 安排至 ${targetKey === 'car_1' ? '1 號車' : '2 號車'}（上方已移出）！`);
+        }
+      } else {
+        // 趣味任務分工
+        if (!rolesData[targetKey]) rolesData[targetKey] = [];
+        if (!rolesData[targetKey].includes(name)) {
+          rolesData[targetKey].push(name);
+          saveRoles();
+          showToast(`已指派 ${name} 擔任任務！`);
+        } else {
+          showToast(`${name} 已經在名單中囉！`);
+        }
+      }
+    }
+
     // 處理點選目的地加入成員
     function handleZoneClick(targetKey) {
       if (!selectedMemberId) return;
       const member = members.find(m => m.id === selectedMemberId);
       if (!member) return;
 
-      if (!rolesData[targetKey]) rolesData[targetKey] = [];
-      if (!rolesData[targetKey].includes(member.name)) {
-        rolesData[targetKey].push(member.name);
-        saveRoles();
-        renderRoles();
-        showToast(`已將 ${member.name} 放入！`);
-      } else {
-        showToast(`${member.name} 已經在裡面囉！`);
-      }
+      assignMemberToZone(member.name, targetKey);
       selectedMemberId = null;
-      renderMembers();
+      renderAll();
     }
 
     // 從特定職位或車次移除成員
@@ -1348,8 +1384,8 @@
       if (!rolesData[targetKey]) return;
       rolesData[targetKey] = rolesData[targetKey].filter(n => n !== memberName);
       saveRoles();
-      renderRoles();
-      showToast(`已將 ${memberName} 移出！`);
+      renderAll();
+      showToast(`已將 ${memberName} 卸下並放回上方待安排名單！`);
     }
 
     // 渲染車次與分工
@@ -1399,10 +1435,11 @@
     function createBadgeHtml(zoneKey, name) {
       const m = members.find(x => x.name === name) || { icon: "👤", color: "bg-gray-100 text-gray-800 border-gray-200" };
       return `
-        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold border shadow-2xs ${m.color}">
+        <span draggable="true" ondragstart="handleDragStart(event, '${name}')"
+          class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold border shadow-2xs cursor-grab active:cursor-grabbing ${m.color}">
           <span>${m.icon}</span>
           <span>${name}</span>
-          <button type="button" onclick="removeMemberFromZone('${zoneKey}', '${name}', event)" class="ml-1 text-gray-400 hover:text-rose-600 transition" title="移除">✕</button>
+          <button type="button" onclick="removeMemberFromZone('${zoneKey}', '${name}', event)" class="ml-1 text-gray-400 hover:text-rose-600 transition" title="卸下移回上方">✕</button>
         </span>
       `;
     }
@@ -1423,12 +1460,31 @@
       e.currentTarget.classList.remove('dropzone-highlight');
       const name = e.dataTransfer.getData('text/plain');
       if (!name) return;
-      if (!rolesData[targetKey]) rolesData[targetKey] = [];
-      if (!rolesData[targetKey].includes(name)) {
-        rolesData[targetKey].push(name);
+
+      assignMemberToZone(name, targetKey);
+      renderAll();
+    }
+
+    // 拖曳放回上方成員池
+    function handleDropToPool(e) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('dropzone-highlight');
+      const name = e.dataTransfer.getData('text/plain');
+      if (!name) return;
+
+      let changed = false;
+      if (rolesData.car_1 && rolesData.car_1.includes(name)) {
+        rolesData.car_1 = rolesData.car_1.filter(n => n !== name);
+        changed = true;
+      }
+      if (rolesData.car_2 && rolesData.car_2.includes(name)) {
+        rolesData.car_2 = rolesData.car_2.filter(n => n !== name);
+        changed = true;
+      }
+      if (changed) {
         saveRoles();
-        renderRoles();
-        showToast(`已將 ${name} 拖曳放入！`);
+        renderAll();
+        showToast(`已將 ${name} 放回上方待安排名單！`);
       }
     }
 
