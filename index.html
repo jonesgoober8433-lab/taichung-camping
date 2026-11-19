@@ -1643,28 +1643,7 @@
       document.querySelectorAll('input[name="expense_splitter"]').forEach(cb => cb.checked = checked);
     }
 
-    function handleAddExpense(e) {
-      e.preventDefault();
-      const title = document.getElementById('expense-title').value.trim();
-      const amount = parseFloat(document.getElementById('expense-amount').value);
-      const payerSelect = document.getElementById('expense-payer');
-      let payer = payerSelect.value;
-      if (payer === '__custom__') {
-        payer = document.getElementById('custom-payer-input').value.trim();
-      }
-      if (!payer) {
-        showToast('請指定或輸入先代墊人！');
-        return;
-      }
-
-      const splitters = [];
-      document.querySelectorAll('input[name="expense_splitter"]:checked').forEach(cb => splitters.push(cb.value));
-      if (splitters.length === 0) {
-        showToast('請至少勾選一位分攤人！');
-        return;
-      }
-
-      let editingExpenseId = null;
+    let editingExpenseId = null;
 
     function startEditExpense(id) {
       const exp = expenses.find(x => x.id === id);
@@ -1995,7 +1974,11 @@
       }, 3000);
     }
 
-    window.addEventListener('DOMContentLoaded', initApp);
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
   </script>
 </body>
 </html>
