@@ -399,6 +399,49 @@
     html[data-theme="dark"] .sch-empty { color: #B3A99E; }
     html[data-theme="dark"] .sch-dot.is-on { border-color: #14110F; }
     @media (max-width: 639px) { .sch-edit-grid { grid-template-columns: 5rem 1fr; } .sch-day { padding: 0.85rem; } }
+
+    /* ===== 預收款 ===== */
+    .pp-panel { background: #F6FAF7; border: 1px solid #CDE5D8; border-radius: 1rem; padding: 1rem; }
+    @media (min-width: 640px) { .pp-panel { padding: 1.25rem; } }
+    .pp-title { color: #14532D; }
+    .pp-note { color: #57534E; }
+    .pp-copy { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.85rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 800; background: #047857; color: #fff; white-space: nowrap; }
+    .pp-copy:active, .pp-apply:active, .pp-btn:active { transform: scale(0.95); }
+    .pp-apply { flex-shrink: 0; padding: 0 1.1rem; height: 3rem; border-radius: 0.75rem; font-weight: 800; font-size: 0.9rem; background: #1C1917; color: #FDE68A; }
+    .pp-summary { background: #fff; border: 1px solid #DCEBE2; border-radius: 0.85rem; padding: 0.85rem 1rem; }
+    .pp-sum-line { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.25rem 1rem; }
+    .pp-big { font-size: 1.35rem; font-weight: 900; color: #047857; line-height: 1.2; }
+    .pp-sub { font-size: 0.8rem; font-weight: 700; color: #57534E; }
+    .pp-bar { height: 0.6rem; border-radius: 9999px; background: #E2EDE6; overflow: hidden; margin-top: 0.6rem; }
+    .pp-fill { height: 100%; border-radius: 9999px; background: #10B981; transition: width .3s; }
+    .pp-row { display: grid; grid-template-columns: 1fr auto; gap: 0.5rem 0.75rem; align-items: center; background: #fff; border: 1px solid #E3EEE7; border-left: 4px solid #D6D3D1; border-radius: 0.85rem; padding: 0.7rem 0.8rem; }
+    .pp-row.is-paid { border-left-color: #10B981; background: #F2FBF6; }
+    .pp-name { order: 1; font-weight: 800; font-size: 0.95rem; color: #1C1917; min-width: 0; overflow-wrap: anywhere; }
+    .pp-btn { order: 2; padding: 0.5rem 1rem; border-radius: 9999px; font-weight: 800; font-size: 0.85rem; border: 1px solid #D6D3D1; color: #57534E; background: #fff; white-space: nowrap; min-width: 5rem; text-align: center; }
+    .pp-row.is-paid .pp-btn { background: #047857; border-color: #047857; color: #fff; }
+    .pp-amt { order: 3; grid-column: 1 / -1; }
+    @media (min-width: 640px) {
+      .pp-row { grid-template-columns: 1fr 9rem auto; }
+      .pp-amt { order: 2; grid-column: auto; }
+      .pp-btn { order: 3; }
+    }
+    .pp-empty { text-align: center; font-size: 0.85rem; color: #78716C; padding: 0.6rem 0; }
+    .settle-prepay-note { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; font-weight: 800; color: #047857; background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.3); padding: 0.3rem 0.75rem; border-radius: 9999px; align-self: flex-start; }
+    html[data-theme="dark"] .pp-panel { background: #17201B; border-color: rgba(52,211,153,.3); }
+    html[data-theme="dark"] .pp-title { color: #6EE7B7; }
+    html[data-theme="dark"] .pp-note, html[data-theme="dark"] .pp-sub { color: #B3A99E; }
+    html[data-theme="dark"] .pp-copy { background: #10B981; color: #04120C; }
+    html[data-theme="dark"] .pp-apply { background: #FDE68A; color: #1C1917; }
+    html[data-theme="dark"] .pp-summary { background: #1F2A24; border-color: rgba(52,211,153,.25); }
+    html[data-theme="dark"] .pp-big { color: #34D399; }
+    html[data-theme="dark"] .pp-bar { background: #2C3A32; }
+    html[data-theme="dark"] .pp-row { background: #1F2A24; border-color: #2F3D35; border-left-color: #4A4239; }
+    html[data-theme="dark"] .pp-row.is-paid { background: #1A2E24; border-left-color: #34D399; }
+    html[data-theme="dark"] .pp-name { color: #F5F0EA; }
+    html[data-theme="dark"] .pp-btn { background: transparent; border-color: #4A4239; color: #D8CFC5; }
+    html[data-theme="dark"] .pp-row.is-paid .pp-btn { background: #10B981; border-color: #10B981; color: #04120C; }
+    html[data-theme="dark"] .pp-empty { color: #B3A99E; }
+    html[data-theme="dark"] .settle-prepay-note { color: #6EE7B7; background: rgba(16,185,129,.16); border-color: rgba(52,211,153,.4); }
     @media print {
       .sch-add, .sch-add-day, .sch-icon-btn, .sch-pen, .sch-actions, .sch-edit-btn, #sch-bar { display: none !important; }
       #left-desktop-nav, #left-mobile-trigger, #back-to-top, nav, #password-gate {
@@ -1029,6 +1072,34 @@
         </button>
       </div>
 
+      <!-- 0. 預收款：每人先轉給收款人，收到就點「已收」，完帳時自動扣掉 -->
+      <div class="pp-panel space-y-3.5">
+        <div class="flex items-start justify-between gap-3 flex-wrap">
+          <div>
+            <div class="pp-title text-sm sm:text-base font-black flex items-center gap-2"><i class="fa-solid fa-wallet"></i> 預收款（先收錢）</div>
+            <p class="pp-note text-xs mt-1 leading-relaxed">每個人先轉給收款人。收到後點「已收」，最後完帳時會自動扣掉，不用另外記帳。</p>
+          </div>
+          <button type="button" onclick="copyPrepayStatus()" class="pp-copy"><i class="fa-solid fa-copy"></i> 複製收款進度貼 DC</button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-start">
+          <div class="sm:col-span-5">
+            <label class="block text-xs font-bold pp-note mb-1">收款人（誰幫大家收錢）</label>
+            <select id="prepay-collector" class="field-input font-medium" onchange="prepaySetCollector(this.value)"></select>
+          </div>
+          <div class="sm:col-span-7">
+            <label class="block text-xs font-bold pp-note mb-1">每人預收金額（一次套用給「還沒收」的人）</label>
+            <div class="flex items-center gap-2">
+              <input id="prepay-default" type="number" inputmode="numeric" min="1" step="1" placeholder="例如 3000" class="field-input font-bold">
+              <button type="button" onclick="prepayFillAll()" class="pp-apply">套用</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="prepay-summary" class="pp-summary"></div>
+        <div id="prepay-rows" class="space-y-2"></div>
+      </div>
+
       <!-- 1. 新增 / 編輯記帳表單（品項/金額/代墊人/分攤人） -->
       <form id="expense-form" onsubmit="handleAddExpense(event)" class="bg-yellow-50/40 rounded-2xl p-4 border border-yellow-200 space-y-3">
         <div class="flex items-center justify-between">
@@ -1119,6 +1190,7 @@
           </span>
         </div>
 
+        <p id="settle-prepay-note" class="settle-prepay-note" style="display:none"></p>
         <p class="settle-note text-xs leading-relaxed">
           不用互相算老半天！演算法已自動完成債務對沖，以下是全場最少次數的平帳方式，大家對號入座轉帳即可全體結清：
         </p>
@@ -1715,6 +1787,7 @@
     function initApp() {
       applyTheme();
       loadSchedule();
+      loadPrepay();
       checkGate();
       loadMembers();
       loadRoles();
@@ -1837,7 +1910,9 @@
       expenses.forEach(e => { exps[e.id] = JSON.stringify(e); });
       const sch = {};
       schedule.forEach(d => { sch[d.id] = dayJson(d); });
-      return { members: JSON.stringify(members), roles, expenses: exps, schedule: sch, schedule_init: true };
+      const pre = {};
+      Object.keys(prepay.rows).forEach(k => { pre[k] = JSON.stringify(prepay.rows[k]); });
+      return { members: JSON.stringify(members), roles, expenses: exps, schedule: sch, schedule_init: true, prepay: pre, prepay_collector: JSON.stringify(prepay.collector) };
     }
 
     async function push(method, path, val) {
@@ -1894,6 +1969,15 @@
       calculateSettlement();
       // 只有成員名單變動才重建表單選項，避免打到一半的記帳被洗掉
       if (JSON.stringify(members) !== oldMembersSig) renderExpenseFormOptions();
+      if (data.prepay && typeof data.prepay === 'object') {
+        const rows = {};
+        Object.keys(data.prepay).forEach(k => { const v = parseJson(data.prepay[k], null); if (v) rows[k] = v; });
+        prepay.rows = rows;
+      }
+      if (typeof data.prepay_collector === 'string') { const c = parseJson(data.prepay_collector, null); if (c) prepay.collector = c; }
+      persistPrepay();
+      renderPrepay();
+      calculateSettlement();
       if (schMode !== 'edit') {
         if (data.schedule && typeof data.schedule === 'object') {
           schedule = Object.keys(data.schedule).map(k => parseJson(data.schedule[k], null)).filter(Boolean).sort((a, b) => (a.ord || 0) - (b.ord || 0));
@@ -1983,6 +2067,7 @@
       renderMembers();
       renderRoleMembersPool();
       renderExpenseFormOptions();
+      renderPrepay();
       pushMembers();
     }
 
@@ -2085,6 +2170,7 @@
       renderRoleMembersPool();
       renderRoles();
       renderExpenseFormOptions();
+      renderPrepay();
       renderExpensesTable();
       calculateSettlement();
     }
@@ -2485,6 +2571,123 @@
       document.getElementById('total-expenses-stat').textContent = `總計：NT$ ${total.toLocaleString()}`;
     }
 
+    // ==================== 預收款（每人先收錢，完帳時自動扣除） ====================
+    const PREPAY_KEY = "trip_prepay_data";
+    let prepay = { collector: '阿寶boa (Edward)', rows: {} }; // rows[成員id] = { amount, paid }
+    let currentPrepaid = 0;
+
+    function loadPrepay() {
+      const v = parseJson(lsGet(PREPAY_KEY), null);
+      if (v && typeof v === 'object') prepay = { collector: v.collector || '阿寶boa (Edward)', rows: v.rows || {} };
+    }
+    function persistPrepay() { lsSet(PREPAY_KEY, JSON.stringify(prepay)); }
+    function prepayCollector() {
+      return members.some(m => m.name === prepay.collector) ? prepay.collector : (members[0] ? members[0].name : prepay.collector);
+    }
+    function prepayRow(id) { return prepay.rows[id] || (prepay.rows[id] = { amount: 0, paid: false }); }
+    function prepayPush(id) { return push('PUT', 'prepay/' + id, JSON.stringify(prepay.rows[id])); }
+    function prepayMembers() { const c = prepayCollector(); return members.filter(m => m.name !== c); }
+    function money(n) { return 'NT$ ' + Math.round(n).toLocaleString(); }
+
+    function prepaySummary() {
+      let target = 0, paid = 0; const unpaid = [];
+      prepayMembers().forEach(m => {
+        const r = prepay.rows[m.id] || { amount: 0, paid: false };
+        const a = Number(r.amount) || 0;
+        target += a;
+        if (r.paid) paid += a; else if (a > 0) unpaid.push({ name: m.name, amount: a });
+      });
+      return { target, paid, unpaid };
+    }
+
+    function updatePrepaySummary() {
+      const box = document.getElementById('prepay-summary');
+      if (!box) return;
+      const s = prepaySummary();
+      const pct = s.target > 0 ? Math.min(100, Math.round(s.paid / s.target * 100)) : 0;
+      box.innerHTML = `
+        <div class="pp-sum-line">
+          <div><span class="pp-sub">已收</span> <span class="pp-big">${money(s.paid)}</span></div>
+          <div class="pp-sub">目標 ${money(s.target)}　・　${s.target > s.paid ? '還差 ' + money(s.target - s.paid) : (s.target > 0 ? '全部收齊 🎉' : '先填每個人的金額')}</div>
+        </div>
+        <div class="pp-bar"><div class="pp-fill" style="width:${pct}%"></div></div>`;
+    }
+
+    function renderPrepay() {
+      const sel = document.getElementById('prepay-collector');
+      const rowsBox = document.getElementById('prepay-rows');
+      if (!sel || !rowsBox) return;
+      const col = prepayCollector();
+      sel.innerHTML = members.map(m => `<option value="${esc(m.name)}" ${m.name === col ? 'selected' : ''}>${esc(m.name)}</option>`).join('');
+      updatePrepaySummary();
+      // 正在輸入金額時，不重畫列表，避免輸入被洗掉
+      if (rowsBox.contains(document.activeElement) && document.activeElement.tagName === 'INPUT') return;
+      const list = prepayMembers();
+      rowsBox.innerHTML = list.length === 0 ? `<div class="pp-empty">還沒有其他成員</div>` : list.map(m => {
+        const r = prepay.rows[m.id] || { amount: 0, paid: false };
+        return `
+          <div class="pp-row ${r.paid ? 'is-paid' : ''}">
+            <div class="pp-name">${esc(m.name)}</div>
+            <input class="field-input pp-amt font-bold" type="number" inputmode="numeric" min="0" step="1" placeholder="金額 NT$" value="${r.amount ? r.amount : ''}"
+              oninput="prepaySetAmount(${jsArg(m.id)}, this.value)" onchange="prepayCommit(${jsArg(m.id)})">
+            <button type="button" class="pp-btn" onclick="prepayToggle(${jsArg(m.id)})">${r.paid ? '✓ 已收' : '未收'}</button>
+          </div>`;
+      }).join('');
+    }
+
+    function prepaySetAmount(id, val) {
+      const r = prepayRow(id);
+      r.amount = Math.max(0, parseFloat(val) || 0);
+      persistPrepay();
+      updatePrepaySummary();
+      calculateSettlement();
+    }
+    function prepayCommit(id) { prepayPush(id); }
+    function prepayToggle(id) {
+      const r = prepayRow(id);
+      if (!r.paid && !(Number(r.amount) > 0)) { showToast('請先填這個人要預收的金額'); return; }
+      r.paid = !r.paid;
+      persistPrepay();
+      prepayPush(id);
+      renderPrepay();
+      calculateSettlement();
+      const m = members.find(x => x.id === id);
+      showToast(r.paid ? `✅ 已收 ${esc(m ? m.name : '')} 的預收款` : `已改回「未收」`);
+    }
+    function prepayFillAll() {
+      const v = parseFloat(document.getElementById('prepay-default').value);
+      if (!(v > 0)) { showToast('請先輸入每人預收金額'); return; }
+      let n = 0;
+      prepayMembers().forEach(m => {
+        const r = prepayRow(m.id);
+        if (!r.paid) { r.amount = v; prepayPush(m.id); n++; }
+      });
+      persistPrepay();
+      document.getElementById('prepay-rows').innerHTML = '';
+      renderPrepay();
+      calculateSettlement();
+      showToast(`已套用 ${money(v)} 給 ${n} 位還沒收的人（已收的不動）`);
+    }
+    function prepaySetCollector(name) {
+      prepay.collector = name;
+      persistPrepay();
+      push('PUT', 'prepay_collector', JSON.stringify(name));
+      document.getElementById('prepay-rows').innerHTML = '';
+      renderPrepay();
+      calculateSettlement();
+      showToast(`收款人改為 ${esc(name)}`);
+    }
+    function copyPrepayStatus() {
+      const s = prepaySummary(), col = prepayCollector();
+      let t = `💰 【台中石岡出遊・預收款進度】⛺\n收款人：${col}\n已收：${money(s.paid)}　目標：${money(s.target)}${s.target > s.paid ? `（還差 ${money(s.target - s.paid)}）` : ''}\n----------------------------------\n`;
+      prepayMembers().forEach(m => {
+        const r = prepay.rows[m.id] || { amount: 0, paid: false };
+        if (Number(r.amount) > 0) t += `${r.paid ? '✅' : '⬜'} ${m.name}：${money(r.amount)}\n`;
+      });
+      t += `----------------------------------\n${s.unpaid.length ? '⬜ 還沒轉的請盡快轉給 ' + col + ' 唷！' : '🎉 全部收齊，謝謝大家！'}\n(來自 DC Edward 的小空間)`;
+      copyText(t, '✅ 已複製預收款進度！<br><span class="text-emerald-300 font-bold">請直接貼在 Discord (DC) 群組！</span>');
+    }
+
     // ==================== 最少次數完帳演算法 ====================
     let currentSettlements = [];
 
@@ -2498,6 +2701,22 @@
         balance[exp.payer] = (balance[exp.payer] || 0) + exp.amount;
         exp.splitters.forEach(person => { balance[person] = (balance[person] || 0) - splitAmount; });
       });
+
+      // 預收款：已收的金額 = 付款人轉給收款人，等於付款人多付、收款人多拿
+      const col = prepayCollector();
+      let prepaid = 0;
+      members.forEach(m => {
+        if (m.name === col) return;
+        const r = prepay.rows[m.id];
+        const a = r && r.paid ? (Number(r.amount) || 0) : 0;
+        if (a > 0) { balance[m.name] = (balance[m.name] || 0) + a; balance[col] = (balance[col] || 0) - a; prepaid += a; }
+      });
+      currentPrepaid = prepaid;
+      const pn = document.getElementById('settle-prepay-note');
+      if (pn) {
+        pn.style.display = prepaid > 0 ? 'inline-flex' : 'none';
+        pn.innerHTML = prepaid > 0 ? `<i class="fa-solid fa-circle-check"></i> 已扣除預收款 ${money(prepaid)}` : '';
+      }
 
       const debtors = [];
       const creditors = [];
@@ -2561,7 +2780,9 @@
     function copySplitSimplified() {
       if (currentSettlements.length === 0) { showToast('目前沒有需要結算的帳目！'); return; }
       let text = `📋 【台中石岡 閒情驛棧出遊・最少次數極簡完帳指南】⛺\n`;
-      text += `（每人只要轉一筆，帳目瞬間平帳）\n----------------------------------\n`;
+      text += `（每人只要轉一筆，帳目瞬間平帳）\n`;
+      if (currentPrepaid > 0) text += `（已扣除預收款 ${money(currentPrepaid)}）\n`;
+      text += `----------------------------------\n`;
       currentSettlements.forEach((s, idx) => {
         text += `${idx + 1}. 【${s.from}】 轉帳給 【${s.to}】：NT$ ${s.amount.toLocaleString()}\n`;
       });
