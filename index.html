@@ -451,6 +451,41 @@
     html[data-theme="dark"] .pp-row.is-paid .pp-btn { background: #10B981; border-color: #10B981; color: #04120C; }
     html[data-theme="dark"] .pp-empty { color: #B3A99E; }
     html[data-theme="dark"] .settle-prepay-note { color: #6EE7B7; background: rgba(16,185,129,.16); border-color: rgba(52,211,153,.4); }
+
+    /* ===== 收支明細（收入＋支出） ===== */
+    .led-seg-wrap { display: inline-flex; padding: 0.25rem; border-radius: 9999px; background: rgba(0,0,0,.06); gap: 0.15rem; }
+    .led-seg { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 1rem; border-radius: 9999px; font-weight: 800; font-size: 0.85rem; color: #57534E; transition: background .15s, color .15s; white-space: nowrap; }
+    .led-seg.is-on { background: #1C1917; color: #FDE68A; }
+    .led-seg.is-on[data-mode="income"] { background: #047857; color: #fff; }
+    .led-readonly { display: flex; align-items: center; font-weight: 700; background: rgba(0,0,0,.04) !important; color: #44403C; }
+    #expense-form.is-income { background: rgba(16,185,129,.08); border-color: rgba(16,185,129,.4); }
+    #expense-form.is-income #expense-submit-btn { background-image: none; background-color: #047857; }
+    .led-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+    .led-tile { border-radius: 0.85rem; padding: 0.65rem 0.8rem; border: 1px solid #E7E2DA; background: #fff; min-width: 0; }
+    .led-tile .k { font-size: 0.72rem; font-weight: 700; color: #78716C; line-height: 1.3; }
+    .led-tile .v { font-size: 1.1rem; font-weight: 900; margin-top: 0.2rem; white-space: nowrap; }
+    .led-tile.in .v, .led-tile.pos .v { color: #047857; }
+    .led-tile.out .v, .led-tile.neg .v { color: #BE123C; }
+    .led-hint { font-size: 0.8rem; font-weight: 700; color: #57534E; padding: 0 0.25rem; }
+    .led-badge { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 800; margin-right: 0.45rem; vertical-align: middle; }
+    .led-badge.in { background: rgba(16,185,129,.15); color: #047857; }
+    .led-badge.out { background: rgba(244,63,94,.12); color: #BE123C; }
+    .led-amt-in { color: #047857; font-weight: 900; white-space: nowrap; }
+    .led-amt-out { color: #BE123C; font-weight: 900; white-space: nowrap; }
+    @media (max-width: 520px) { .led-stats { grid-template-columns: 1fr 1fr; } .led-tile.pos, .led-tile.neg { grid-column: 1 / -1; } .led-seg { padding: 0.45rem 0.85rem; } }
+    html[data-theme="dark"] .led-seg-wrap { background: rgba(255,255,255,.08); }
+    html[data-theme="dark"] .led-seg { color: #D8CFC5; }
+    html[data-theme="dark"] .led-seg.is-on { background: #FDE68A; color: #1C1917; }
+    html[data-theme="dark"] .led-seg.is-on[data-mode="income"] { background: #10B981; color: #04120C; }
+    html[data-theme="dark"] .led-readonly { background: rgba(255,255,255,.06) !important; color: #E4DCD3; }
+    html[data-theme="dark"] #expense-form.is-income { background: rgba(16,185,129,.1); border-color: rgba(52,211,153,.4); }
+    html[data-theme="dark"] #expense-form.is-income #expense-submit-btn { background-color: #10B981; color: #04120C; }
+    html[data-theme="dark"] .led-tile { background: #1F2A24; border-color: #2F3D35; }
+    html[data-theme="dark"] .led-tile .k, html[data-theme="dark"] .led-hint { color: #B3A99E; }
+    html[data-theme="dark"] .led-tile.in .v, html[data-theme="dark"] .led-tile.pos .v, html[data-theme="dark"] .led-amt-in { color: #34D399; }
+    html[data-theme="dark"] .led-tile.out .v, html[data-theme="dark"] .led-tile.neg .v, html[data-theme="dark"] .led-amt-out { color: #FDA4AF; }
+    html[data-theme="dark"] .led-badge.in { background: rgba(16,185,129,.2); color: #6EE7B7; }
+    html[data-theme="dark"] .led-badge.out { background: rgba(244,63,94,.2); color: #FDA4AF; }
     @media print {
       .sch-add, .sch-add-day, .sch-icon-btn, .sch-pen, .sch-actions, .sch-edit-btn, #sch-bar { display: none !important; }
       #left-desktop-nav, #left-mobile-trigger, #back-to-top, nav, #password-gate {
@@ -1116,6 +1151,10 @@
 
       <!-- 1. 新增 / 編輯記帳表單（品項/金額/代墊人/分攤人） -->
       <form id="expense-form" onsubmit="handleAddExpense(event)" class="bg-yellow-50/40 rounded-2xl p-4 border border-yellow-200 space-y-3">
+        <div class="led-seg-wrap" role="tablist" aria-label="登記類型">
+          <button type="button" class="led-seg is-on" data-mode="expense" onclick="setFormMode('expense')"><i class="fa-solid fa-arrow-trend-down"></i> 支出</button>
+          <button type="button" class="led-seg" data-mode="income" onclick="setFormMode('income')"><i class="fa-solid fa-arrow-trend-up"></i> 收入（預收款）</button>
+        </div>
         <div class="flex items-center justify-between">
           <div class="font-black text-xs text-yellow-950 flex items-center gap-1.5" id="expense-form-title">
             <i class="fa-solid fa-plus-circle text-yellow-600"></i> 快速新增一筆消費
@@ -1128,23 +1167,27 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 text-sm items-start">
-          <div class="sm:col-span-5">
+          <div class="sm:col-span-5" id="fld-title">
             <label class="block text-gray-600 text-xs font-bold mb-1">消費品項名稱</label>
             <input type="text" id="expense-title" placeholder="如：全聯食材、飲料啤酒..." required class="field-input">
           </div>
+          <div class="sm:col-span-5" id="fld-collector" style="display:none">
+            <label class="block text-gray-600 text-xs font-bold mb-1">收款人（到「預收款」區可更換）</label>
+            <div id="income-collector-name" class="field-input led-readonly"></div>
+          </div>
           <div class="sm:col-span-3">
-            <label class="block text-gray-600 text-xs font-bold mb-1">金額 (NT$)</label>
+            <label id="lbl-amount" class="block text-gray-600 text-xs font-bold mb-1">金額 (NT$)</label>
             <input type="number" inputmode="numeric" id="expense-amount" placeholder="0" min="1" step="1" required class="field-input font-bold text-emerald-800">
           </div>
           <div class="sm:col-span-4">
-            <label class="block text-gray-600 text-xs font-bold mb-1">誰先代墊</label>
+            <label id="lbl-payer" class="block text-gray-600 text-xs font-bold mb-1">誰先代墊</label>
             <select id="expense-payer" onchange="checkCustomPayer(this)" class="field-input font-medium"></select>
             <input type="text" id="custom-payer-input" placeholder="手動輸入姓名" class="hidden field-input mt-1.5">
           </div>
         </div>
 
         <!-- 誰需要分攤 -->
-        <div class="pt-2 border-t border-yellow-200/50 space-y-1.5">
+        <div id="fld-splitters" class="pt-2 border-t border-yellow-200/50 space-y-1.5">
           <div class="flex items-center justify-between">
             <label class="text-xs font-bold text-gray-700">👥 誰需要分攤這筆費用？</label>
             <div class="space-x-2 text-[11px]">
@@ -1164,11 +1207,10 @@
         </button>
       </form>
 
-      <div class="space-y-2">
-        <div class="flex items-center justify-between text-sm px-1">
-          <span class="font-bold text-gray-800">📋 已登記支出</span>
-          <span id="total-expenses-stat" class="font-black text-amber-900">總計：NT$ 0</span>
-        </div>
+      <div class="space-y-2.5">
+        <div class="px-1"><span class="font-bold text-gray-800 text-sm">📋 收支明細</span></div>
+        <div id="led-stats" class="led-stats"></div>
+        <div id="led-hint" class="led-hint"></div>
 
         <!-- 手機：卡片清單 -->
         <div id="expenses-cards" class="sm:hidden space-y-2.5"></div>
@@ -1178,10 +1220,10 @@
           <table class="w-full text-left text-sm">
             <thead class="bg-gray-50 text-gray-700 border-b border-gray-200">
               <tr>
-                <th class="p-3">消費品項</th>
+                <th class="p-3">項目</th>
                 <th class="p-3">金額 (NT$)</th>
-                <th class="p-3">代墊人</th>
-                <th class="p-3">分攤對象</th>
+                <th class="p-3">付款人</th>
+                <th class="p-3">分攤／收款</th>
                 <th class="p-3 text-center">操作</th>
               </tr>
             </thead>
@@ -1564,6 +1606,8 @@
     let selectedMemberId = null;
     let selectedRoleMemberId = null;
     let editingExpenseId = null;
+    let formMode = 'expense'; // expense | income
+    let editingIncomeId = null; // 正在編輯的收入（成員 id）
     let pickerTarget = null;
 
     // ==================== 小工具 ====================
@@ -1992,7 +2036,7 @@
       if (typeof data.prepay_collector === 'string') { const c = parseJson(data.prepay_collector, null); if (c) prepay.collector = c; }
       persistPrepay();
       renderPrepay();
-      calculateSettlement();
+      prepayChanged();
       if (schMode !== 'edit') {
         if (data.schedule && typeof data.schedule === 'object') {
           schedule = Object.keys(data.schedule).map(k => parseJson(data.schedule[k], null)).filter(Boolean).sort((a, b) => (a.ord || 0) - (b.ord || 0));
@@ -2436,8 +2480,14 @@
     function renderExpenseFormOptions() {
       const payerSelect = document.getElementById('expense-payer');
       const customPayerInput = document.getElementById('custom-payer-input');
-      payerSelect.innerHTML = members.map(m => `<option value="${esc(m.name)}">${esc(m.name)}</option>`).join('')
-        + `<option value="__custom__">➕ 其他（自行輸入）</option>`;
+      if (formMode === 'income') {
+        payerSelect.innerHTML = prepayMembers().map(m => `<option value="${esc(m.id)}">${esc(m.name)}</option>`).join('');
+        const cn = document.getElementById('income-collector-name');
+        if (cn) cn.textContent = prepayCollector();
+      } else {
+        payerSelect.innerHTML = members.map(m => `<option value="${esc(m.name)}">${esc(m.name)}</option>`).join('')
+          + `<option value="__custom__">➕ 其他（自行輸入）</option>`;
+      }
       customPayerInput.classList.add('hidden');
 
       document.getElementById('splitters-checkboxes').innerHTML = members.map(m => `
@@ -2445,6 +2495,25 @@
           <input type="checkbox" name="expense_splitter" value="${esc(m.name)}" checked class="w-4 h-4 rounded text-amber-600 focus:ring-amber-500">
           <span class="font-medium">${esc(m.name)}</span>
         </label>`).join('');
+    }
+
+    // 切換「支出／收入（預收款）」
+    function setFormMode(mode) {
+      formMode = mode;
+      editingExpenseId = null; editingIncomeId = null;
+      const inc = mode === 'income';
+      document.querySelectorAll('.led-seg').forEach(b => b.classList.toggle('is-on', b.dataset.mode === mode));
+      document.getElementById('expense-form').classList.toggle('is-income', inc);
+      document.getElementById('fld-title').style.display = inc ? 'none' : '';
+      document.getElementById('fld-collector').style.display = inc ? '' : 'none';
+      document.getElementById('fld-splitters').style.display = inc ? 'none' : '';
+      document.getElementById('expense-title').required = !inc;
+      document.getElementById('lbl-payer').textContent = inc ? '誰繳的' : '誰先代墊';
+      document.getElementById('lbl-amount').textContent = inc ? '收到的金額 (NT$)' : '金額 (NT$)';
+      document.getElementById('expense-title').value = '';
+      document.getElementById('expense-amount').value = '';
+      renderExpenseFormOptions();
+      resetExpenseFormUi();
     }
 
     function checkCustomPayer(selectEl) {
@@ -2462,15 +2531,44 @@
     }
 
     function resetExpenseFormUi() {
-      editingExpenseId = null;
-      document.getElementById('expense-form-title').innerHTML = `<i class="fa-solid fa-plus-circle text-yellow-600"></i> 快速新增一筆消費`;
-      document.getElementById('expense-submit-text').textContent = '儲存並即時計算分帳';
+      editingExpenseId = null; editingIncomeId = null;
+      document.getElementById('expense-form-title').innerHTML = formMode === 'income'
+        ? `<i class="fa-solid fa-circle-plus text-emerald-600"></i> 登記一筆收入（誰先繳了預收款）`
+        : `<i class="fa-solid fa-plus-circle text-yellow-600"></i> 快速新增一筆消費`;
+      document.getElementById('expense-submit-text').textContent = formMode === 'income' ? '登記收入並即時計算分帳' : '儲存並即時計算分帳';
       document.getElementById('expense-cancel-edit-btn').classList.add('hidden');
+    }
+
+    // 編輯一筆收入（＝某位成員的預收款）
+    function startEditIncome(memberId) {
+      if (formMode !== 'income') setFormMode('income');
+      const r = prepay.rows[memberId];
+      const m = members.find(x => x.id === memberId);
+      if (!r || !m) return;
+      editingIncomeId = memberId;
+      document.getElementById('expense-payer').value = memberId;
+      document.getElementById('expense-amount').value = r.amount || '';
+      document.getElementById('expense-form-title').innerHTML = `<i class="fa-solid fa-pen-to-square text-emerald-600"></i> <span class="font-black">正在編輯收入：${esc(m.name)}</span>`;
+      document.getElementById('expense-submit-text').textContent = '💾 儲存修改並重新計算';
+      document.getElementById('expense-cancel-edit-btn').classList.remove('hidden');
+      document.getElementById('expense-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // 取消一筆收入（改回「未收」，金額仍保留在預收款區）
+    function deleteIncome(memberId) {
+      const m = members.find(x => x.id === memberId);
+      if (!confirm(`確定要取消「${m ? m.name : ''}」這筆預收款嗎？（會改回「未收」，所有人都會看到）`)) return;
+      const r = prepayRow(memberId);
+      r.paid = false;
+      persistPrepay(); prepayPush(memberId);
+      renderPrepay(); prepayChanged();
+      showToast('已取消這筆收入（改回未收）');
     }
 
     function startEditExpense(id) {
       const exp = expenses.find(x => x.id === id);
       if (!exp) return;
+      if (formMode !== 'expense') setFormMode('expense');
       editingExpenseId = id;
       document.getElementById('expense-title').value = exp.title;
       document.getElementById('expense-amount').value = exp.amount;
@@ -2504,8 +2602,28 @@
       selectAllSplitters(true);
     }
 
+    function handleAddIncome() {
+      const mid = document.getElementById('expense-payer').value;
+      const amount = parseFloat(document.getElementById('expense-amount').value);
+      const m = members.find(x => x.id === mid);
+      if (!m) { showToast('請選擇是誰繳的！'); return; }
+      if (!(amount > 0)) { showToast('請填寫收到的金額！'); return; }
+      if (editingIncomeId && editingIncomeId !== mid) {
+        // 改了繳款人：原本那位改回未收
+        const old = prepayRow(editingIncomeId); old.paid = false; prepayPush(editingIncomeId);
+      }
+      const r = prepayRow(mid);
+      r.amount = amount; r.paid = true;
+      persistPrepay(); prepayPush(mid);
+      renderPrepay(); prepayChanged();
+      showToast(`✅ 已登記收入：${esc(m.name)} ${money(amount)}`);
+      document.getElementById('expense-amount').value = '';
+      resetExpenseFormUi();
+    }
+
     function handleAddExpense(e) {
       e.preventDefault();
+      if (formMode === 'income') { handleAddIncome(); return; }
       const title = document.getElementById('expense-title').value.trim();
       const amount = parseFloat(document.getElementById('expense-amount').value);
       let payer = document.getElementById('expense-payer').value;
@@ -2549,14 +2667,39 @@
     }
 
     function renderExpensesTable() {
-      let total = 0;
-      expenses.forEach(exp => { total += exp.amount; });
+      let outTotal = 0;
+      expenses.forEach(exp => { outTotal += exp.amount; });
+      const col = prepayCollector();
+      const incomes = prepayMembers().filter(m => { const r = prepay.rows[m.id]; return r && r.paid && Number(r.amount) > 0; })
+        .map(m => ({ id: m.id, name: m.name, amount: Number(prepay.rows[m.id].amount) }));
+      const inTotal = incomes.reduce((a, b) => a + b.amount, 0);
+      const net = inTotal - outTotal;
+
+      // 統計
+      document.getElementById('led-stats').innerHTML = `
+        <div class="led-tile in"><div class="k">收入（預收款）</div><div class="v">${money(inTotal)}</div></div>
+        <div class="led-tile out"><div class="k">支出</div><div class="v">${money(outTotal)}</div></div>
+        <div class="led-tile ${net >= 0 ? 'pos' : 'neg'}"><div class="k">差額（收入 − 支出）</div><div class="v">${net < 0 ? '−' : ''}${money(Math.abs(net))}</div></div>`;
+      document.getElementById('led-hint').textContent = inTotal === 0
+        ? '還沒登記收入。上方切到「收入（預收款）」就能登記誰先繳了錢。'
+        : (net >= 0 ? '✔ 預收款已經夠付目前的支出。' : `預收款還差 ${money(-net)} 才夠付目前的支出。`);
 
       // 電腦版：表格
-      document.getElementById('expenses-tbody').innerHTML = expenses.map(exp => `
+      const incRowsT = incomes.map(i => `
         <tr>
-          <td class="p-3 font-bold text-gray-800">${esc(exp.title)}</td>
-          <td class="p-3 font-extrabold text-emerald-700 whitespace-nowrap">NT$ ${exp.amount.toLocaleString()}</td>
+          <td class="p-3 font-bold text-gray-800"><span class="led-badge in">收入</span>${esc(i.name)} 預收款</td>
+          <td class="p-3 led-amt-in">+ ${money(i.amount)}</td>
+          <td class="p-3 font-medium text-gray-700">${esc(i.name)}</td>
+          <td class="p-3 text-gray-500 text-xs max-w-[16rem]">收款人：${esc(col)}</td>
+          <td class="p-3 text-center whitespace-nowrap">
+            <button onclick="startEditIncome(${jsArg(i.id)})" class="px-2.5 py-1.5 rounded-md bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold transition"><i class="fa-solid fa-pen-to-square text-[10px]"></i> 編輯</button>
+            <button onclick="deleteIncome(${jsArg(i.id)})" class="px-2 py-1.5 rounded-md text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition" aria-label="取消這筆收入"><i class="fa-solid fa-trash-can"></i></button>
+          </td>
+        </tr>`).join('');
+      const expRowsT = expenses.map(exp => `
+        <tr>
+          <td class="p-3 font-bold text-gray-800"><span class="led-badge out">支出</span>${esc(exp.title)}</td>
+          <td class="p-3 led-amt-out">− ${money(exp.amount)}</td>
           <td class="p-3 font-medium text-gray-700">${esc(exp.payer)}</td>
           <td class="p-3 text-gray-500 text-xs max-w-[16rem]">${esc(splitLabel(exp))}</td>
           <td class="p-3 text-center whitespace-nowrap">
@@ -2564,15 +2707,28 @@
             <button onclick="deleteExpense(${jsArg(exp.id)})" class="px-2 py-1.5 rounded-md text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition" aria-label="刪除"><i class="fa-solid fa-trash-can"></i></button>
           </td>
         </tr>`).join('');
+      document.getElementById('expenses-tbody').innerHTML = incRowsT + expRowsT;
 
       // 手機版：卡片
-      document.getElementById('expenses-cards').innerHTML = expenses.length === 0
-        ? `<div class="text-center text-xs text-gray-400 py-4">還沒有任何支出</div>`
-        : expenses.map(exp => `
+      const incCards = incomes.map(i => `
         <div class="rounded-2xl border border-gray-200 bg-white p-3.5 space-y-2 shadow-2xs">
           <div class="flex items-start justify-between gap-3">
-            <div class="font-black text-gray-900 text-[15px] leading-snug flex-1 min-w-0">${esc(exp.title)}</div>
-            <div class="font-black text-emerald-700 text-base whitespace-nowrap">NT$ ${exp.amount.toLocaleString()}</div>
+            <div class="font-black text-gray-900 text-[15px] leading-snug flex-1 min-w-0"><span class="led-badge in">收入</span>${esc(i.name)} 預收款</div>
+            <div class="led-amt-in text-base">+ ${money(i.amount)}</div>
+          </div>
+          <div class="text-xs text-gray-600 leading-relaxed">
+            <span class="font-bold text-gray-800">${esc(i.name)}</span> 繳給 <span class="font-bold text-gray-800">${esc(col)}</span>
+          </div>
+          <div class="flex items-center gap-2 pt-1">
+            <button onclick="startEditIncome(${jsArg(i.id)})" class="flex-1 py-2 rounded-xl bg-amber-100 active:bg-amber-200 text-amber-900 text-sm font-bold"><i class="fa-solid fa-pen-to-square text-xs"></i> 編輯</button>
+            <button onclick="deleteIncome(${jsArg(i.id)})" class="px-4 py-2 rounded-xl bg-rose-50 active:bg-rose-100 text-rose-600 text-sm font-bold" aria-label="取消這筆收入"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+        </div>`).join('');
+      const expCards = expenses.map(exp => `
+        <div class="rounded-2xl border border-gray-200 bg-white p-3.5 space-y-2 shadow-2xs">
+          <div class="flex items-start justify-between gap-3">
+            <div class="font-black text-gray-900 text-[15px] leading-snug flex-1 min-w-0"><span class="led-badge out">支出</span>${esc(exp.title)}</div>
+            <div class="led-amt-out text-base">− ${money(exp.amount)}</div>
           </div>
           <div class="text-xs text-gray-600 leading-relaxed">
             <span class="font-bold text-gray-800">${esc(exp.payer)}</span> 先付　・　${esc(splitLabel(exp))}
@@ -2582,8 +2738,9 @@
             <button onclick="deleteExpense(${jsArg(exp.id)})" class="px-4 py-2 rounded-xl bg-rose-50 active:bg-rose-100 text-rose-600 text-sm font-bold" aria-label="刪除"><i class="fa-solid fa-trash-can"></i></button>
           </div>
         </div>`).join('');
-
-      document.getElementById('total-expenses-stat').textContent = `總計：NT$ ${total.toLocaleString()}`;
+      document.getElementById('expenses-cards').innerHTML = (incomes.length + expenses.length) === 0
+        ? `<div class="text-center text-xs text-gray-400 py-4">還沒有任何收支</div>`
+        : incCards + expCards;
     }
 
     // ==================== 預收款（每人先收錢，完帳時自動扣除） ====================
@@ -2602,6 +2759,7 @@
     function prepayRow(id) { return prepay.rows[id] || (prepay.rows[id] = { amount: 0, paid: false }); }
     function prepayPush(id) { return push('PUT', 'prepay/' + id, JSON.stringify(prepay.rows[id])); }
     function prepayMembers() { const c = prepayCollector(); return members.filter(m => m.name !== c); }
+    function prepayChanged() { renderExpensesTable(); calculateSettlement(); }
     function money(n) { return 'NT$ ' + Math.round(n).toLocaleString(); }
 
     function prepaySummary() {
@@ -2673,7 +2831,7 @@
       r.amount = Math.max(0, parseFloat(val) || 0);
       persistPrepay();
       updatePrepaySummary();
-      calculateSettlement();
+      prepayChanged();
     }
     function prepayCommit(id) { prepayPush(id); }
     function prepayToggle(id) {
@@ -2683,7 +2841,7 @@
       persistPrepay();
       prepayPush(id);
       renderPrepay();
-      calculateSettlement();
+      prepayChanged();
       const m = members.find(x => x.id === id);
       showToast(r.paid ? `✅ 已收 ${esc(m ? m.name : '')} 的預收款` : `已改回「未收」`);
     }
@@ -2698,7 +2856,7 @@
       persistPrepay();
       document.getElementById('prepay-rows').innerHTML = '';
       renderPrepay();
-      calculateSettlement();
+      prepayChanged();
       showToast(`已套用 ${money(v)} 給 ${n} 位還沒收的人（已收的不動）`);
     }
     function prepaySetCollector(name) {
@@ -2707,7 +2865,8 @@
       push('PUT', 'prepay_collector', JSON.stringify(name));
       document.getElementById('prepay-rows').innerHTML = '';
       renderPrepay();
-      calculateSettlement();
+      prepayChanged();
+      if (formMode === 'income') renderExpenseFormOptions();
       showToast(`收款人改為 ${esc(name)}`);
     }
     function copyPrepayStatus() {
